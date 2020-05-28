@@ -7,23 +7,35 @@ import * as serviceWorker from './serviceWorker';
 import { firebase } from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
 
-const jsx = (
+const app = (
   <Provider store={store}>
     <AppRouter />
   </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById('root'));
+ReactDOM.render(<LoadingPage />, document.getElementById('root'));
+
+let rendered = false;
+
+const renderApp = () => {
+  if (!rendered) {
+    ReactDOM.render(app, document.getElementById('root'));
+    rendered = true;
+  }
+};
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    store.dispatch(login(user.uid));
+    store.dispatch(login(user));
+    renderApp();
     if (history.location.pathname === '/') history.push('/dashboard');
   } else {
     store.dispatch(logout());
+    renderApp();
     history.push('/');
   }
 });
