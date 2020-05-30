@@ -4,40 +4,44 @@ import { connect } from 'react-redux';
 import { startSetUserData } from '../actions/user';
 
 const SettingsModal = ({
-  initialDname = '',
-  initialSnum = '',
+  initialDisplayName = '',
+  initialStudentNum = '',
   isOpen,
   onRequestClose,
-  startSetUserData
+  startSetUserData,
+  isNewUser
 }) => {
-  const [dname, setDname] = useState(initialDname);
-  const [snum, setSnum] = useState(initialSnum);
+  const [displayName, setDisplayName] = useState(initialDisplayName);
+  const [studentNum, setStudentNum] = useState(initialStudentNum);
   const [error, setError] = useState('');
 
-  const onDnameChange = e => {
-    const dname = e.target.value;
-    setDname(dname);
+  const onDisplayNameChange = e => {
+    const displayName = e.target.value;
+    setDisplayName(displayName);
   };
 
-  const onSnumChange = e => {
-    const snum = e.target.value;
-    setSnum(snum);
+  const onStudentNumChange = e => {
+    const studentNum = e.target.value;
+    if (!studentNum || studentNum.match(/^[aA]\d{0,7}[a-zA-Z]?$/))
+      setStudentNum(studentNum.toUpperCase());
   };
 
   const onCancel = () => {
-    setDname(initialDname);
-    setSnum(initialSnum);
+    setDisplayName(initialDisplayName);
+    setStudentNum(initialStudentNum);
     onRequestClose();
   };
 
   const onSubmit = e => {
     e.preventDefault();
 
-    if (!dname || !snum) {
+    if (!displayName || !studentNum) {
       setError('Please enter display name and student number');
+    } else if (!studentNum.match(/^A\d{7}[A-Z]$/)) {
+      setError('Please enter a valid student number');
     } else {
       setError('');
-      startSetUserData(dname, snum).then(() => onRequestClose());
+      startSetUserData(displayName, studentNum).then(() => onRequestClose());
     }
   };
 
@@ -45,34 +49,49 @@ const SettingsModal = ({
     <Modal
       isOpen={isOpen}
       contentLabel="Settings"
-      onRequestClose={onRequestClose}
+      onRequestClose={() => onRequestClose(isNewUser)}
       appElement={document.getElementById('root')}
     >
-      <h2>Settings</h2>
+      {isNewUser ? (
+        <div>
+          <h2>Welcome to Class Board Tasks!</h2>
+          <h4>Please enter your information to get started</h4>
+        </div>
+      ) : (
+        <h2>Settings</h2>
+      )}
       {error && <p>{error}</p>}
       <form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Display name (required)"
-          value={dname}
-          onChange={onDnameChange}
+          value={displayName}
+          onChange={onDisplayNameChange}
           autoFocus
         />
         <input
           type="text"
           placeholder="Student number (required)"
-          value={snum}
-          onChange={onSnumChange}
+          value={studentNum}
+          onChange={onStudentNumChange}
         />
         <button>Submit</button>
-        <button onClick={onCancel}>Cancel</button>
+        <button onClick={onCancel} disabled={isNewUser}>
+          Cancel
+        </button>
       </form>
     </Modal>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  startSetUserData: (dname, snum) => dispatch(startSetUserData(dname, snum))
+const mapStateToProps = state => ({
+  initialDisplayName: state.user.displayName,
+  initialStudentNum: state.user.studentNum
 });
 
-export default connect(undefined, mapDispatchToProps)(SettingsModal);
+const mapDispatchToProps = dispatch => ({
+  startSetUserData: (displayName, studentNum) =>
+    dispatch(startSetUserData(displayName, studentNum))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import './styles/index.css';
 import configureStore from './store/configureStore';
 import * as serviceWorker from './serviceWorker';
-import { firebase } from './firebase/firebase';
+import database, { firebase } from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
+import { newUser, startGetUserData } from './actions/user';
 import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
@@ -17,22 +18,31 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(<LoadingPage />, document.getElementById('root'));
-
-let rendered = false;
-
 const renderApp = () => {
-  if (!rendered) {
-    ReactDOM.render(app, document.getElementById('root'));
-    rendered = true;
-  }
+  ReactDOM.render(app, document.getElementById('root'));
+};
+
+const firstLogin = user => {
+  const userRef = database.collection('users').doc(user.uid);
+
+  return userRef
+    .get()
+    .then(snapshot =>
+      snapshot.exists
+        ? store.dispatch(startGetUserData())
+        : store.dispatch(newUser())
+    );
 };
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    ReactDOM.render(<LoadingPage />, document.getElementById('root'));
     store.dispatch(login(user));
-    renderApp();
-    if (history.location.pathname === '/') history.push('/dashboard');
+    firstLogin(user)
+      .then(() => renderApp())
+      .then(
+        () => history.location.pathname === '/' && history.push('/dashboard')
+      );
   } else {
     store.dispatch(logout());
     renderApp();
@@ -40,7 +50,4 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
