@@ -22,7 +22,11 @@ const SettingsModal = ({
 
   const onStudentNumChange = e => {
     const studentNum = e.target.value;
-    if (!studentNum || studentNum.match(/^[aA]\d{0,7}[a-zA-Z]?$/))
+    if (
+      !studentNum ||
+      studentNum.match(/^[aA]\d{0,7}$/) ||
+      studentNum.match(/^[aA]\d{7}[a-zA-Z]$/)
+    )
       setStudentNum(studentNum.toUpperCase());
   };
 
