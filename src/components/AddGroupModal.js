@@ -3,22 +3,18 @@ import Modal from 'react-modal';
 import { startNewGroup } from '../actions/groups';
 import { connect } from 'react-redux';
 
-const NewGroupModal = ({
-  isOpen,
-  onRequestClose,
-  startNewGroup
-}) => {
+const NewGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
   const [groupName, setGroupName] = useState('');
   const [error, setError] = useState('');
 
   const onGroupNameChange = e => {
     setGroupName(e.target.value);
-  }
+  };
 
   const onCancel = () => {
     setGroupName('');
     onRequestClose();
-  }
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -28,17 +24,17 @@ const NewGroupModal = ({
       setError('');
       startNewGroup(groupName).then(() => onRequestClose());
     }
-  }
-  
+  };
+
   return (
-    <Modal 
+    <Modal
       isOpen={isOpen}
       contentLabel="New Group"
       onRequestClose={() => onRequestClose()}
-      appElement={document.getElementById('root')}>
-      
+      appElement={document.getElementById('root')}
+    >
       <form onSubmit={onSubmit}>
-        <input 
+        <input
           type="text"
           placeholder="Group name (required)"
           value={groupName}
@@ -48,15 +44,13 @@ const NewGroupModal = ({
         <button>Submit</button>
         <button onClick={onCancel}>Cancel</button>
       </form>
-      
-
     </Modal>
-  )
-}
+  );
+};
 
 const mapDispatchToProps = dispatch => ({
-  startNewGroup: (groupName) => 
-    dispatch(startNewGroup(groupName))
-})
+  startNewGroup: groupName => dispatch(startNewGroup(groupName))
+});
 
 export default connect(null, mapDispatchToProps)(NewGroupModal);
+

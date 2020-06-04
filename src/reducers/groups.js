@@ -1,4 +1,4 @@
-const groupsReducer = (state = {groups: []}, action) => {
+const groupsReducer = (state = { groups: [] }, action) => {
   switch (action.type) {
     case 'NEW_GROUP':
     default:
