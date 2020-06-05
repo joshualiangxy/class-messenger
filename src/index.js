@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './styles/index.css';
 import configureStore from './store/configureStore';
 import * as serviceWorker from './serviceWorker';
 import database, { firebase } from './firebase/firebase';
@@ -9,6 +8,9 @@ import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
 import { newUser, startGetUserData } from './actions/user';
 import LoadingPage from './components/LoadingPage';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import './styles/styles.scss';
 
 const store = configureStore();
 

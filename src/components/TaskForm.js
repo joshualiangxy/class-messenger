@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 
-export const TaskForm = ({ isGroup, task, submitTask, groupModule }) => {
+const TaskForm = ({
+  isGroup,
+  task = {},
+  submitTask,
+  groupModule,
+  onRequestClose
+}) => {
   const {
     initialTitle = '',
     initialDescription = '',
@@ -35,8 +41,9 @@ export const TaskForm = ({ isGroup, task, submitTask, groupModule }) => {
 
   const onDeadlineChange = deadline => setDeadline(deadline);
 
-  const onFocusChange = ({ calendarFocused }) =>
-    setCalendarFocus(calendarFocused);
+  const onFocusChange = ({ focused }) => {
+    setCalendarFocus(focused);
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -44,13 +51,29 @@ export const TaskForm = ({ isGroup, task, submitTask, groupModule }) => {
     if (!title) setError('Please provide title of task');
     else {
       setError('');
-      submitTask({
+      const task = {
         title,
         description,
-        module,
-        deadline: deadline ? deadline.valueOf() : undefined
-      });
+        module
+      };
+      submitTask(
+        deadline
+          ? {
+              ...task,
+              deadline: deadline.valueOf()
+            }
+          : task
+      );
     }
+  };
+
+  const onCancel = () => {
+    setTitle(initialTitle);
+    setModule(isGroup ? groupModule : initialModule);
+    setDeadline(initialDeadline ? moment(initialDeadline) : undefined);
+    setCalendarFocus(false);
+    setError('');
+    onRequestClose();
   };
 
   return (
@@ -63,15 +86,16 @@ export const TaskForm = ({ isGroup, task, submitTask, groupModule }) => {
         onChange={onTitleChange}
         autoFocus={true}
       />
-      {isGroup && (
+      {!isGroup && (
         <input
           type="text"
-          placeholder="Module code, class name (optional)"
+          placeholder="Module code/Class name (optional)"
           value={module}
           onChange={onModuleChange}
         />
       )}
       <SingleDatePicker
+        id="taskDeadline"
         date={deadline}
         onDateChange={onDeadlineChange}
         focused={calendarFocused}
@@ -85,7 +109,12 @@ export const TaskForm = ({ isGroup, task, submitTask, groupModule }) => {
         value={description}
         onChange={onDescriptionChange}
       />
-      <button>{task ? 'Edit Task' : 'Add Task'}</button>
+      <button>{initialTitle ? 'Edit Task' : 'Add Task'}</button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
     </form>
   );
 };
+
+export default TaskForm;
