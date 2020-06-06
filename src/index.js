@@ -7,6 +7,7 @@ import database, { firebase } from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
 import { newUser, startGetUserData } from './actions/user';
+import { startSetTasks } from './actions/tasks';
 import LoadingPage from './components/LoadingPage';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
@@ -41,6 +42,7 @@ firebase.auth().onAuthStateChanged(user => {
     ReactDOM.render(<LoadingPage />, document.getElementById('root'));
     store.dispatch(login(user));
     firstLogin(user)
+      .then(() => store.dispatch(startSetTasks()))
       .then(() => renderApp())
       .then(
         () => history.location.pathname === '/' && history.push('/dashboard')
