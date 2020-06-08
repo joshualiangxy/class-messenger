@@ -13,7 +13,8 @@ const TaskForm = ({
     initialTitle = '',
     initialDescription = '',
     initialModule = '',
-    initialDeadline
+    initialDeadline,
+    initialComplete = false
   } = task;
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
@@ -35,7 +36,7 @@ const TaskForm = ({
   };
 
   const onModuleChange = e => {
-    const module = e.target.value;
+    const module = e.target.value.toUpperCase();
     setModule(module);
   };
 
@@ -48,13 +49,17 @@ const TaskForm = ({
   const onSubmit = e => {
     e.preventDefault();
 
-    if (!title) setError('Please provide title of task');
+    const submittedTitle = title.trim();
+    const submittedDescription = description.trim();
+    const submittedModule = module.trim();
+    if (!submittedTitle) setError('Please provide title of task');
     else {
       setError('');
       const task = {
-        title,
-        description,
-        module
+        title: submittedTitle,
+        description: submittedDescription,
+        module: submittedModule,
+        completed: initialComplete
       };
       submitTask(
         deadline
@@ -102,7 +107,9 @@ const TaskForm = ({
         onFocusChange={onFocusChange}
         numberOfMonths={1}
         isOutsideRange={() => false}
+        displayFormat="DD/MM/YYYY"
         showClearDate={true}
+        placeholder="Deadline"
       />
       <textarea
         placeholder="Add a description for your task (optional)"

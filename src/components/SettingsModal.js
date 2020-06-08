@@ -39,13 +39,16 @@ const SettingsModal = ({
   const onSubmit = e => {
     e.preventDefault();
 
-    if (!displayName || !studentNum) {
+    const submittedDisplayName = displayName.trim();
+    if (!submittedDisplayName || !studentNum) {
       setError('Please enter display name and student number');
     } else if (!studentNum.match(/^A\d{7}[A-Z]$/)) {
       setError('Please enter a valid student number');
     } else {
       setError('');
-      startSetUserData(displayName, studentNum).then(() => onRequestClose());
+      startSetUserData(submittedDisplayName, studentNum).then(() =>
+        onRequestClose()
+      );
     }
   };
 
