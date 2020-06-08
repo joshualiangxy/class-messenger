@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import database from '../firebase/firebase';
 
 export const addPersonalTask = task => ({ type: 'ADD_PERSONAL_TASK', task });
@@ -6,7 +5,7 @@ export const addPersonalTask = task => ({ type: 'ADD_PERSONAL_TASK', task });
 export const startAddPersonalTask = task => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const id = uuid();
+    const id = task.id;
 
     return database
       .collection('users')
@@ -14,11 +13,11 @@ export const startAddPersonalTask = task => {
       .collection('tasks')
       .doc(id)
       .set(task)
-      .then(() => dispatch(addPersonalTask({ id, ...task })));
+      .then(() => dispatch(addPersonalTask(task)));
   };
 };
 
-export const removeTask = id => ({ type: 'REMOVE_TASK', id });
+export const removePersonalTask = id => ({ type: 'REMOVE_PERSONAL_TASK', id });
 
 export const startRemovePersonalTask = id => {
   return (dispatch, getState) => {
@@ -30,11 +29,29 @@ export const startRemovePersonalTask = id => {
       .collection('tasks')
       .doc(id)
       .delete()
-      .then(() => dispatch(removeTask(id)));
+      .then(() => dispatch(removePersonalTask(id)));
   };
 };
 
-export const editTask = (id, updates) => ({ type: 'EDIT_TASK', id, updates });
+export const editPersonalTask = (id, updates) => ({
+  type: 'EDIT_PERSONAL_TASK',
+  id,
+  updates
+});
+
+export const startEditPersonalTask = (id, updates) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+
+    return database
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(id)
+      .set(updates)
+      .then(dispatch(editPersonalTask(id, updates)));
+  };
+};
 
 export const setTasks = tasks => ({ type: 'SET_TASK', tasks });
 
@@ -42,11 +59,10 @@ export const startSetTasks = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const tasks = [];
+    const userRef = database.collection('users').doc(uid);
+    const tasksRef = userRef.collection('tasks');
 
-    return database
-      .collection('users')
-      .doc(uid)
-      .collection('tasks')
+    return tasksRef
       .get()
       .then(querySnapshot =>
         querySnapshot.forEach(queryDocSnapshot =>
@@ -54,43 +70,59 @@ export const startSetTasks = () => {
         )
       )
       .then(() => {
-        database
-          .collection('users')
-          .doc(uid)
-          .get()
-          .then(userDocSnapshot => {
-            const groupIds = userDocSnapshot.get('groups') || [];
-            const groupsPromises = [];
+        userRef.get().then(userDocSnapshot => {
+          const groupIds = userDocSnapshot.get('groups') || [];
+          const groupsPromises = [];
 
-            groupIds.forEach(gid => {
-              const groupPromises = [];
-              const groupRef = database.collection('groups').doc(gid);
+          groupIds.forEach(gid => {
+            const groupPromises = [];
+            const groupRef = database.collection('groups').doc(gid);
 
-              groupPromises.push(
-                groupRef
-                  .get()
-                  .then(groupDocSnapshot => groupDocSnapshot.get('name'))
-              );
-              groupPromises.push(groupRef.collection('tasks').get());
+            groupPromises.push(
+              groupRef
+                .get()
+                .then(groupDocSnapshot => groupDocSnapshot.get('name'))
+            );
+            groupPromises.push(groupRef.collection('tasks').get());
 
-              groupsPromises.push(
-                Promise.all(groupPromises).then(
-                  ([groupName, queryTaskCollectionSnapshot]) =>
-                    queryTaskCollectionSnapshot.forEach(queryTaskDocSnapshot =>
-                      tasks.push({
-                        groupName,
-                        gid,
-                        id: queryTaskDocSnapshot.id,
-                        ...queryTaskDocSnapshot.data()
-                      })
-                    )
-                )
-              );
+            groupsPromises.push(
+              Promise.all(groupPromises).then(
+                ([groupName, queryTaskCollectionSnapshot]) =>
+                  queryTaskCollectionSnapshot.forEach(queryTaskDocSnapshot =>
+                    tasks.push({
+                      groupName,
+                      gid,
+                      id: queryTaskDocSnapshot.id,
+                      ...queryTaskDocSnapshot.data()
+                    })
+                  )
+              )
+            );
 
-              return Promise.all(groupPromises);
-            });
+            return Promise.all(groupPromises);
           });
+        });
       })
       .then(() => dispatch(setTasks(tasks)));
+  };
+};
+
+export const toggleCompleted = (id, completedState) => ({
+  type: 'TOGGLE_COMPLETED',
+  id,
+  completedState
+});
+
+export const startToggleCompleted = (id, completedState) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+
+    return database
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(id)
+      .update({ completed: !completedState })
+      .then(() => toggleCompleted(id, completedState));
   };
 };

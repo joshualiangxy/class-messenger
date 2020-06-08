@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { startRemovePersonalTask } from '../actions/tasks';
+import {
+  startRemovePersonalTask,
+  startToggleCompleted
+} from '../actions/tasks';
+import EditTaskModal from './EditTaskModal';
 
-export const TaskListItem = ({ task }) => {
+export const TaskListItem = ({
+  task,
+  startRemovePersonalTask,
+  startToggleCompleted,
+  showGroup
+}) => {
   const {
     id,
     title,
@@ -15,12 +24,30 @@ export const TaskListItem = ({ task }) => {
   } = task;
   const [visible, setVisible] = useState(false);
   const [completed, setCompleted] = useState(initialComplete);
+  const [open, setOpen] = useState(false);
   const now = moment().valueOf;
-  const deadlineClass =
-    deadline - now > 0 ? 'before-deadline' : 'after-deadline';
+  const deadlineClass = deadline > now ? 'before-deadline' : 'after-deadline';
 
   const toggleVisibility = () => setVisible(!visible);
-  const toggleCompleted = () => setCompleted(!completed);
+
+  const toggleCompleted = () => {
+    setCompleted(!completed);
+    startToggleCompleted(id, completed);
+  };
+
+  const onRemove = e => {
+    e.stopPropagation();
+    startRemovePersonalTask(id);
+  };
+
+  const openEditTask = e => {
+    e.stopPropagation();
+    setOpen(true);
+  };
+
+  const onRequestClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -34,22 +61,26 @@ export const TaskListItem = ({ task }) => {
         )}
         {visible && (
           <div>
-            {module && <h5>{module}</h5>}
+            {showGroup && module && <h5>{module}</h5>}
             {description && <p>{description}</p>}
-            {gid && (
-              <button onClick={() => startRemovePersonalTask(id)}>
-                Remove Task
-              </button>
-            )}
+            {!gid && <button onClick={openEditTask}>Edit Task</button>}
+            {!gid && <button onClick={onRemove}>Remove Task</button>}
           </div>
         )}
       </div>
+      <EditTaskModal
+        isOpen={open}
+        onRequestClose={onRequestClose}
+        task={task}
+      />
     </div>
   );
 };
 
 const mapDispatchToProps = dispatch => ({
-  startRemovePersonalTask: id => dispatch(startRemovePersonalTask(id))
+  startRemovePersonalTask: id => dispatch(startRemovePersonalTask(id)),
+  startToggleCompleted: (id, completedState) =>
+    dispatch(startToggleCompleted(id, completedState))
 });
 
 export default connect(undefined, mapDispatchToProps)(TaskListItem);

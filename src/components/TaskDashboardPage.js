@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import AddTaskModal from './AddTaskModal';
 import TaskListFilters from './TaskListFilters';
 import TaskList from './TaskList';
 
-export const TaskDashboardPage = () => {
+const TaskDashboardPage = () => {
   const [open, setOpen] = useState(false);
 
   const openAddTask = () => {
@@ -26,6 +25,4 @@ export const TaskDashboardPage = () => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(undefined, mapDispatchToProps)(TaskDashboardPage);
+export default TaskDashboardPage;

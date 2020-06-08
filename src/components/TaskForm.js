@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
+import { v4 as uuid } from 'uuid';
 
 const TaskForm = ({
   isGroup,
@@ -10,11 +11,12 @@ const TaskForm = ({
   onRequestClose
 }) => {
   const {
-    initialTitle = '',
-    initialDescription = '',
-    initialModule = '',
-    initialDeadline,
-    initialComplete = false
+    id = uuid(),
+    title: initialTitle = '',
+    description: initialDescription = '',
+    module: initialModule = '',
+    deadline: initialDeadline,
+    completed: initialComplete = false
   } = task;
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
@@ -56,6 +58,7 @@ const TaskForm = ({
     else {
       setError('');
       const task = {
+        id,
         title: submittedTitle,
         description: submittedDescription,
         module: submittedModule,
