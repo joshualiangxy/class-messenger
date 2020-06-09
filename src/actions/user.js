@@ -43,3 +43,16 @@ export const startSetUserData = (displayName, studentNum) => {
 };
 
 export const newUser = () => ({ type: 'NEW_USER' });
+
+export const startNewUser = () => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+    const email = getState().auth.user.email;
+
+    return database
+      .collection('emailToUid')
+      .doc(email)
+      .set({ uid })
+      .then(() => dispatch(newUser()));
+  };
+};

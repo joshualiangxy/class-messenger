@@ -107,13 +107,13 @@ export const startSetTasks = () => {
   };
 };
 
-export const toggleCompleted = (id, completedState) => ({
-  type: 'TOGGLE_COMPLETED',
+export const toggleCompletedPersonal = (id, completedState) => ({
+  type: 'TOGGLE_COMPLETED_PERSONAL',
   id,
   completedState
 });
 
-export const startToggleCompleted = (id, completedState) => {
+export const startToggleCompletedPersonal = (id, completedState) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
@@ -123,6 +123,8 @@ export const startToggleCompleted = (id, completedState) => {
       .collection('tasks')
       .doc(id)
       .update({ completed: !completedState })
-      .then(() => toggleCompleted(id, completedState));
+      .then(() => toggleCompletedPersonal(id, completedState));
   };
 };
+
+export const removeTaskData = () => ({ type: 'REMOVE_TASK_DATA' });

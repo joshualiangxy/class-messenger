@@ -74,7 +74,7 @@ const SettingsModal = ({
           placeholder="Display name (required)"
           value={displayName}
           onChange={onDisplayNameChange}
-          autoFocus
+          autoFocus={true}
         />
         <input
           type="text"

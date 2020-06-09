@@ -9,16 +9,6 @@ const tasksReducer = (state = [], action) => {
     case 'SET_TASK':
       return action.tasks;
     case 'TOGGLE_COMPLETED':
-      console.log(
-        state.map(task =>
-          task.id !== action.id
-            ? task
-            : {
-                ...task,
-                completed: action.completedState
-              }
-        )
-      );
       return state.map(task =>
         task.id !== action.id
           ? task
@@ -27,6 +17,8 @@ const tasksReducer = (state = [], action) => {
               completed: action.completedState
             }
       );
+    case 'REMOVE_TASK_DATA':
+      return [];
     default:
       return state;
   }

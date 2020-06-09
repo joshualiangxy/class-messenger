@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import database, { firebase } from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
-import { newUser, startGetUserData } from './actions/user';
+import { startNewUser, startGetUserData } from './actions/user';
 import { startSetTasks } from './actions/tasks';
 import LoadingPage from './components/LoadingPage';
 import 'react-dates/initialize';
@@ -33,7 +33,7 @@ const firstLogin = user => {
     .then(snapshot =>
       snapshot.exists
         ? store.dispatch(startGetUserData())
-        : store.dispatch(newUser())
+        : store.dispatch(startNewUser())
     );
 };
 

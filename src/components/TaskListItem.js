@@ -3,14 +3,14 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   startRemovePersonalTask,
-  startToggleCompleted
+  startToggleCompletedPersonal
 } from '../actions/tasks';
 import EditTaskModal from './EditTaskModal';
 
 export const TaskListItem = ({
   task,
   startRemovePersonalTask,
-  startToggleCompleted,
+  startToggleCompletedPersonal,
   showGroup
 }) => {
   const {
@@ -32,7 +32,7 @@ export const TaskListItem = ({
 
   const toggleCompleted = () => {
     setCompleted(!completed);
-    startToggleCompleted(id, completed);
+    startToggleCompletedPersonal(id, completed);
   };
 
   const onRemove = e => {
@@ -79,8 +79,8 @@ export const TaskListItem = ({
 
 const mapDispatchToProps = dispatch => ({
   startRemovePersonalTask: id => dispatch(startRemovePersonalTask(id)),
-  startToggleCompleted: (id, completedState) =>
-    dispatch(startToggleCompleted(id, completedState))
+  startToggleCompletedPersonal: (id, completedState) =>
+    dispatch(startToggleCompletedPersonal(id, completedState))
 });
 
 export default connect(undefined, mapDispatchToProps)(TaskListItem);

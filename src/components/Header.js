@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SettingsModal from './SettingsModal';
 import { startLogout } from '../actions/auth';
-import { removeUserData } from '../actions/user';
 
 export const Header = ({ startLogout, isNewUser }) => {
   const [open, setOpen] = useState(false);
@@ -12,9 +11,7 @@ export const Header = ({ startLogout, isNewUser }) => {
     if (isNewUser) setOpen(true);
   }, [isNewUser]);
 
-  const openSettings = () => {
-    setOpen(true);
-  };
+  const openSettings = () => setOpen(true);
 
   const onRequestClose = isNewUser => {
     if (!isNewUser) setOpen(false);
@@ -42,10 +39,7 @@ export const Header = ({ startLogout, isNewUser }) => {
 const mapStateToProps = state => ({ isNewUser: !!state.user.newUser });
 
 const mapDispatchToProps = dispatch => ({
-  startLogout: () => {
-    dispatch(removeUserData());
-    dispatch(startLogout());
-  }
+  startLogout: () => dispatch(startLogout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
