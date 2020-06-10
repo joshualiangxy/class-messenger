@@ -12,11 +12,11 @@ export const TaskList = ({ tasks, filters }) => {
         <h3>No tasks yet</h3>
       ) : filters.grouped ? (
         Object.values(sortedList).map((group, id) => (
-          <TaskListGroup key={id} group={group} />
+          <TaskListGroup key={Object.keys(sortedList)[id]} group={group} />
         ))
       ) : (
-        Object.values(sortedList)[0].tasks.map((task, id) => (
-          <TaskListItem key={id} task={task} showGroup={true} />
+        Object.values(sortedList)[0].tasks.map(task => (
+          <TaskListItem key={task.id} task={task} showGroup={true} />
         ))
       )}
     </div>

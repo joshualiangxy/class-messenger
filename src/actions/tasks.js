@@ -1,4 +1,4 @@
-import database from '../firebase/firebase';
+import firebase from '../firebase/firebase';
 
 export const addPersonalTask = task => ({ type: 'ADD_PERSONAL_TASK', task });
 
@@ -7,7 +7,8 @@ export const startAddPersonalTask = task => {
     const uid = getState().auth.user.uid;
     const id = task.id;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -23,7 +24,8 @@ export const startRemovePersonalTask = id => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -43,7 +45,8 @@ export const startEditPersonalTask = (id, updates) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -59,7 +62,7 @@ export const startSetTasks = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const tasks = [];
-    const userRef = database.collection('users').doc(uid);
+    const userRef = firebase.firestore().collection('users').doc(uid);
     const tasksRef = userRef.collection('tasks');
 
     return tasksRef
@@ -76,7 +79,7 @@ export const startSetTasks = () => {
 
           groupIds.forEach(gid => {
             const groupPromises = [];
-            const groupRef = database.collection('groups').doc(gid);
+            const groupRef = firebase.firestore().collection('groups').doc(gid);
 
             groupPromises.push(
               groupRef
@@ -117,7 +120,8 @@ export const startToggleCompletedPersonal = (id, completedState) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .collection('tasks')

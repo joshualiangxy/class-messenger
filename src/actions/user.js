@@ -1,4 +1,4 @@
-import database from '../firebase/firebase';
+import firebase from '../firebase/firebase';
 
 export const getUserData = (displayName, studentNum) => ({
   type: 'GET_USER_DATA',
@@ -10,7 +10,8 @@ export const startGetUserData = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .get()
@@ -34,7 +35,8 @@ export const startSetUserData = (displayName, studentNum) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return database
+    return firebase
+      .firestore()
       .collection('users')
       .doc(uid)
       .set({ displayName, studentNum })
@@ -49,7 +51,8 @@ export const startNewUser = () => {
     const uid = getState().auth.user.uid;
     const email = getState().auth.user.email;
 
-    return database
+    return firebase
+      .firestore()
       .collection('emailToUid')
       .doc(email)
       .set({ uid })

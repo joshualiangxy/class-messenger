@@ -1,6 +1,4 @@
-import database from '../firebase/firebase';
-import firebase from 'firebase';
-
+import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 
 export const newGroup = name => ({
@@ -13,8 +11,8 @@ export const startNewGroup = groupName => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const groupUUID = uuid();
-    const userRef = database.collection('users').doc(uid);
-    const groupRef = database.collection('groups').doc(groupUUID);
+    const userRef = firebase.firestore().collection('users').doc(uid);
+    const groupRef = firebase.firestore().collection('groups').doc(groupUUID);
 
     // Not sure why but database.FieldValue doesn't work but this still does the job
     const userPromise = userRef.update({
@@ -36,17 +34,22 @@ export const startNewGroup = groupName => {
   };
 };
 
-
 export const addNewUser = (userEmail, group) => {
   const uid = userEmail; // Change this when email-uid are linked!
-  const groupRef = database.collection('groups').doc(group); 
-  const userRef = database.collection('users').doc(uid);
+  const groupRef = firebase.firestore().collection('groups').doc(group);
+  const userRef = firebase.firestore().collection('users').doc(uid);
   if (userRef.exists) {
     // Create a new document for this user. Non-admin by default, implement promotion later
     const userProperties = {};
-    userRef.get().then(snapshot => {
-      userProperties.name = snapshot.displayName;
-      userProperties.sNum = snapshot.studentNum;
-    }).catch(() => {console.log("caught")});
-  } 
-}
+    userRef
+      .get()
+      .then(snapshot => {
+        userProperties.name = snapshot.displayName;
+        userProperties.sNum = snapshot.studentNum;
+      })
+      .catch(() => {
+        console.log('caught');
+      });
+  }
+};
+

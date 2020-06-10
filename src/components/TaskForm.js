@@ -16,7 +16,7 @@ const TaskForm = ({
     description: initialDescription = '',
     module: initialModule = '',
     deadline: initialDeadline,
-    completed: initialComplete = false
+    completed = false
   } = task;
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
@@ -62,7 +62,7 @@ const TaskForm = ({
         title: submittedTitle,
         description: submittedDescription,
         module: submittedModule,
-        completed: initialComplete
+        completed
       };
       submitTask(
         deadline

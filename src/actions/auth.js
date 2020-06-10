@@ -1,4 +1,4 @@
-import { firebase, googleAuthProvider } from '../firebase/firebase';
+import firebase, { googleAuthProvider } from '../firebase/firebase';
 import { removeUserData } from './user';
 import { removeTaskData } from './tasks';
 

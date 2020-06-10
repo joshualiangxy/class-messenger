@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import * as serviceWorker from './serviceWorker';
-import database, { firebase } from './firebase/firebase';
+import firebase from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
 import { startNewUser, startGetUserData } from './actions/user';
@@ -26,7 +26,7 @@ const renderApp = () => {
 };
 
 const firstLogin = user => {
-  const userRef = database.collection('users').doc(user.uid);
+  const userRef = firebase.firestore().collection('users').doc(user.uid);
 
   return userRef
     .get()
