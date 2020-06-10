@@ -3,7 +3,8 @@ import Modal from 'react-modal';
 import { startNewGroup } from '../actions/groups';
 import { connect } from 'react-redux';
 
-const NewGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
+// TODO: Add the ability to add other users into the group
+const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
   const [groupName, setGroupName] = useState('');
   const [error, setError] = useState('');
 
@@ -18,11 +19,12 @@ const NewGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if (!groupName) {
+    const submittedName = groupName.trim();
+    if (!submittedName) {
       setError('Please enter a group name');
     } else {
       setError('');
-      startNewGroup(groupName).then(() => onRequestClose());
+      startNewGroup(submittedName).then(() => onRequestClose());
     }
   };
 
@@ -43,6 +45,7 @@ const NewGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
         />
         <button>Submit</button>
         <button onClick={onCancel}>Cancel</button>
+        <div>{error}</div>
       </form>
     </Modal>
   );
@@ -52,5 +55,4 @@ const mapDispatchToProps = dispatch => ({
   startNewGroup: groupName => dispatch(startNewGroup(groupName))
 });
 
-export default connect(null, mapDispatchToProps)(NewGroupModal);
-
+export default connect(null, mapDispatchToProps)(AddGroupModal);

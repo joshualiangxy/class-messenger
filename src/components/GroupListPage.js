@@ -3,21 +3,14 @@ import firebase from 'firebase';
 import database from '../firebase/firebase';
 import AddGroupModal from './AddGroupModal';
 
-// Returns an array containing all of the groups associated with this user as objects.
 const getGroups = () => {
   const uid = firebase.auth().currentUser.uid;
   const userRef = database.collection('users').doc(uid);
-  const groups = [];
-  // This part gets all the groups' names and references and adds them to the groups array.
-  userRef
-    .collection('groups')
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        groups.push(doc.data());
-      });
-    });
-  return groups;
+  // This is able to get a *promise* for a group array, but not the actual array itself.
+  return userRef.get().then(doc => {
+    console.log(doc.get('displayName'));
+    return doc.get('groups');
+  });
 };
 
 const GroupListPage = () => {
@@ -36,6 +29,9 @@ const GroupListPage = () => {
       <h1>GroupListPage</h1>
       <button onClick={openNewGroup}>Add New Group</button>
       <button onClick={() => console.log(getGroups())}>Get groups</button>
+      {
+        // TODO: Map groups to <Link to={groupID}> or something like that here.
+      }
       <AddGroupModal isOpen={open} onRequestClose={onRequestClose} />
     </div>
   );
