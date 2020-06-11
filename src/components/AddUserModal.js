@@ -2,37 +2,47 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import firebase from '../firebase/firebase';
 
-// Note: This still works off uid for now. This also does NOT work yet. 
+// Note: This still works off uid for now. This also does NOT work yet.
 const AddUserModal = ({ isOpen, onRequestClose, group }) => {
   const addNewUser = (userEmail, group) => {
-    // TODO: Fix collection paths to make it actually write properly
-    // Debug user exists part - maybe just go straight to reading and catching the error?
     const uid = userEmail; // TODO: Change this when email-uid are linked!
 
     // Both of these references are DocumentReference
-    const userRef = firebase.firestore().collection('users').doc(uid); 
+    const userRef = firebase.firestore().collection('users').doc(uid);
     const groupRef = firebase.firestore().collection('groups').doc(group);
-    
-    // Gets the data from a user. 
-    userRef.get().then(doc =>{
+
+    // Gets the data from a user.
+    userRef.get().then(doc => {
       const data = doc.data();
-      console.log(data); // Should show all the data under a user's document
-      // TODO: Take the fields from this data, put it into the group's users and add this group's id to the user
       // Write displayName, studentNum, and UID into a new document
-      groupRef.collection('users').doc(uid) // Create document for this user's UID
-        .set({
-          studentNum: data.studentNum,
-          displayName: data.displayName,
-          uid: uid,
-          admin: false
-        })
+      if (typeof data === 'undefined') {
+        // Most likely a user that doesn't exist.
+        setError('No such user found');
+      } else {
+        groupRef
+          .collection('users')
+          .doc(uid) // Create document for this user's UID
+          .set({
+            studentNum: data.studentNum,
+            displayName: data.displayName,
+            uid: uid,
+            admin: false
+          })
+          .then(() => {
+            setError('User added!');
+          })
+          .catch(error => {
+            setError('Something went wrong.');
+          });
+      }
       // Defaults to non-admin.
-    })
+    });
   };
 
   // TODO: When calling this modal, pass in the group UID as a prop
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
+  // const [usersAdded, setUsersAdded] = useState([]); // For listing down people that have been added?
 
   const onUserEmailChange = e => {
     setUserEmail(e.target.value);

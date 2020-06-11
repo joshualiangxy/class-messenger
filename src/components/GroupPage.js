@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import firebase from 'firebase';
-import database from '../firebase/firebase';
+import firebase from '../firebase/firebase';
 import { connect } from 'react-redux';
 import AddUserModal from './AddUserModal';
 
@@ -12,6 +11,17 @@ const GroupPage = props => {
 
   // For Modal
   const [isOpen, setOpen] = useState(false);
+  const [users, setUsers] = useState([]);
+  const userArray = [];
+  // TODO: Fix this to be able to get all the users. 
+  firebase.firestore().collection('groups').doc(groupId).collection('users')
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        userArray.push(doc.displayName)
+      })
+    })
+    .then(() => setUsers(userArray))
 
   const onRequestClose = () => {
     setOpen(false);
@@ -25,6 +35,7 @@ const GroupPage = props => {
     <div>
       <h1>Group Page {groupId}</h1>
       <button onClick={openAddUser}>Add new user</button>
+      <button onClick={() => console.log(userArray)}>get users</button>
       <AddUserModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
