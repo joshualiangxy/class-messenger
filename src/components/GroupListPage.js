@@ -7,8 +7,10 @@ const getGroups = () => {
   const userRef = firebase.firestore().collection('users').doc(uid);
   // This is able to get a *promise* for a group array, but not the actual array itself.
   return userRef.get().then(doc => {
-    console.log(doc.get('displayName'));
-    return doc.get('groups');
+    const groups = [];
+    console.log(doc.get('groups'));
+    groups.push(doc.get('groups'));
+    return groups;
   });
 };
 
