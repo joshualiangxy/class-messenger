@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   sortByName,
+  sortByNameReversed,
   sortByDeadline,
+  sortByDeadlineReversed,
   setTextFilter,
   toggleGrouped
 } from '../actions/filters';
@@ -10,7 +12,9 @@ import {
 export const TaskListFilters = ({
   filters,
   sortByName,
+  sortByNameReversed,
   sortByDeadline,
+  sortByDeadlineReversed,
   setTextFilters,
   toggleGrouped
 }) => {
@@ -21,8 +25,14 @@ export const TaskListFilters = ({
       case 'deadline':
         sortByDeadline();
         break;
+      case 'deadlineReversed':
+        sortByDeadlineReversed();
+        break;
       case 'name':
         sortByName();
+        break;
+      case 'nameReversed':
+        sortByNameReversed();
         break;
     }
   };
@@ -46,7 +56,9 @@ export const TaskListFilters = ({
       <label htmlFor="grouped"> Group tasks</label>
       <select value={filters.sortBy} onChange={onSortChange}>
         <option value="deadline">Deadline</option>
+        <option value="deadlineReversed">Deadline Reversed</option>
         <option value="name">Name</option>
+        <option value="nameReversed">Name Reversed</option>
       </select>
     </div>
   );
@@ -56,7 +68,9 @@ const mapStateToProps = ({ filters }) => ({ filters });
 
 const mapDispatchToProps = dispatch => ({
   sortByName: () => dispatch(sortByName()),
+  sortByNameReversed: () => dispatch(sortByNameReversed()),
   sortByDeadline: () => dispatch(sortByDeadline()),
+  sortByDeadlineReversed: () => dispatch(sortByDeadlineReversed()),
   setTextFilters: text => dispatch(setTextFilter(text)),
   toggleGrouped: () => dispatch(toggleGrouped())
 });

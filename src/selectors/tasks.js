@@ -15,9 +15,17 @@ const getSortedTasks = (tasks, { text, sortBy, grouped }) => {
             return taskOne.deadline - taskTwo.deadline;
           else if (taskOne.deadline) return -1;
           else if (taskTwo.deadline) return 1;
-          else return taskOne.title.localeCompare(taskTwo.title);
+          else return 0;
+        case 'deadlineReversed':
+          if (taskOne.deadline && taskTwo.deadline)
+            return taskTwo.deadline - taskOne.deadline;
+          else if (taskOne.deadline) return 1;
+          else if (taskTwo.deadline) return -1;
+          else return 0;
         case 'name':
           return taskOne.title.localeCompare(taskTwo.title);
+        case 'nameReversed':
+          return taskTwo.title.localeCompare(taskOne.title);
       }
     });
 

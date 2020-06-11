@@ -50,7 +50,6 @@ export const TaskListItem = ({
   return (
     <div>
       <input type="checkbox" checked={completed} onChange={toggleCompleted} />
-      <p>{completed ? 'completed' : 'not completed'}</p>
       <div onClick={toggleVisibility}>
         <h3>{title}</h3>
         {deadline && (

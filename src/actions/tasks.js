@@ -51,12 +51,12 @@ export const startEditPersonalTask = (id, updates) => {
       .doc(uid)
       .collection('tasks')
       .doc(id)
-      .set(updates)
+      .update(updates)
       .then(dispatch(editPersonalTask(id, updates)));
   };
 };
 
-export const setTasks = tasks => ({ type: 'SET_TASK', tasks });
+export const setTasks = tasks => ({ type: 'SET_TASKS', tasks });
 
 export const startSetTasks = () => {
   return (dispatch, getState) => {
@@ -69,17 +69,18 @@ export const startSetTasks = () => {
       .get()
       .then(querySnapshot =>
         querySnapshot.forEach(queryDocSnapshot =>
-          tasks.push({ id: queryDocSnapshot.id, ...queryDocSnapshot.data() })
+          tasks.push(queryDocSnapshot.data())
         )
       )
-      .then(() => {
+      .then(() =>
         userRef.get().then(userDocSnapshot => {
+          const groupsCollection = firebase.firestore().collection('groups');
           const groupIds = userDocSnapshot.get('groups') || [];
           const groupsPromises = [];
 
           groupIds.forEach(gid => {
             const groupPromises = [];
-            const groupRef = firebase.firestore().collection('groups').doc(gid);
+            const groupRef = groupsCollection.doc(gid);
 
             groupPromises.push(
               groupRef
@@ -95,17 +96,16 @@ export const startSetTasks = () => {
                     tasks.push({
                       groupName,
                       gid,
-                      id: queryTaskDocSnapshot.id,
                       ...queryTaskDocSnapshot.data()
                     })
                   )
               )
             );
-
-            return Promise.all(groupPromises);
           });
-        });
-      })
+
+          return Promise.all(groupsPromises);
+        })
+      )
       .then(() => dispatch(setTasks(tasks)));
   };
 };
@@ -127,7 +127,7 @@ export const startToggleCompletedPersonal = (id, completedState) => {
       .collection('tasks')
       .doc(id)
       .update({ completed: !completedState })
-      .then(() => toggleCompletedPersonal(id, completedState));
+      .then(() => dispatch(toggleCompletedPersonal(id, completedState)));
   };
 };
 

@@ -6,7 +6,8 @@ const tasksReducer = (state = [], action) => {
       return state.filter(task => task.id !== action.id);
     case 'EDIT_PERSONAL_TASK':
       return state.map(task => (task.id === action.id ? action.updates : task));
-    case 'SET_TASK':
+    case 'SET_TASKS':
+      console.log(action.tasks);
       return action.tasks;
     case 'TOGGLE_COMPLETED_PERSONAL':
       return state.map(task =>
