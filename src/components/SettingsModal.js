@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { startSetUserData } from '../actions/user';
 
-const SettingsModal = ({
+export const SettingsModal = ({
   initialDisplayName = '',
   initialStudentNum = '',
   isOpen,
@@ -33,21 +33,26 @@ const SettingsModal = ({
   const onCancel = () => {
     setDisplayName(initialDisplayName);
     setStudentNum(initialStudentNum);
-    onRequestClose();
+    onRequestClose(false);
   };
 
   const onSubmit = e => {
     e.preventDefault();
 
     const submittedDisplayName = displayName.trim();
-    if (!submittedDisplayName || !studentNum) {
+    if (
+      !submittedDisplayName &&
+      (!studentNum || !studentNum.match(/^A\d{7}[A-Z]$/))
+    ) {
       setError('Please enter display name and student number');
+    } else if (!submittedDisplayName) {
+      setError('Please enter display name');
     } else if (!studentNum.match(/^A\d{7}[A-Z]$/)) {
       setError('Please enter a valid student number');
     } else {
       setError('');
-      startSetUserData(submittedDisplayName, studentNum).then(() =>
-        onRequestClose()
+      return startSetUserData(submittedDisplayName, studentNum).then(() =>
+        onRequestClose(true)
       );
     }
   };
@@ -56,7 +61,7 @@ const SettingsModal = ({
     <Modal
       isOpen={isOpen}
       contentLabel="Settings"
-      onRequestClose={() => onRequestClose(isNewUser)}
+      onRequestClose={() => onRequestClose(false)}
       appElement={document.getElementById('root')}
     >
       {isNewUser ? (
@@ -83,7 +88,7 @@ const SettingsModal = ({
           onChange={onStudentNumChange}
         />
         <button>Submit</button>
-        <button onClick={onCancel} disabled={isNewUser}>
+        <button type="button" onClick={onCancel} disabled={isNewUser}>
           Cancel
         </button>
       </form>

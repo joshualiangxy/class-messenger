@@ -4,7 +4,8 @@ const userReducer = (state = {}, action) => {
     case 'SET_USER_DATA':
       return {
         displayName: action.displayName,
-        studentNum: action.studentNum
+        studentNum: action.studentNum,
+        newUser: false
       };
     case 'NEW_USER':
       return { newUser: true, ...state };

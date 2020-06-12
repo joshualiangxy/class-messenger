@@ -14,7 +14,7 @@ export const EditTaskModal = ({
 }) => {
   const submitTask = task => {
     const id = task.id;
-    startEditPersonalTask(id, task).then(() => onRequestClose());
+    return startEditPersonalTask(id, task).then(() => onRequestClose());
   };
 
   return (

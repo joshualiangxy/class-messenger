@@ -1,4 +1,4 @@
-import createMockStore from '../setupTests';
+import createMockStore from '../../setupTests';
 import firebase, { googleAuthProvider } from '../../firebase/firebase';
 import auth, {
   signInWithPopup,
@@ -26,7 +26,7 @@ describe('login', () => {
       expect(auth).toHaveBeenCalledTimes(1);
 
       expect(signInWithPopup).toHaveBeenCalledTimes(1);
-      expect(signInWithPopup).toHaveBeenCalledWith(googleAuthProvider);
+      expect(signInWithPopup).toHaveBeenLastCalledWith(googleAuthProvider);
     }));
 });
 

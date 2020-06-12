@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render EditTaskModal 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  closeTimeoutMS={0}
+  contentLabel="Edit Task"
+  isOpen={false}
+  onRequestClose={[MockFunction]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <h2>
+    Edit Task
+  </h2>
+  <TaskForm
+    onRequestClose={[MockFunction]}
+    submitTask={[Function]}
+    task={
+      Object {
+        "completed": true,
+        "description": "",
+        "id": "d2b10492-853d-4290-baf8-cb47cd4ec04e",
+        "module": "",
+        "title": "Read a book everyday",
+      }
+    }
+  />
+</Modal>
+`;
+
+exports[`render should render EditTaskModal with alternate task 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  closeTimeoutMS={0}
+  contentLabel="Edit Task"
+  isOpen={false}
+  onRequestClose={[MockFunction]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <h2>
+    Edit Task
+  </h2>
+  <TaskForm
+    onRequestClose={[MockFunction]}
+    submitTask={[Function]}
+    task={
+      Object {
+        "completed": true,
+        "description": "",
+        "id": "73c8ac1a-1d06-46ee-a39e-e656e1e41db0",
+        "module": "CS2040S",
+        "title": "Do problem set",
+      }
+    }
+  />
+</Modal>
+`;

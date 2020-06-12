@@ -1,4 +1,4 @@
-import createMockStore from '../setupTests';
+import createMockStore from '../../setupTests';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
 import firestore, { collection } from '../__mocks__/firestore.mock';
@@ -54,10 +54,10 @@ describe('get user data', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('users');
+      expect(collection).toHaveBeenLastCalledWith('users');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userDocGet).toHaveBeenCalledTimes(1);
 
@@ -88,13 +88,13 @@ describe('set user data', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('users');
+      expect(collection).toHaveBeenLastCalledWith('users');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userDocSet).toHaveBeenCalledTimes(1);
-      expect(userDocSet).toHaveBeenCalledWith({
+      expect(userDocSet).toHaveBeenLastCalledWith({
         displayName,
         studentNum
       });
@@ -115,13 +115,13 @@ describe('new user', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('emailToUid');
+      expect(collection).toHaveBeenLastCalledWith('emailToUid');
 
       expect(emailToUidDoc).toHaveBeenCalledTimes(1);
-      expect(emailToUidDoc).toHaveBeenCalledWith(email);
+      expect(emailToUidDoc).toHaveBeenLastCalledWith(email);
 
       expect(emailToUidDocSet).toHaveBeenCalledTimes(1);
-      expect(emailToUidDocSet).toHaveBeenCalledWith({ uid });
+      expect(emailToUidDocSet).toHaveBeenLastCalledWith({ uid });
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(newUser());

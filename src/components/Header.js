@@ -13,8 +13,8 @@ export const Header = ({ startLogout, isNewUser }) => {
 
   const openSettings = () => setOpen(true);
 
-  const onRequestClose = isNewUser => {
-    if (!isNewUser) setOpen(false);
+  const onRequestClose = submitting => {
+    if (!isNewUser || submitting) setOpen(false);
   };
 
   return (

@@ -1,4 +1,4 @@
-import createMockStore from '../setupTests';
+import createMockStore from '../../setupTests';
 import tasks from '../fixtures/tasks';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
@@ -80,19 +80,19 @@ describe('add personal task', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('users');
+      expect(collection).toHaveBeenLastCalledWith('users');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userDocCollection).toHaveBeenCalledTimes(1);
-      expect(userDocCollection).toHaveBeenCalledWith('tasks');
+      expect(userDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(userTaskDoc).toHaveBeenCalledTimes(1);
-      expect(userTaskDoc).toHaveBeenCalledWith(id);
+      expect(userTaskDoc).toHaveBeenLastCalledWith(id);
 
       expect(userTaskSet).toHaveBeenCalledTimes(1);
-      expect(userTaskSet).toHaveBeenCalledWith(task);
+      expect(userTaskSet).toHaveBeenLastCalledWith(task);
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(addPersonalTask(task));
@@ -113,16 +113,16 @@ describe('remove personal task', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('users');
+      expect(collection).toHaveBeenLastCalledWith('users');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userDocCollection).toHaveBeenCalledTimes(1);
-      expect(userDocCollection).toHaveBeenCalledWith('tasks');
+      expect(userDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(userTaskDoc).toHaveBeenCalledTimes(1);
-      expect(userTaskDoc).toHaveBeenCalledWith(id);
+      expect(userTaskDoc).toHaveBeenLastCalledWith(id);
 
       expect(userTaskDocRef.delete).toHaveBeenCalledTimes(1);
 
@@ -149,13 +149,13 @@ describe('edit personal task', () => {
       expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenCalledWith('users');
+      expect(collection).toHaveBeenLastCalledWith('users');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userTaskUpdate).toHaveBeenCalledTimes(1);
-      expect(userTaskUpdate).toHaveBeenCalledWith(updates);
+      expect(userTaskUpdate).toHaveBeenLastCalledWith(updates);
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(editPersonalTask(id, updates));
@@ -177,10 +177,10 @@ describe('set tasks', () => {
       expect(collection).toHaveBeenNthCalledWith(2, 'groups');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
-      expect(userDoc).toHaveBeenCalledWith(uid);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
 
       expect(userDocCollection).toHaveBeenCalledTimes(1);
-      expect(userDocCollection).toHaveBeenCalledWith('tasks');
+      expect(userDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(userTaskCollectionGet).toHaveBeenCalledTimes(1);
 
@@ -191,7 +191,7 @@ describe('set tasks', () => {
       expect(userDocGet).toHaveBeenCalledTimes(1);
 
       expect(userDocSnapshotGet).toHaveBeenCalledTimes(1);
-      expect(userDocSnapshotGet).toHaveBeenCalledWith('groups');
+      expect(userDocSnapshotGet).toHaveBeenLastCalledWith('groups');
 
       expect(groupDoc).toHaveBeenCalledTimes(3);
       for (let i = 1; i <= 3; i++)
@@ -200,10 +200,10 @@ describe('set tasks', () => {
       expect(groupOneDocGet).toHaveBeenCalledTimes(1);
 
       expect(groupOneDocSnapshotGet).toHaveBeenCalledTimes(1);
-      expect(groupOneDocSnapshotGet).toHaveBeenCalledWith('name');
+      expect(groupOneDocSnapshotGet).toHaveBeenLastCalledWith('name');
 
       expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupOneDocCollection).toHaveBeenCalledWith('tasks');
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(groupOneTaskCollectionGet).toHaveBeenCalledTimes(1);
 
@@ -213,10 +213,10 @@ describe('set tasks', () => {
       expect(groupTwoDocGet).toHaveBeenCalledTimes(1);
 
       expect(groupTwoDocSnapshotGet).toHaveBeenCalledTimes(1);
-      expect(groupTwoDocSnapshotGet).toHaveBeenCalledWith('name');
+      expect(groupTwoDocSnapshotGet).toHaveBeenLastCalledWith('name');
 
       expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupTwoDocCollection).toHaveBeenCalledWith('tasks');
+      expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(groupTwoTaskCollectionGet).toHaveBeenCalledTimes(1);
 
@@ -226,10 +226,10 @@ describe('set tasks', () => {
       expect(groupThreeDocGet).toHaveBeenCalledTimes(1);
 
       expect(groupThreeDocSnapshotGet).toHaveBeenCalledTimes(1);
-      expect(groupThreeDocSnapshotGet).toHaveBeenCalledWith('name');
+      expect(groupThreeDocSnapshotGet).toHaveBeenLastCalledWith('name');
 
       expect(groupThreeDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupThreeDocCollection).toHaveBeenCalledWith('tasks');
+      expect(groupThreeDocCollection).toHaveBeenLastCalledWith('tasks');
 
       expect(groupThreeTaskCollectionGet).toHaveBeenCalledTimes(1);
 
@@ -279,19 +279,19 @@ describe('toggle completed state for personal task', () => {
         expect(firestore).toHaveBeenCalledTimes(1);
 
         expect(collection).toHaveBeenCalledTimes(1);
-        expect(collection).toHaveBeenCalledWith('users');
+        expect(collection).toHaveBeenLastCalledWith('users');
 
         expect(userDoc).toHaveBeenCalledTimes(1);
-        expect(userDoc).toHaveBeenCalledWith(uid);
+        expect(userDoc).toHaveBeenLastCalledWith(uid);
 
         expect(userDocCollection).toHaveBeenCalledTimes(1);
-        expect(userDocCollection).toHaveBeenCalledWith('tasks');
+        expect(userDocCollection).toHaveBeenLastCalledWith('tasks');
 
         expect(userTaskDoc).toHaveBeenCalledTimes(1);
-        expect(userTaskDoc).toHaveBeenCalledWith(id);
+        expect(userTaskDoc).toHaveBeenLastCalledWith(id);
 
         expect(userTaskUpdate).toHaveBeenCalledTimes(1);
-        expect(userTaskUpdate).toHaveBeenCalledWith({
+        expect(userTaskUpdate).toHaveBeenLastCalledWith({
           completed: !completedState
         });
 

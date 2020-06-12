@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render Header 1`] = `
+<div>
+  <Link
+    to="/dashboard"
+  >
+    <h2>
+      Class Board Task
+    </h2>
+  </Link>
+  <NavLink
+    exact={true}
+    to="/groups"
+  >
+    Groups
+  </NavLink>
+  <button
+    onClick={[Function]}
+  >
+    Settings
+  </button>
+  <button
+    onClick={[MockFunction]}
+  >
+    Logout
+  </button>
+  <Connect(SettingsModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+  />
+</div>
+`;
