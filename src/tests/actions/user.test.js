@@ -1,6 +1,17 @@
 import createMockStore from '../setupTests';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
+import firestore, { collection } from '../__mocks__/firestore.mock';
+import {
+  emailToUidDoc,
+  emailToUidDocSet
+} from '../__mocks__/firestore/emailToUid';
+import {
+  userDoc,
+  userDocGet,
+  userDocSet,
+  userDocSnapshotData
+} from '../__mocks__/firestore/users';
 import {
   getUserData,
   startGetUserData,
@@ -10,16 +21,6 @@ import {
   newUser,
   startNewUser
 } from '../../actions/user';
-import firestore, {
-  collection,
-  emailToUidDoc,
-  emailToUidDocSet,
-  userDoc,
-  userDocGet,
-  userDocSet,
-  userDocSnapshotData,
-  resetFirestore
-} from '../__mocks__/firestore.mock';
 
 firebase.firestore = firestore;
 
@@ -34,8 +35,8 @@ const store = createMockStore({
 });
 
 beforeEach(() => {
+  jest.clearAllMocks();
   store.clearActions();
-  resetFirestore();
 });
 
 describe('get user data', () => {

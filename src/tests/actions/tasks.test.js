@@ -2,37 +2,43 @@ import createMockStore from '../setupTests';
 import tasks from '../fixtures/tasks';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
-import firestore, {
-  collection,
-  groupDoc,
-  groupOneDocGet,
-  groupOneDocSnapshotGet,
-  groupOneDocCollection,
-  groupOneTaskCollectionGet,
-  groupTwoDocGet,
-  groupTwoDocSnapshotGet,
-  groupTwoDocCollection,
-  groupTwoTaskCollectionGet,
-  groupThreeDocGet,
-  groupThreeDocSnapshotGet,
-  groupThreeDocCollection,
-  groupThreeTaskCollectionGet,
+import firestore, { collection } from '../__mocks__/firestore.mock';
+import {
   userDoc,
-  userDocCollection,
   userDocGet,
-  userDocSnapshotData,
-  userDocSnapshotGet,
-  userTaskCollectionGet,
+  userDocCollection,
+  userDocSnapshotGet
+} from '../__mocks__/firestore/users';
+import {
   userTaskDoc,
-  userTaskDocRef,
   userTaskSet,
+  userTaskDocRef,
   userTaskUpdate,
-  queryUserTaskSnapshot,
-  queryGroupOneTaskSnapshot,
-  queryGroupTwoTaskSnapshot,
-  queryGroupThreeTaskSnapshot,
-  resetFirestore
-} from '../__mocks__/firestore.mock';
+  userTaskCollectionGet,
+  queryUserTaskSnapshot
+} from '../__mocks__/firestore/userTask';
+import { groupDoc } from '../__mocks__/firestore/groups';
+import {
+  groupOneDocGet,
+  groupOneDocCollection,
+  groupOneDocSnapshotGet,
+  groupOneTaskCollectionGet,
+  queryGroupOneTaskSnapshot
+} from '../__mocks__/firestore/groupCollections/groupOne';
+import {
+  groupTwoDocGet,
+  groupTwoDocCollection,
+  groupTwoDocSnapshotGet,
+  groupTwoTaskCollectionGet,
+  queryGroupTwoTaskSnapshot
+} from '../__mocks__/firestore/groupCollections/groupTwo';
+import {
+  groupThreeDocGet,
+  groupThreeDocCollection,
+  groupThreeDocSnapshotGet,
+  groupThreeTaskCollectionGet,
+  queryGroupThreeTaskSnapshot
+} from '../__mocks__/firestore/groupCollections/groupThree';
 import {
   addPersonalTask,
   startAddPersonalTask,
@@ -59,7 +65,7 @@ const task = tasks[0];
 const id = task.id;
 
 beforeEach(() => {
-  resetFirestore();
+  jest.clearAllMocks();
   store.clearActions();
 });
 
