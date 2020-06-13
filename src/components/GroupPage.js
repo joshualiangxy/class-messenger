@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import firebase from '../firebase/firebase';
 import { connect } from 'react-redux';
 import AddUserModal from './AddUserModal';
+import { leaveGroup, startLeaveGroup } from '../actions/groups';
 
 const GroupPage = props => {
   const groupId = props.match.params.id;
@@ -36,6 +37,7 @@ const GroupPage = props => {
       <h1>Group Page {groupId}</h1>
       <button onClick={openAddUser}>Add new user</button>
       <button onClick={() => console.log(userArray)}>get users</button>
+      <button onClick={leaveGroup}>Leave Group</button>
       <AddUserModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
@@ -49,9 +51,12 @@ const GroupPage = props => {
   );
 };
 
-// groups should be an array of group IDs, and this only needs to check if the current group ID matches something in this array
+const mapDispatchToProps = dispatch => ({
+  leaveGroup: gid => dispatch(startLeaveGroup(gid))
+})
+
 const mapStateToProps = state => ({
   groups: state.groups
 });
 
-export default GroupPage;
+export default connect(mapStateToProps, mapDispatchToProps)(GroupPage);

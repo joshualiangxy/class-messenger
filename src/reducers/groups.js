@@ -1,14 +1,12 @@
-const groupsReducer = (state = { groups: [] }, action) => {
+const groupsReducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_GROUP':
-      {
-      const newGroups = state.groups;
-      newGroups.push(action.groupId);
-      return {groups: newGroups}}
-    case 'GET_GROUPS':
-      // TODO: make it spread so 
-      const newGroups = action.groups;
-      return {groups: newGroups}
+      const newGroup = { name: action.name, gid: action.groupId };
+      return [...state, newGroup];
+    case 'SET_GROUPS':
+      return action.groups;
+    case 'LEAVE_GROUP':
+      return state.filter(group => group.gid !== action.gid);
     default:
       return state;
   }

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import firebase from '../firebase/firebase';
 import { connect } from 'react-redux';
 import {addNewUser} from '../actions/groups';
 
-// Note: This still works off uid for now. This also does NOT work yet.
-const AddUserModal = ({ isOpen, onRequestClose, group }) => {
-  // TODO: When calling this modal, pass in the group UID as a prop
+const AddUserModal = ({ isOpen, onRequestClose, group }) => {  
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
   // const [usersAdded, setUsersAdded] = useState([]); // For listing down people that have been added?
@@ -57,4 +54,4 @@ const mapDispatchToProps = dispatch => ({
   addNewUser: (userEmail, group, setError) => dispatch(addNewUser(userEmail, group, setError))
 })
 
-export default AddUserModal;
+export default connect(null, mapDispatchToProps)(AddUserModal);

@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
 import firebase from '../firebase/firebase';
 import AddGroupModal from './AddGroupModal';
+import { startGetGroups } from '../actions/groups';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const getGroups = () => {
-  const uid = firebase.auth().currentUser.uid;
-  const userRef = firebase.firestore().collection('users').doc(uid);
-  // This is able to get a *promise* for a group array, but not the actual array itself.
-  return userRef.get().then(doc => {
-    const groups = [];
-    console.log(doc.get('groups'));
-    groups.push(doc.get('groups'));
-    return groups;
-  });
-};
-
-const GroupListPage = () => {
+const GroupListPage = ({ groups }) => {
   const [open, setOpen] = useState(false);
 
   const onRequestClose = () => {
@@ -29,13 +20,28 @@ const GroupListPage = () => {
     <div>
       <h1>GroupListPage</h1>
       <button onClick={openNewGroup}>Add New Group</button>
-      <button onClick={() => console.log(getGroups())}>Get groups</button>
+      <button onClick={() => console.log(groups)}>log groups</button>
       {
-        // TODO: Map groups to <Link to={groupID}> or something like that here.
+        // TODO: make this into an actual list with link
+        groups.map(group => {
+          const gid = group.gid;
+          const name = group.name;
+          return (
+            <div key={gid}>
+              <Link to={`/groups/${gid}`}>
+                <h2>{name}</h2>
+              </Link>
+            </div>
+          );
+        })
       }
       <AddGroupModal isOpen={open} onRequestClose={onRequestClose} />
     </div>
   );
 };
 
-export default GroupListPage;
+const mapStateToProps = state => ({
+  groups: state.groups
+});
+
+export default connect(mapStateToProps)(GroupListPage);

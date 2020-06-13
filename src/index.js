@@ -12,6 +12,7 @@ import LoadingPage from './components/LoadingPage';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './styles/styles.scss';
+import { startSetGroups } from './actions/groups';
 
 const store = configureStore();
 
@@ -43,6 +44,7 @@ firebase.auth().onAuthStateChanged(user => {
     store.dispatch(login(user));
     firstLogin(user)
       .then(() => store.dispatch(startSetTasks()))
+      .then(() => store.dispatch(startSetGroups()))
       .then(() => renderApp())
       .then(
         () => history.location.pathname === '/' && history.push('/dashboard')

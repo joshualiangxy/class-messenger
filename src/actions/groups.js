@@ -1,9 +1,10 @@
 import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 
-export const newGroup = name => ({
+export const newGroup = (name, groupId) => ({
   type: 'NEW_GROUP',
-  name
+  name,
+  groupId
 });
 
 // Should return a promise of both adding a user to the group and adding a group to a user.
@@ -31,7 +32,9 @@ export const startNewGroup = groupName => {
       studentNum: getState().user.studentNum,
       admin: true
     });
-    return Promise.all([userPromise, groupPromise, groupUserPromise]);
+    return Promise.all([userPromise, groupPromise, groupUserPromise]).then(
+      dispatch(newGroup())
+    );
   };
 };
 
@@ -61,7 +64,7 @@ export const addNewUser = (userEmail, group, setError) => {
           // Write displayName, studentNum, and UID into a new document
           if (typeof data === 'undefined') {
             // Most likely a user that doesn't exist.
-            // Deprecated, since there's already the check in emailToUid. 
+            // Redundant, since there's already the check in emailToUid.
             setError('No such user found');
           } else {
             groupRef
@@ -84,4 +87,67 @@ export const addNewUser = (userEmail, group, setError) => {
       }
       // Defaults to non-admin.
     });
+};
+
+export const setGroups = groups => ({ type: 'SET_GROUPS', groups });
+
+export const startSetGroups = () => {
+  const groups = []; // The array of objects to be pushed
+  return (dispatch, getState) => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(getState().auth.user.uid)
+      .get()
+      .then(userSnapshot => {
+        // Get the array of all groups this user is in, and dispatch it to the store.
+        const groupIds = userSnapshot.data().groups || []; // Array of group id, or empty array.
+        const promises = [];
+
+        groupIds.forEach(gid => {
+          promises.push(
+            firebase
+              .firestore()
+              .collection('groups')
+              .doc(gid)
+              .get()
+              .then(snapshot => {
+                groups.push({
+                  name: snapshot.data().name,
+                  gid
+                });
+              })
+          );
+        });
+        return Promise.all(promises);
+      })
+      .then(() => dispatch(setGroups(groups)))
+      .catch(error => console.log(error));
+  };
+};
+
+export const leaveGroup = gid => ({
+  type: 'LEAVE_GROUP',
+  gid
+});
+
+export const startLeaveGroup = gid => {
+  // TODO: not working yet, probably has to do with where this is called in GroupPage
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+    const userRef = firebase.firestore().collection('users').doc(uid);
+    const groupUserRef = firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('users')
+      .doc(uid);
+    const userPromise = userRef.update({
+      groups: firebase.firestore.FieldValue.arrayRemove(gid)
+    }); // Removes this group from the user's group list
+    const groupUserPromise = groupUserRef.delete(); // Removes the user from the group
+    return Promise.all([userPromise, groupUserPromise]).then(() =>
+      dispatch(leaveGroup(gid))
+    );
+  };
 };
