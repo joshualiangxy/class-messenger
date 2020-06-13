@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`clickable div should toggle visibility of div 1`] = `
+<div>
+  <input
+    checked={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Watch lecture
+    </h3>
+    <h3
+      className="after-deadline"
+    >
+      5th Jun 2020
+    </h3>
+    <div>
+      <p>
+        Catch up on lectures!
+      </p>
+      <button
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </div>
+  <Connect(EditTaskModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+    task={
+      Object {
+        "completed": false,
+        "deadline": 1591329600000,
+        "description": "Catch up on lectures!",
+        "id": "5feb18c0-78a8-49b6-8584-75b8c1b40abc",
+        "module": "CS2030",
+        "title": "Watch lecture",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`render should render TaskListItem 1`] = `
+<div>
+  <input
+    checked={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Watch lecture
+    </h3>
+    <h3
+      className="after-deadline"
+    >
+      5th Jun 2020
+    </h3>
+  </div>
+  <Connect(EditTaskModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+    task={
+      Object {
+        "completed": false,
+        "deadline": 1591329600000,
+        "description": "Catch up on lectures!",
+        "id": "5feb18c0-78a8-49b6-8584-75b8c1b40abc",
+        "module": "CS2030",
+        "title": "Watch lecture",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`render should render TaskListItem with alt task 1`] = `
+<div>
+  <input
+    checked={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Do lab
+    </h3>
+  </div>
+  <Connect(EditTaskModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+    task={
+      Object {
+        "completed": false,
+        "description": "",
+        "id": "a1050220-fa88-4dc2-aa9d-9521ae95de47",
+        "module": "CS2030",
+        "title": "Do lab",
+      }
+    }
+  />
+</div>
+`;

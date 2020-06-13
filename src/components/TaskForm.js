@@ -22,7 +22,7 @@ const TaskForm = ({
   const [description, setDescription] = useState(initialDescription);
   const [module, setModule] = useState(isGroup ? groupModule : initialModule);
   const [deadline, setDeadline] = useState(
-    initialDeadline ? moment(initialDeadline) : undefined
+    initialDeadline ? moment(initialDeadline) : null
   );
   const [calendarFocused, setCalendarFocus] = useState(false);
   const [error, setError] = useState('');
@@ -78,6 +78,7 @@ const TaskForm = ({
   const onCancel = () => {
     setTitle(initialTitle);
     setModule(isGroup ? groupModule : initialModule);
+    setDescription(initialDescription);
     setDeadline(initialDeadline ? moment(initialDeadline) : undefined);
     setCalendarFocus(false);
     setError('');
