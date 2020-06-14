@@ -14,7 +14,7 @@ const tasksReducer = (state = [], action) => {
           ? task
           : {
               ...task,
-              completed: action.completedState
+              completed: !action.completedState
             }
       );
     case 'REMOVE_TASK_DATA':
