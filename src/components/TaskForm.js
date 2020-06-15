@@ -4,10 +4,10 @@ import { SingleDatePicker } from 'react-dates';
 import { v4 as uuid } from 'uuid';
 
 const TaskForm = ({
-  isGroup,
+  gid,
+  groupModule,
   task = {},
   submitTask,
-  groupModule,
   onRequestClose
 }) => {
   const {
@@ -20,7 +20,7 @@ const TaskForm = ({
   } = task;
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
-  const [module, setModule] = useState(isGroup ? groupModule : initialModule);
+  const [module, setModule] = useState(gid ? groupModule : initialModule);
   const [deadline, setDeadline] = useState(
     initialDeadline ? moment(initialDeadline) : null
   );
@@ -64,6 +64,7 @@ const TaskForm = ({
         module: submittedModule,
         completed
       };
+      if (gid) task.gid = gid;
       submitTask(
         deadline
           ? {
@@ -77,7 +78,7 @@ const TaskForm = ({
 
   const onCancel = () => {
     setTitle(initialTitle);
-    setModule(isGroup ? groupModule : initialModule);
+    setModule(gid ? groupModule : initialModule);
     setDescription(initialDescription);
     setDeadline(initialDeadline ? moment(initialDeadline) : undefined);
     setCalendarFocus(false);
@@ -95,7 +96,7 @@ const TaskForm = ({
         onChange={onTitleChange}
         autoFocus={true}
       />
-      {!isGroup && (
+      {!gid && (
         <input
           type="text"
           placeholder="Module code/Class name (optional)"

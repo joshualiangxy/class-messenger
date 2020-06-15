@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
+import { history } from '../routers/AppRouter';
 import { startLeaveGroup } from '../actions/groups';
 
-const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid, onLeave }) => {
+const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid }) => {
   const onCancel = () => {
     onRequestClose();
   };
@@ -12,8 +13,8 @@ const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid, onLeave
     e.preventDefault();
     startLeaveGroup(gid).then(() => {
       onRequestClose();
-      onLeave();
-    })
+      history.push('/groups');
+    });
   };
 
   return (
@@ -23,8 +24,9 @@ const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid, onLeave
       onRequestClose={() => onRequestClose()}
       appElement={document.getElementById('root')}
     >
-      <button onClick={onSubmit}>Yes, leave the group</button>
-      <button onClick={onCancel}>Cancel</button>
+      <h3>Do you want to leave?</h3>
+      <button onClick={onSubmit}>Yes</button>
+      <button onClick={onCancel}>No</button>
     </Modal>
   );
 };

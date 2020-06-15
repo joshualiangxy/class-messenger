@@ -1,6 +1,6 @@
 const tasksReducer = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_PERSONAL_TASK':
+    case 'ADD_TASK':
       return [...state, action.task];
     case 'REMOVE_PERSONAL_TASK':
       return state.filter(task => task.id !== action.id);

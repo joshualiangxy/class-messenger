@@ -40,7 +40,7 @@ import {
   queryGroupThreeTaskSnapshot
 } from '../__mocks__/firestore/groupCollections/groupThree';
 import {
-  addPersonalTask,
+  addTask,
   startAddPersonalTask,
   removePersonalTask,
   startRemovePersonalTask,
@@ -69,9 +69,9 @@ beforeEach(() => {
   store.clearActions();
 });
 
-describe('add personal task', () => {
+describe('add task', () => {
   it('should generate action object with task', () =>
-    expect(addPersonalTask(task)).toEqual({ type: 'ADD_PERSONAL_TASK', task }));
+    expect(addTask(task)).toEqual({ type: 'ADD_TASK', task }));
 
   it('should add personal task to firestore', () =>
     store.dispatch(startAddPersonalTask(task)).then(() => {
@@ -95,7 +95,7 @@ describe('add personal task', () => {
       expect(userTaskSet).toHaveBeenLastCalledWith(task);
 
       expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(addPersonalTask(task));
+      expect(actions[0]).toEqual(addTask(task));
     }));
 });
 

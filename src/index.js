@@ -8,11 +8,11 @@ import AppRouter, { history } from './routers/AppRouter';
 import { login, logout } from './actions/auth';
 import { startNewUser, startGetUserData } from './actions/user';
 import { startSetTasks } from './actions/tasks';
+import { startSetGroups } from './actions/groups';
 import LoadingPage from './components/LoadingPage';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './styles/styles.scss';
-import { startSetGroups } from './actions/groups';
 
 const store = configureStore();
 
@@ -43,8 +43,8 @@ firebase.auth().onAuthStateChanged(user => {
     ReactDOM.render(<LoadingPage />, document.getElementById('root'));
     store.dispatch(login(user));
     firstLogin(user)
+      .then(() => store.dispatch(startSetGroups())) // Not finishing properly
       .then(() => store.dispatch(startSetTasks()))
-      .then(() => store.dispatch(startSetGroups()))
       .then(() => renderApp())
       .then(
         () => history.location.pathname === '/' && history.push('/dashboard')

@@ -8,7 +8,7 @@ describe('reducer', () => {
     expect(state).toEqual([]);
   });
 
-  it('should add personal task', () => {
+  it('should add task', () => {
     const task = {
       completed: false,
       deadline: 191283791823791,
@@ -17,7 +17,7 @@ describe('reducer', () => {
       module: 'IS1103',
       title: 'Write report'
     };
-    const state = tasksReducer(tasks, { type: 'ADD_PERSONAL_TASK', task });
+    const state = tasksReducer(tasks, { type: 'ADD_TASK', task });
 
     expect(state).toEqual([...tasks, task]);
   });

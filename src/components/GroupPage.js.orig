@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import firebase from '../firebase/firebase';
 import { connect } from 'react-redux';
 import AddUserModal from './AddUserModal';
 import LeaveGroupModal from './LeaveGroupModal';
-import { getAllUsers } from '../actions/groups';
+<<<<<<< HEAD
+import { startLeaveGroup, getAllUsers } from '../actions/groups';
+import AppRouter, { history } from '../routers/AppRouter';
+=======
 import AddTaskModal from './AddTaskModal';
+>>>>>>> 02daa4a... add addGroupTask action and change GroupPage to be able to handle add task
 
 const GroupPage = ({ match, groups }) => {
-  const gid = match.params.id;
-  const group = groups.find(group => group.gid === gid);
+  const groupId = match.params.id;
   // var isAuthenticated = props.groups.includes(groupId); // Not working yet because groups haven't been stored yet
   var isAuthenticated = true; // TODO: Remove this once isAuthenticated works properly. For now, anyone can go to any group.
   // var isAdmin = true; // Not used right now, but may be useful to store it here for any admin operations later.
@@ -17,12 +21,31 @@ const GroupPage = ({ match, groups }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [addTaskOpen, setAddTaskOpen] = useState(false);
   const [users, setUsers] = useState([]);
+<<<<<<< HEAD
   // TODO: React complains about this not being a function
   useEffect(() => {
-    getAllUsers(gid);
+    getAllUsers(groupId);
   }, []);
+=======
+  const userArray = [];
+  const group = groups.find(group => group.gid === groupId);
+
+  // TODO: Fix this to be able to get all the users.
+  //firebase
+  //.firestore()
+  //.collection('groups')
+  //.doc(groupId)
+  //.collection('users')
+  //.get()
+  //.then(snapshot => {
+  //snapshot.forEach(doc => {
+  //userArray.push(doc.displayName);
+  //});
+  //})
+  //.then(() => setUsers(userArray));
 
   const closeAddUser = () => setAddUserOpen(false);
+>>>>>>> 02daa4a... add addGroupTask action and change GroupPage to be able to handle add task
 
   const openAddUser = () => setAddUserOpen(true);
 
@@ -32,28 +55,34 @@ const GroupPage = ({ match, groups }) => {
 
   const openAddTask = () => setAddTaskOpen(true);
 
+<<<<<<< HEAD
+  const onLeave = () => {
+    history.push('/groups');
+  };
+=======
   const closeAddTask = () => setAddTaskOpen(false);
+>>>>>>> 02daa4a... add addGroupTask action and change GroupPage to be able to handle add task
 
   return isAuthenticated ? (
     <div>
-      <h1>Group Page {gid}</h1>
+      <h1>Group Page {groupId}</h1>
       <button onClick={openAddTask}>Add Task</button>
       <button onClick={openAddUser}>Add new user</button>
       <button onClick={openLeave}>Leave Group</button>
       <AddUserModal
         isOpen={addUserOpen}
         onRequestClose={closeAddUser}
-        group={gid}
+        group={groupId}
       />
       <LeaveGroupModal
         isOpen={leaveOpen}
         onRequestClose={onLeaveCancel}
-        gid={gid}
+        gid={groupId}
       />
       <AddTaskModal
         isOpen={addTaskOpen}
         onRequestClose={closeAddTask}
-        gid={gid}
+        gid={groupId}
         groupModule={group.module}
       />
     </div>
@@ -64,6 +93,8 @@ const GroupPage = ({ match, groups }) => {
   );
 };
 
-const mapStateToProps = state => ({ groups: state.groups });
+const mapStateToProps = state => ({
+  groups: state.groups
+});
 
 export default connect(mapStateToProps)(GroupPage);

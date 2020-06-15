@@ -1,6 +1,6 @@
 import firebase from '../firebase/firebase';
 
-export const addPersonalTask = task => ({ type: 'ADD_PERSONAL_TASK', task });
+export const addTask = task => ({ type: 'ADD_TASK', task });
 
 export const startAddPersonalTask = task => {
   return (dispatch, getState) => {
@@ -14,7 +14,23 @@ export const startAddPersonalTask = task => {
       .collection('tasks')
       .doc(id)
       .set(task)
-      .then(() => dispatch(addPersonalTask(task)));
+      .then(() => dispatch(addTask(task)));
+  };
+};
+
+export const startAddGroupTask = task => {
+  return (dispatch, getState) => {
+    const gid = task.gid;
+    const id = task.id;
+
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .set(task)
+      .then(() => dispatch(addTask(task)));
   };
 };
 
