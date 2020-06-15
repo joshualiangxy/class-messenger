@@ -8,7 +8,7 @@ const userReducer = (state = {}, action) => {
         newUser: false
       };
     case 'NEW_USER':
-      return { newUser: true, ...state };
+      return { ...state, newUser: true };
     case 'REMOVE_USER_DATA':
       return {};
     default:
