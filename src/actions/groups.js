@@ -135,19 +135,29 @@ export const startLeaveGroup = gid => {
   // TODO: not working yet, probably has to do with where this is called in GroupPage
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const userRef = firebase.firestore().collection('users').doc(uid);
-    const groupUserRef = firebase
+
+    // Promises
+    const userPromise = firebase
+      .firestore()
+      .collection('users')
+      .doc(uid)
+      .update({
+        groups: firebase.firestore.FieldValue.arrayRemove(gid)
+      }); // Remove this group from the user's groups.
+    const groupPromise = firebase
       .firestore()
       .collection('groups')
       .doc(gid)
       .collection('users')
-      .doc(uid);
-    const userPromise = userRef.update({
-      groups: firebase.firestore.FieldValue.arrayRemove(gid)
-    }); // Removes this group from the user's group list
-    const groupUserPromise = groupUserRef.delete(); // Removes the user from the group
-    return Promise.all([userPromise, groupUserPromise]).then(() =>
+      .doc(uid)
+      .delete(); // Remove the user document from this group
+    // TODO: Add a promise to cleanup empty groups (may require additional field)
+    return Promise.all([userPromise, groupPromise]).then(() =>
       dispatch(leaveGroup(gid))
     );
   };
 };
+
+export const setUsers = (gid) => {
+  
+}

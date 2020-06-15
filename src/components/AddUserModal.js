@@ -6,7 +6,7 @@ import {addNewUser} from '../actions/groups';
 const AddUserModal = ({ isOpen, onRequestClose, group }) => {  
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
-  // const [usersAdded, setUsersAdded] = useState([]); // For listing down people that have been added?
+  const [usersAdded, setUsersAdded] = useState([]); // For listing down people that have been added?
 
   const onUserEmailChange = e => {
     setUserEmail(e.target.value);
