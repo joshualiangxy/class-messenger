@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from '../firebase/firebase';
 import { connect } from 'react-redux';
 import AddUserModal from './AddUserModal';
 import LeaveGroupModal from './LeaveGroupModal';
-import { leaveGroup, startLeaveGroup } from '../actions/groups';
+import { startLeaveGroup, getAllUsers } from '../actions/groups';
 import AppRouter, { history } from '../routers/AppRouter';
 
 const GroupPage = props => {
@@ -16,20 +16,9 @@ const GroupPage = props => {
   const [isOpen, setOpen] = useState(false);
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [users, setUsers] = useState([]);
-  const userArray = [];
-  // TODO: Fix this to be able to get all the users.
-  firebase
-    .firestore()
-    .collection('groups')
-    .doc(groupId)
-    .collection('users')
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        userArray.push(doc.displayName);
-      });
-    })
-    .then(() => setUsers(userArray));
+  // TODO: React complains about this not being a function
+  useEffect(() => (getAllUsers(groupId)), []);
+  
 
   const onRequestClose = () => {
     setOpen(false);

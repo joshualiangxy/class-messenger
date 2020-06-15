@@ -1,5 +1,6 @@
 import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
+import { firestore } from 'firebase';
 
 export const newGroup = (name, groupId) => ({
   type: 'NEW_GROUP',
@@ -8,20 +9,20 @@ export const newGroup = (name, groupId) => ({
 });
 
 // Should return a promise of both adding a user to the group and adding a group to a user.
-export const startNewGroup = groupName => {
+export const startNewGroup = (groupName, module) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const groupUUID = uuid();
     const userRef = firebase.firestore().collection('users').doc(uid);
     const groupRef = firebase.firestore().collection('groups').doc(groupUUID);
 
-    // Not sure why but database.FieldValue doesn't work but this still does the job
     const userPromise = userRef.update({
       groups: firebase.firestore.FieldValue.arrayUnion(groupUUID)
     });
     const groupPromise = groupRef
       .set({
-        name: groupName
+        name: groupName,
+        module: module
       })
       .catch(error => {
         console.log(error);
@@ -38,55 +39,30 @@ export const startNewGroup = groupName => {
   };
 };
 
-export const addNewUser = (userEmail, group, setError) => {
-  firebase
+export const addNewUser = (user, gid) => {
+  // Note: No checking on this side, since only valid users can be added by getUser
+  // Add user to group
+  const groupPromise = firebase
     .firestore()
-    .collection('emailToUid')
-    .doc(userEmail)
-    .get()
-    .then(uidDoc => {
-      const uidData = uidDoc.data();
-      if (typeof uidData === 'undefined') {
-        // This data doesn't exist / Invalid user
-        setError('No user found');
-      } else {
-        // Both of these references are DocumentReference
-        const userRef = firebase
-          .firestore()
-          .collection('users')
-          .doc(uidData.uid);
-        const groupRef = firebase.firestore().collection('groups').doc(group);
-        const uid = uidData.uid;
-
-        // Gets the data from a user.
-        userRef.get().then(doc => {
-          const data = doc.data();
-          // Write displayName, studentNum, and UID into a new document
-          if (typeof data === 'undefined') {
-            // Most likely a user that doesn't exist.
-            // Redundant, since there's already the check in emailToUid.
-            setError('No such user found');
-          } else {
-            groupRef
-              .collection('users')
-              .doc(uid) // Create document for this user's UID
-              .set({
-                studentNum: data.studentNum,
-                displayName: data.displayName,
-                uid: uid,
-                admin: false
-              })
-              .then(() => {
-                setError('User added!');
-              })
-              .catch(error => {
-                setError('Something went wrong.');
-              });
-          }
-        });
-      }
-      // Defaults to non-admin.
+    .collection('groups')
+    .doc(gid)
+    .collection('users')
+    .doc(user.uid)
+    .set({
+      displayName: user.displayName,
+      studentNum: user.studentNum,
+      uid: user.uid,
+      admin: false
     });
+  // Add group to user's groups array.
+  const userPromise = firebase
+    .firestore()
+    .collection('users')
+    .doc(user.uid)
+    .update({
+      groups: firebase.firestore.FieldValue.arrayUnion(gid)
+    });
+  return Promise.all([groupPromise, userPromise]);
 };
 
 export const setGroups = groups => ({ type: 'SET_GROUPS', groups });
@@ -158,6 +134,46 @@ export const startLeaveGroup = gid => {
   };
 };
 
-export const setUsers = (gid) => {
-  
-}
+export const getUser = email => {
+  // Get UID from email
+  return firebase
+    .firestore()
+    .collection('emailToUid')
+    .doc(email)
+    .get()
+    .then(uidDoc => {
+      if (uidDoc.exists) {
+        // If this user exists, find the UID associated
+        return firebase
+          .firestore()
+          .collection('users')
+          .doc(uidDoc.data().uid)
+          .get()
+          .then(userDoc => {
+            // Then return an object containing the user's name and number
+            return {
+              displayName: userDoc.data().displayName,
+              studentNum: userDoc.data().studentNum,
+              uid: userDoc.ref.id
+            };
+          });
+      } else {
+        return undefined;
+      }
+    });
+};
+
+// Not to be confused with getUser, this one is for all the users in a group.
+export const getAllUsers = gid => {
+  // TODO: This still needs to dispatch to redux store
+  const result = [];
+  return firebase
+    .firestore()
+    .collection('groups')
+    .doc(gid)
+    .collection('users')
+    .get()
+    .then(query => query.forEach(doc => {
+      result.push(doc.data())
+    })).then(console.log(result))
+};
