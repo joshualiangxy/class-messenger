@@ -17,8 +17,9 @@ const GroupPage = props => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [users, setUsers] = useState([]);
   // TODO: React complains about this not being a function
-  useEffect(() => (getAllUsers(groupId)), []);
-  
+  useEffect(() => {
+    getAllUsers(groupId);
+  }, []);
 
   const onRequestClose = () => {
     setOpen(false);
@@ -38,7 +39,7 @@ const GroupPage = props => {
 
   const onLeave = () => {
     history.push('/groups');
-  }
+  };
 
   return isAuthenticated ? (
     <div>
@@ -50,7 +51,7 @@ const GroupPage = props => {
         onRequestClose={onRequestClose}
         group={groupId}
       />
-      <LeaveGroupModal 
+      <LeaveGroupModal
         isOpen={leaveOpen}
         onRequestClose={onLeaveCancel}
         gid={groupId}

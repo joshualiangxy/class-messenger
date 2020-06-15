@@ -173,7 +173,10 @@ export const getAllUsers = gid => {
     .doc(gid)
     .collection('users')
     .get()
-    .then(query => query.forEach(doc => {
-      result.push(doc.data())
-    })).then(console.log(result))
+    .then(query =>
+      query.forEach(doc => {
+        result.push(doc.data());
+      })
+    )
+    .then(console.log(result));
 };
