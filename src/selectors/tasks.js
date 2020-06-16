@@ -1,4 +1,7 @@
-const getSortedTasks = (tasks, { text, sortBy, grouped }) => {
+const getSortedTasks = (
+  tasks,
+  { text = '', sortBy = 'deadline', grouped = false } = {}
+) => {
   const lowercaseText = text.toLowerCase();
 
   const processedTasks = tasks

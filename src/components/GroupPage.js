@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import LoadingPage from './LoadingPage';
 import AddUserModal from './AddUserModal';
 import LeaveGroupModal from './LeaveGroupModal';
+import AddTaskModal from './AddTaskModal';
+import GroupTaskList from './GroupTaskList';
 import { getAllUsers } from '../actions/groups';
 import { getAllGroupTasks } from '../actions/tasks';
-import AddTaskModal from './AddTaskModal';
+import { history } from '../routers/AppRouter';
 
-const GroupPage = ({ match, groups }) => {
+const GroupPage = ({ match, groups, userGroups }) => {
   const gid = match.params.id;
   const group = groups.find(group => group.gid === gid);
-  // var isAuthenticated = props.groups.includes(groupId); // Not working yet because groups haven't been stored yet
-  var isAuthenticated = true; // TODO: Remove this once isAuthenticated works properly. For now, anyone can go to any group.
   // var isAdmin = true; // Not used right now, but may be useful to store it here for any admin operations later.
 
   // For Modal
@@ -19,13 +20,19 @@ const GroupPage = ({ match, groups }) => {
   const [addTaskOpen, setAddTaskOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // TODO: Add the authentication under useEffect.
   // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there.
   useEffect(() => {
-    getAllUsers(gid).then(users => setUsers(users));
-    getAllGroupTasks(gid).then(tasks => setTasks(tasks));
+    if (!userGroups.find(id => id === gid)) history.push('/groups');
+    const promises = [];
+    promises.push(getAllUsers(gid).then(users => setUsers(users)));
+    promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
+    Promise.all(promises).then(() => setLoading(false));
   }, []);
+
+  const addGroupTask = task => setTasks([...tasks, task]);
 
   const closeAddUser = () => setAddUserOpen(false);
 
@@ -39,37 +46,44 @@ const GroupPage = ({ match, groups }) => {
 
   const closeAddTask = () => setAddTaskOpen(false);
 
-  return isAuthenticated ? (
+  return (
     <div>
-      <h1>Group Page {gid}</h1>
-      <button onClick={() => console.log(users)}>log</button>
-      <button onClick={openAddTask}>Add Task</button>
-      <button onClick={openAddUser}>Add new user</button>
-      <button onClick={openLeave}>Leave Group</button>
-      <AddUserModal
-        isOpen={addUserOpen}
-        onRequestClose={closeAddUser}
-        group={gid}
-      />
-      <LeaveGroupModal
-        isOpen={leaveOpen}
-        onRequestClose={onLeaveCancel}
-        gid={gid}
-      />
-      <AddTaskModal
-        isOpen={addTaskOpen}
-        onRequestClose={closeAddTask}
-        gid={gid}
-        groupModule={group.module}
-      />
-    </div>
-  ) : (
-    <div>
-      <h1>You are not in this group</h1>
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <div>
+          <h1>Group Page {gid}</h1>
+          <button onClick={() => console.log(users)}>log</button>
+          <button onClick={openAddTask}>Add Task</button>
+          <button onClick={openAddUser}>Add new user</button>
+          <button onClick={openLeave}>Leave Group</button>
+          <GroupTaskList tasks={tasks} />
+          <AddUserModal
+            isOpen={addUserOpen}
+            onRequestClose={closeAddUser}
+            group={gid}
+          />
+          <LeaveGroupModal
+            isOpen={leaveOpen}
+            onRequestClose={onLeaveCancel}
+            gid={gid}
+          />
+          <AddTaskModal
+            isOpen={addTaskOpen}
+            onRequestClose={closeAddTask}
+            gid={gid}
+            groupModule={group.module}
+            addGroupTask={addGroupTask}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-const mapStateToProps = state => ({ groups: state.groups });
+const mapStateToProps = state => ({
+  groups: state.groups,
+  userGroups: state.user.groups
+});
 
 export default connect(mapStateToProps)(GroupPage);

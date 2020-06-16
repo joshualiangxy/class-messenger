@@ -10,11 +10,15 @@ export const AddTaskModal = ({
   isOpen,
   onRequestClose,
   gid,
-  groupModule
+  groupModule,
+  addGroupTask
 }) => {
   const submitTask = task =>
     gid
-      ? startAddGroupTask(task).then(() => onRequestClose())
+      ? startAddGroupTask(task).then(() => {
+          addGroupTask(task);
+          onRequestClose();
+        })
       : startAddPersonalTask(task).then(() => onRequestClose());
 
   return (

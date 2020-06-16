@@ -1,9 +1,10 @@
 import firebase from '../firebase/firebase';
 
-export const getUserData = (displayName, studentNum) => ({
+export const getUserData = (displayName, studentNum, groups) => ({
   type: 'GET_USER_DATA',
   displayName,
-  studentNum
+  studentNum,
+  groups
 });
 
 export const startGetUserData = () => {
@@ -16,9 +17,10 @@ export const startGetUserData = () => {
       .doc(uid)
       .get()
       .then(snapshot => {
-        const displayName = snapshot.data().displayName;
-        const studentNum = snapshot.data().studentNum;
-        dispatch(getUserData(displayName, studentNum));
+        const displayName = snapshot.get('displayName');
+        const studentNum = snapshot.get('studentNum');
+        const groups = snapshot.get('groups');
+        dispatch(getUserData(displayName, studentNum, groups));
       });
   };
 };
@@ -55,7 +57,9 @@ export const startNewUser = () => {
       .firestore()
       .collection('emailToUid')
       .doc(email)
-      .set({ uid })
+      .set({ uid, groups: [] })
       .then(() => dispatch(newUser()));
   };
 };
+
+export const addGroup = gid => ({ type: 'ADD_GROUP', gid });

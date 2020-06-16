@@ -1,6 +1,7 @@
 import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 import { firestore } from 'firebase';
+import { addGroup } from './user';
 
 export const newGroup = (name, groupId, module) => ({
   type: 'NEW_GROUP',
@@ -13,17 +14,17 @@ export const newGroup = (name, groupId, module) => ({
 export const startNewGroup = (groupName, module) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const groupUUID = uuid();
+    const gid = uuid();
     const userRef = firebase.firestore().collection('users').doc(uid);
-    const groupRef = firebase.firestore().collection('groups').doc(groupUUID);
+    const groupRef = firebase.firestore().collection('groups').doc(gid);
 
     const userPromise = userRef.update({
-      groups: firebase.firestore.FieldValue.arrayUnion(groupUUID)
+      groups: firebase.firestore.FieldValue.arrayUnion(gid)
     });
     const groupPromise = groupRef
       .set({
         name: groupName,
-        module: module
+        module
       })
       .catch(error => {
         console.log(error);
@@ -34,8 +35,12 @@ export const startNewGroup = (groupName, module) => {
       studentNum: getState().user.studentNum,
       admin: true
     });
+
     return Promise.all([userPromise, groupPromise, groupUserPromise]).then(
-      dispatch(newGroup(groupName, groupUUID, module))
+      () => {
+        dispatch(newGroup(groupName, gid, module));
+        dispatch(addGroup(gid));
+      }
     );
   };
 };
@@ -90,8 +95,9 @@ export const startSetGroups = () => {
               .get()
               .then(snapshot => {
                 groups.push({
-                  name: snapshot.data().name,
-                  gid
+                  name: snapshot.get('name'),
+                  gid,
+                  module: snapshot.get('module') || ''
                 });
               })
           );
@@ -166,18 +172,17 @@ export const getUser = email => {
 
 // Not to be confused with getUser, this one is for all the users in a group.
 export const getAllUsers = gid => {
-  const result = [];
   return firebase
     .firestore()
     .collection('groups')
     .doc(gid)
     .collection('users')
     .get()
-    .then(query =>
+    .then(query => {
+      const result = [];
       query.forEach(doc => {
         result.push(doc.data());
-      })
-    ).then(() => {
+      });
       return result;
-    })
+    });
 };
