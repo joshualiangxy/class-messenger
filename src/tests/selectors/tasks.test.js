@@ -54,7 +54,7 @@ describe('sort', () => {
     expect(getSortedTasks(tasks, filters)).toEqual({
       others: {
         groupName: 'others',
-        tasks: [tasks[1], tasks[2], tasks[3], tasks[0]]
+        tasks: [tasks[1], tasks[0], tasks[2], tasks[3]]
       }
     });
   });
@@ -65,7 +65,7 @@ describe('sort', () => {
     expect(getSortedTasks(tasks, filters)).toEqual({
       others: {
         groupName: 'others',
-        tasks: [tasks[1], tasks[3], tasks[2], tasks[0]]
+        tasks: [tasks[1], tasks[0], tasks[3], tasks[2]]
       }
     });
   });
@@ -76,7 +76,7 @@ describe('sort', () => {
     expect(getSortedTasks(tasks, filters)).toEqual({
       others: {
         groupName: 'others',
-        tasks: [tasks[0], tasks[2], tasks[3], tasks[1]]
+        tasks: [tasks[0], tasks[1], tasks[2], tasks[3]]
       }
     });
   });

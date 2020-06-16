@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AddUserModal from './AddUserModal';
 import LeaveGroupModal from './LeaveGroupModal';
 import { getAllUsers } from '../actions/groups';
+import { getAllGroupTasks } from '../actions/tasks';
 import AddTaskModal from './AddTaskModal';
 
 const GroupPage = ({ match, groups }) => {
@@ -17,12 +18,14 @@ const GroupPage = ({ match, groups }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [addTaskOpen, setAddTaskOpen] = useState(false);
   const [users, setUsers] = useState([]);
-  
+  const [tasks, setTasks] = useState([]);
+
   // TODO: Add the authentication under useEffect.
-  // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there. 
+  // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there.
   useEffect(() => {
-    (getAllUsers(gid).then(result => setUsers(result)));
-  }, [gid]);
+    getAllUsers(gid).then(users => setUsers(users));
+    getAllGroupTasks(gid).then(tasks => setTasks(tasks));
+  }, []);
 
   const closeAddUser = () => setAddUserOpen(false);
 

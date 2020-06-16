@@ -148,3 +148,20 @@ export const startToggleCompletedPersonal = (id, completedState) => {
 };
 
 export const removeTaskData = () => ({ type: 'REMOVE_TASK_DATA' });
+
+export const getAllGroupTasks = gid => {
+  return (dispatch, getState) => {
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .get()
+      .then(tasksQuerySnapshot => {
+        const tasks = [];
+        tasksQuerySnapshot.forEach(task => tasks.push(task));
+
+        return tasks;
+      });
+  };
+};
