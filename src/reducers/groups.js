@@ -1,7 +1,7 @@
 const groupsReducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_GROUP':
-      const newGroup = { name: action.name, gid: action.groupId };
+      const newGroup = { name: action.name, gid: action.groupId, module: action.module };
       return [...state, newGroup];
     case 'SET_GROUPS':
       return action.groups;

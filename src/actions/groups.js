@@ -2,10 +2,11 @@ import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 import { firestore } from 'firebase';
 
-export const newGroup = (name, groupId) => ({
+export const newGroup = (name, groupId, module) => ({
   type: 'NEW_GROUP',
   name,
-  groupId
+  groupId,
+  module
 });
 
 // Should return a promise of both adding a user to the group and adding a group to a user.
@@ -34,7 +35,7 @@ export const startNewGroup = (groupName, module) => {
       admin: true
     });
     return Promise.all([userPromise, groupPromise, groupUserPromise]).then(
-      dispatch(newGroup())
+      dispatch(newGroup(groupName, groupUUID, module))
     );
   };
 };
@@ -165,7 +166,6 @@ export const getUser = email => {
 
 // Not to be confused with getUser, this one is for all the users in a group.
 export const getAllUsers = gid => {
-  // TODO: This still needs to dispatch to redux store
   const result = [];
   return firebase
     .firestore()
@@ -177,6 +177,7 @@ export const getAllUsers = gid => {
       query.forEach(doc => {
         result.push(doc.data());
       })
-    )
-    .then(console.log(result));
+    ).then(() => {
+      return result;
+    })
 };

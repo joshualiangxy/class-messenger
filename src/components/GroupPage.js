@@ -17,10 +17,12 @@ const GroupPage = ({ match, groups }) => {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [addTaskOpen, setAddTaskOpen] = useState(false);
   const [users, setUsers] = useState([]);
-  // TODO: React complains about this not being a function
+  
+  // TODO: Add the authentication under useEffect.
+  // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there. 
   useEffect(() => {
-    getAllUsers(gid);
-  }, []);
+    (getAllUsers(gid).then(result => setUsers(result)));
+  }, [gid]);
 
   const closeAddUser = () => setAddUserOpen(false);
 
@@ -37,6 +39,7 @@ const GroupPage = ({ match, groups }) => {
   return isAuthenticated ? (
     <div>
       <h1>Group Page {gid}</h1>
+      <button onClick={() => console.log(users)}>log</button>
       <button onClick={openAddTask}>Add Task</button>
       <button onClick={openAddUser}>Add new user</button>
       <button onClick={openLeave}>Leave Group</button>
