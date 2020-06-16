@@ -17,7 +17,16 @@ const userDocRef = {
 
 export const userDocSnapshotData = jest.fn(() => user);
 
-export const userDocSnapshotGet = jest.fn(() => user.groups);
+export const userDocSnapshotGet = jest.fn(field => {
+  switch (field) {
+    case 'displayName':
+      return user.displayName;
+    case 'studentNum':
+      return user.studentNum;
+    case 'groups':
+      return user.groups;
+  }
+});
 
 const userDocSnapshot = { data: userDocSnapshotData, get: userDocSnapshotGet };
 

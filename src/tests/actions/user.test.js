@@ -10,7 +10,7 @@ import {
   userDoc,
   userDocGet,
   userDocSet,
-  userDocSnapshotData
+  userDocSnapshotGet
 } from '../__mocks__/firestore/users';
 import {
   getUserData,
@@ -28,6 +28,7 @@ const uid = 'testuid';
 const email = 'abc@123';
 const displayName = user.displayName;
 const studentNum = user.studentNum;
+const groups = user.groups;
 const store = createMockStore({
   auth: {
     user: { uid, email }
@@ -61,10 +62,13 @@ describe('get user data', () => {
 
       expect(userDocGet).toHaveBeenCalledTimes(1);
 
-      expect(userDocSnapshotData).toHaveBeenCalledTimes(2);
+      expect(userDocSnapshotGet).toHaveBeenCalledTimes(3);
+      expect(userDocSnapshotGet).toHaveBeenNthCalledWith(1, 'displayName');
+      expect(userDocSnapshotGet).toHaveBeenNthCalledWith(2, 'studentNum');
+      expect(userDocSnapshotGet).toHaveBeenNthCalledWith(3, 'groups');
 
       expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(getUserData(displayName, studentNum));
+      expect(actions[0]).toEqual(getUserData(displayName, studentNum, groups));
     }));
 });
 
@@ -121,7 +125,7 @@ describe('new user', () => {
       expect(emailToUidDoc).toHaveBeenLastCalledWith(email);
 
       expect(emailToUidDocSet).toHaveBeenCalledTimes(1);
-      expect(emailToUidDocSet).toHaveBeenLastCalledWith({ uid });
+      expect(emailToUidDocSet).toHaveBeenLastCalledWith({ uid, groups: [] });
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(newUser());
