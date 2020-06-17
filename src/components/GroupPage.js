@@ -64,13 +64,8 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
         <LoadingPage />
       ) : (
         <div>
-<<<<<<< HEAD
           <h1>{group.name}</h1>
           <button onClick={() => console.log(users)}>log</button>
-=======
-          <h1>Group Page {gid}</h1>
-          <button onClick={() => console.log(group)}>log</button>
->>>>>>> Fix bug with leaving groups by adding a loading screen
           {admin && (
             <div>
               <button onClick={openAddTask}>Add Task</button>

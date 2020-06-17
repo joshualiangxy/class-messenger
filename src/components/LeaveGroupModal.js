@@ -4,7 +4,14 @@ import { connect } from 'react-redux';
 import { history } from '../routers/AppRouter';
 import { startLeaveGroup } from '../actions/groups';
 
-const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid, users, renderLoad }) => {
+const LeaveGroupModal = ({
+  isOpen,
+  onRequestClose,
+  startLeaveGroup,
+  gid,
+  users,
+  renderLoad
+}) => {
   // Passing users into this modal so that we can tell if we should clean up this (empty) group or not
   const onCancel = () => {
     onRequestClose();

@@ -132,12 +132,10 @@ export const startLeaveGroup = (gid, count) => {
       .then(() => {
         if (count <= 1) {
           // Empty group (This person is the last user in the group)
-          // This doesn't delete all the subcollections here, so users and tasks aren't deleted yet. 
+          // This doesn't delete all the subcollections here, so users and tasks aren't deleted yet.
           // TODO: delete tasks collection when that part is implemented
 
-          return Promise.all([            
-            groupRef.delete()
-          ]);
+          return Promise.all([groupRef.delete()]);
         } else {
           return '';
         }
