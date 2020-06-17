@@ -6,7 +6,7 @@ const groupsReducer = (state = [], action) => {
     case 'SET_GROUPS':
       return action.groups;
     case 'LEAVE_GROUP':
-      return state.filter(group => group.gid !== action.gid);
+      return state.filter(group => group.gid !== action.gid);      
     default:
       return state;
   }

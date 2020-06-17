@@ -139,7 +139,7 @@ export const startLeaveGroup = (gid, count) => {
             groupRef.delete()
           ]);
         } else {
-          return;
+          return '';
         }
       })
       .then(() => dispatch(leaveGroup(gid)));
