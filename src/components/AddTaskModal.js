@@ -11,11 +11,12 @@ export const AddTaskModal = ({
   onRequestClose,
   gid,
   groupModule,
+  groupName,
   addGroupTask
 }) => {
   const submitTask = task =>
     gid
-      ? startAddGroupTask(task).then(() => {
+      ? startAddGroupTask(task, groupName).then(() => {
           addGroupTask(task);
           onRequestClose();
         })
@@ -41,7 +42,8 @@ export const AddTaskModal = ({
 
 const mapDispatchToProps = dispatch => ({
   startAddPersonalTask: task => dispatch(startAddPersonalTask(task)),
-  startAddGroupTask: task => dispatch(startAddGroupTask(task))
+  startAddGroupTask: (task, groupName) =>
+    dispatch(startAddGroupTask(task, groupName))
 });
 
 export default connect(undefined, mapDispatchToProps)(AddTaskModal);

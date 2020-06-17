@@ -16,6 +16,7 @@ export const TaskListItem = ({
   removeGroupTask,
   showGroup,
   admin,
+  groupName,
   editGroupTask
 }) => {
   const {
@@ -80,6 +81,7 @@ export const TaskListItem = ({
         onRequestClose={onRequestClose}
         gid={gid}
         groupModule={module}
+        groupName={groupName}
         task={task}
         editGroupTask={editGroupTask}
       />

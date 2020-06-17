@@ -11,12 +11,13 @@ export const EditTaskModal = ({
   onRequestClose,
   gid,
   groupModule,
+  groupName,
   task,
   editGroupTask
 }) => {
   const submitTask = updates =>
     gid
-      ? startEditGroupTask(task.id, updates).then(() => {
+      ? startEditGroupTask(task.id, updates, groupName).then(() => {
           editGroupTask(task.id, updates);
           onRequestClose();
         })
@@ -44,7 +45,8 @@ export const EditTaskModal = ({
 const mapDispatchToProps = dispatch => ({
   startEditPersonalTask: (id, updates) =>
     dispatch(startEditPersonalTask(id, updates)),
-  startEditGroupTask: (id, updates) => dispatch(startEditGroupTask(id, updates))
+  startEditGroupTask: (id, updates, groupName) =>
+    dispatch(startEditGroupTask(id, updates, groupName))
 });
 
 export default connect(undefined, mapDispatchToProps)(EditTaskModal);

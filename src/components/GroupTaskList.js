@@ -2,7 +2,13 @@ import React from 'react';
 import getSortedTasks from '../selectors/tasks';
 import TaskListItem from './TaskListItem';
 
-const GroupTaskList = ({ tasks, admin, editGroupTask, removeGroupTask }) => {
+const GroupTaskList = ({
+  tasks,
+  admin,
+  editGroupTask,
+  removeGroupTask,
+  groupName
+}) => {
   const sortedList = getSortedTasks(tasks);
 
   return (
@@ -16,6 +22,7 @@ const GroupTaskList = ({ tasks, admin, editGroupTask, removeGroupTask }) => {
             task={task}
             showGroup={false}
             admin={admin}
+            groupName={groupName}
             editGroupTask={editGroupTask}
             removeGroupTask={removeGroupTask}
           />

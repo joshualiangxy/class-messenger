@@ -62,7 +62,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
         <LoadingPage />
       ) : (
         <div>
-          <h1>Group Page {gid}</h1>
+          <h1>{group.name}</h1>
           <button onClick={() => console.log(users)}>log</button>
           {admin && (
             <div>
@@ -74,6 +74,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
           <GroupTaskList
             tasks={tasks}
             admin={admin}
+            groupName={group.name}
             editGroupTask={editGroupTask}
             removeGroupTask={removeGroupTask}
           />
@@ -95,6 +96,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
             onRequestClose={closeAddTask}
             gid={gid}
             groupModule={group.module}
+            groupName={group.name}
             addGroupTask={addGroupTask}
           />
         </div>

@@ -18,26 +18,19 @@ export const startAddPersonalTask = task => {
   };
 };
 
-export const startAddGroupTask = task => {
+export const startAddGroupTask = (task, groupName) => {
   return dispatch => {
     const gid = task.gid;
     const id = task.id;
-    const groupRef = firebase.firestore().collection('groups').doc(gid);
-    const promises = [];
 
-    promises.push(
-      groupRef.get().then(groupSnapshot => groupSnapshot.get('name'))
-    );
-    promises.push(groupRef.collection('tasks').doc(id).set(task));
-
-    return Promise.all(promises).then(([groupName]) =>
-      dispatch(
-        addTask({
-          ...task,
-          groupName
-        })
-      )
-    );
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .set(task)
+      .then(() => dispatch(addTask({ ...task, groupName })));
   };
 };
 
@@ -91,25 +84,18 @@ export const startEditPersonalTask = (id, updates) => {
   };
 };
 
-export const startEditGroupTask = (id, updates) => {
+export const startEditGroupTask = (id, updates, groupName) => {
   return dispatch => {
     const gid = updates.gid;
-    const groupRef = firebase.firestore().collection('groups').doc(gid);
-    const promises = [];
 
-    promises.push(
-      groupRef.get().then(groupSnapshot => groupSnapshot.get('name'))
-    );
-    promises.push(groupRef.collection('tasks').doc(id).set(updates));
-
-    return Promise.all(promises).then(([groupName]) =>
-      dispatch(
-        editTask(id, {
-          ...updates,
-          groupName
-        })
-      )
-    );
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .set(updates)
+      .then(() => dispatch(editTask(id, { ...updates, groupName })));
   };
 };
 
