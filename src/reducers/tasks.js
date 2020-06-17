@@ -2,9 +2,9 @@ const tasksReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TASK':
       return [...state, action.task];
-    case 'REMOVE_PERSONAL_TASK':
+    case 'REMOVE_TASK':
       return state.filter(task => task.id !== action.id);
-    case 'EDIT_PERSONAL_TASK':
+    case 'EDIT_TASK':
       return state.map(task => (task.id === action.id ? action.updates : task));
     case 'SET_TASKS':
       return action.tasks;

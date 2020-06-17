@@ -16,7 +16,7 @@ const TaskDashboardPage = () => {
 
   return (
     <div>
-      <h1>This is the task dashboard page</h1>
+      <h1>Dashboard</h1>
       <TaskListFilters />
       <TaskList />
       <button onClick={openAddTask}>Add Task</button>

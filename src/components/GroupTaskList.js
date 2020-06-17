@@ -2,7 +2,7 @@ import React from 'react';
 import getSortedTasks from '../selectors/tasks';
 import TaskListItem from './TaskListItem';
 
-const GroupTaskList = ({ tasks, addTask }) => {
+const GroupTaskList = ({ tasks, admin, editGroupTask, removeGroupTask }) => {
   const sortedList = getSortedTasks(tasks);
 
   return (
@@ -11,7 +11,14 @@ const GroupTaskList = ({ tasks, addTask }) => {
         <h3>No tasks yet</h3>
       ) : (
         Object.values(sortedList)[0].tasks.map(task => (
-          <TaskListItem key={task.id} task={task} showGroup={false} />
+          <TaskListItem
+            key={task.id}
+            task={task}
+            showGroup={false}
+            admin={admin}
+            editGroupTask={editGroupTask}
+            removeGroupTask={removeGroupTask}
+          />
         ))
       )}
     </div>

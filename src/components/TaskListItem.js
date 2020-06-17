@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   startRemovePersonalTask,
+  startRemoveGroupTask,
   startToggleCompletedPersonal
 } from '../actions/tasks';
 import EditTaskModal from './EditTaskModal';
@@ -10,8 +11,12 @@ import EditTaskModal from './EditTaskModal';
 export const TaskListItem = ({
   task,
   startRemovePersonalTask,
+  startRemoveGroupTask,
   startToggleCompletedPersonal,
-  showGroup
+  removeGroupTask,
+  showGroup,
+  admin,
+  editGroupTask
 }) => {
   const {
     id,
@@ -37,7 +42,9 @@ export const TaskListItem = ({
 
   const onRemove = e => {
     e.stopPropagation();
-    startRemovePersonalTask(id);
+    gid
+      ? startRemoveGroupTask(gid, id).then(() => removeGroupTask(id))
+      : startRemovePersonalTask(id);
   };
 
   const openEditTask = e => {
@@ -61,15 +68,20 @@ export const TaskListItem = ({
           <div>
             {showGroup && module && <h5>{module}</h5>}
             {description && <p>{description}</p>}
-            {!gid && <button onClick={openEditTask}>Edit Task</button>}
-            {!gid && <button onClick={onRemove}>Remove Task</button>}
+            {(admin || !gid) && (
+              <button onClick={openEditTask}>Edit Task</button>
+            )}
+            {(admin || !gid) && <button onClick={onRemove}>Remove Task</button>}
           </div>
         )}
       </div>
       <EditTaskModal
         isOpen={open}
         onRequestClose={onRequestClose}
+        gid={gid}
+        groupModule={module}
         task={task}
+        editGroupTask={editGroupTask}
       />
     </div>
   );
@@ -77,6 +89,7 @@ export const TaskListItem = ({
 
 const mapDispatchToProps = dispatch => ({
   startRemovePersonalTask: id => dispatch(startRemovePersonalTask(id)),
+  startRemoveGroupTask: (gid, id) => dispatch(startRemoveGroupTask(gid, id)),
   startToggleCompletedPersonal: (id, completedState) =>
     dispatch(startToggleCompletedPersonal(id, completedState))
 });

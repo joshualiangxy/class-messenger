@@ -9,10 +9,10 @@ import { getAllUsers } from '../actions/groups';
 import { getAllGroupTasks } from '../actions/tasks';
 import { history } from '../routers/AppRouter';
 
-const GroupPage = ({ match, groups, userGroups }) => {
+const GroupPage = ({ match, groups, userGroups, uid }) => {
   const gid = match.params.id;
   const group = groups.find(group => group.gid === gid);
-  // var isAdmin = true; // Not used right now, but may be useful to store it here for any admin operations later.
+  const isGroupMember = !!userGroups.find(id => id === gid);
 
   // For Modal
   const [addUserOpen, setAddUserOpen] = useState(false);
@@ -20,19 +20,29 @@ const GroupPage = ({ match, groups, userGroups }) => {
   const [addTaskOpen, setAddTaskOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [admin, setAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // TODO: Add the authentication under useEffect.
   // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there.
   useEffect(() => {
-    if (!userGroups.find(id => id === gid)) history.push('/groups');
+    if (!isGroupMember) history.push('/groups');
     const promises = [];
     promises.push(getAllUsers(gid).then(users => setUsers(users)));
     promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
     Promise.all(promises).then(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);
+  }, [users]);
+
   const addGroupTask = task => setTasks([...tasks, task]);
+
+  const editGroupTask = (id, updates) =>
+    setTasks(tasks.map(task => (task.id === id ? updates : task)));
+
+  const removeGroupTask = id => setTasks(tasks.filter(task => task.id !== id));
 
   const closeAddUser = () => setAddUserOpen(false);
 
@@ -54,10 +64,19 @@ const GroupPage = ({ match, groups, userGroups }) => {
         <div>
           <h1>Group Page {gid}</h1>
           <button onClick={() => console.log(users)}>log</button>
-          <button onClick={openAddTask}>Add Task</button>
-          <button onClick={openAddUser}>Add new user</button>
+          {admin && (
+            <div>
+              <button onClick={openAddTask}>Add Task</button>
+              <button onClick={openAddUser}>Add new user</button>
+            </div>
+          )}
           <button onClick={openLeave}>Leave Group</button>
-          <GroupTaskList tasks={tasks} />
+          <GroupTaskList
+            tasks={tasks}
+            admin={admin}
+            editGroupTask={editGroupTask}
+            removeGroupTask={removeGroupTask}
+          />
           <AddUserModal
             isOpen={addUserOpen}
             onRequestClose={closeAddUser}
@@ -85,7 +104,8 @@ const GroupPage = ({ match, groups, userGroups }) => {
 
 const mapStateToProps = state => ({
   groups: state.groups,
-  userGroups: state.user.groups
+  userGroups: state.user.groups,
+  uid: state.auth.user.uid
 });
 
 export default connect(mapStateToProps)(GroupPage);

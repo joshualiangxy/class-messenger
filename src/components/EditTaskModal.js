@@ -1,21 +1,26 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { startEditPersonalTask } from '../actions/tasks';
+import { startEditPersonalTask, startEditGroupTask } from '../actions/tasks';
 import TaskForm from './TaskForm';
 
 export const EditTaskModal = ({
   startEditPersonalTask,
+  startEditGroupTask,
   isOpen,
   onRequestClose,
-  isGroup,
+  gid,
   groupModule,
-  task
+  task,
+  editGroupTask
 }) => {
-  const submitTask = task => {
-    const id = task.id;
-    return startEditPersonalTask(id, task).then(() => onRequestClose());
-  };
+  const submitTask = updates =>
+    gid
+      ? startEditGroupTask(task.id, updates).then(() => {
+          editGroupTask(task.id, updates);
+          onRequestClose();
+        })
+      : startEditPersonalTask(task.id, updates).then(() => onRequestClose());
 
   return (
     <Modal
@@ -26,7 +31,7 @@ export const EditTaskModal = ({
     >
       <h2>Edit Task</h2>
       <TaskForm
-        isGroup={isGroup}
+        gid={gid}
         groupModule={groupModule}
         submitTask={submitTask}
         onRequestClose={onRequestClose}
@@ -37,7 +42,9 @@ export const EditTaskModal = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  startEditPersonalTask: (id, task) => dispatch(startEditPersonalTask(id, task))
+  startEditPersonalTask: (id, updates) =>
+    dispatch(startEditPersonalTask(id, updates)),
+  startEditGroupTask: (id, updates) => dispatch(startEditGroupTask(id, updates))
 });
 
 export default connect(undefined, mapDispatchToProps)(EditTaskModal);
