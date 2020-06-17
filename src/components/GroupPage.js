@@ -62,6 +62,8 @@ const GroupPage = ({ match, groups, userGroups }) => {
             isOpen={addUserOpen}
             onRequestClose={closeAddUser}
             group={gid}
+            users={users}
+            setUsers={setUsers}
           />
           <LeaveGroupModal
             isOpen={leaveOpen}
