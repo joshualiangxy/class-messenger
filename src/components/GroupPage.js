@@ -88,6 +88,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
             isOpen={leaveOpen}
             onRequestClose={onLeaveCancel}
             gid={gid}
+            users={users}
           />
           <AddTaskModal
             isOpen={addTaskOpen}

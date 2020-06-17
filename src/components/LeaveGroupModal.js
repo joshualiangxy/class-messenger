@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { history } from '../routers/AppRouter';
 import { startLeaveGroup } from '../actions/groups';
 
-const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid }) => {
+const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid, users }) => {
+  // Passing users into this modal so that we can tell if we should clean up this (empty) group or not
   const onCancel = () => {
     onRequestClose();
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    startLeaveGroup(gid).then(() => {
+    startLeaveGroup(gid, users.length).then(() => {
       onRequestClose();
       history.push('/groups');
     });
@@ -32,7 +33,7 @@ const LeaveGroupModal = ({ isOpen, onRequestClose, startLeaveGroup, gid }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  startLeaveGroup: gid => dispatch(startLeaveGroup(gid))
+  startLeaveGroup: (gid, count) => dispatch(startLeaveGroup(gid, count))
 });
 
 export default connect(null, mapDispatchToProps)(LeaveGroupModal);

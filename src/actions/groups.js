@@ -114,10 +114,10 @@ export const leaveGroup = gid => ({
   gid
 });
 
-export const startLeaveGroup = gid => {
-  // TODO: not working yet, probably has to do with where this is called in GroupPage
+export const startLeaveGroup = (gid, count) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
+    const groupRef = firebase.firestore().collection('groups').doc(gid);
 
     // Promises
     const userPromise = firebase
@@ -127,17 +127,22 @@ export const startLeaveGroup = gid => {
       .update({
         groups: firebase.firestore.FieldValue.arrayRemove(gid)
       }); // Remove this group from the user's groups.
-    const groupPromise = firebase
-      .firestore()
-      .collection('groups')
-      .doc(gid)
-      .collection('users')
-      .doc(uid)
-      .delete(); // Remove the user document from this group
-    // TODO: Add a promise to cleanup empty groups (may require additional field)
-    return Promise.all([userPromise, groupPromise]).then(() =>
-      dispatch(leaveGroup(gid))
-    );
+    const groupPromise = groupRef.collection('users').doc(uid).delete(); // Remove the user document from this group
+    return Promise.all([userPromise, groupPromise])
+      .then(() => {
+        if (count <= 1) {
+          // Empty group (This person is the last user in the group)
+          // This doesn't delete all the subcollections here, so users and tasks aren't deleted yet. 
+          // TODO: delete tasks collection when that part is implemented
+
+          return Promise.all([            
+            groupRef.delete()
+          ]);
+        } else {
+          return;
+        }
+      })
+      .then(() => dispatch(leaveGroup(gid)));
   };
 };
 
