@@ -12,7 +12,6 @@ import { history } from '../routers/AppRouter';
 const GroupPage = ({ match, groups, userGroups, uid }) => {
   const gid = match.params.id;
   const group = groups.find(group => group.gid === gid);
-  const isGroupMember = !!userGroups.find(id => id === gid);
 
   // For Modal
   const [addUserOpen, setAddUserOpen] = useState(false);
@@ -22,20 +21,36 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
   const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [canLeave, setCanLeave] = useState(false); // Hide the option to leave a group by default.
 
-  // TODO: Add the authentication under useEffect.
-  // This may need us to add a new field for the object returned, because I don't want to go through every user object to check if an id is there.
   useEffect(() => {
-    if (!isGroupMember) history.push('/groups');
+    if (!userGroups.find(id => id === gid)) history.push('/groups');
     const promises = [];
     promises.push(getAllUsers(gid).then(users => setUsers(users)));
     promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
     Promise.all(promises).then(() => setLoading(false));
-  }, []);
+  }, [gid, userGroups]);
 
   useEffect(() => {
     if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);
-  }, [users]);
+  }, [users, uid]);
+
+  // For determining if a user should be allowed to leave
+  useEffect(() => {
+    if (users.length <= 1) {
+      // This user is the only one in the group, so let him leave.
+      setCanLeave(true);
+    } else if (users.find(user => user.uid !== uid && user.admin)) {
+      // There is another user in this group who is an admin.
+      setCanLeave(true);
+    } else if (!admin) {
+      // This person is not an admin.
+      setCanLeave(true);
+    } else {
+      // This person is an admin, there are other people in the group, and there aren't any other admins.
+      setCanLeave(true); // Can't leave.
+    }
+  }, [users, admin, uid]);
 
   const addGroupTask = task => setTasks([...tasks, task]);
 
@@ -65,14 +80,14 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
       ) : (
         <div>
           <h1>{group.name}</h1>
-          <button onClick={() => console.log(users)}>log</button>
+          <button onClick={() => console.log(canLeave)}>log</button>
           {admin && (
             <div>
               <button onClick={openAddTask}>Add Task</button>
               <button onClick={openAddUser}>Add new user</button>
             </div>
           )}
-          <button onClick={openLeave}>Leave Group</button>
+          {canLeave && <button onClick={openLeave}>Leave Group</button>}
           <GroupTaskList
             tasks={tasks}
             admin={admin}

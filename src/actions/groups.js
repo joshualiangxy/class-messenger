@@ -131,13 +131,16 @@ export const startLeaveGroup = (gid, count) => {
     return Promise.all([userPromise, groupPromise])
       .then(() => {
         if (count <= 1) {
-          // Empty group (This person is the last user in the group)
+          // This is for the case where the user is alone, and only this case, so there shouldn't be
+          // any risk of deleting a group someone else is in. Unless someone decides to multi-tab this to break the system.
+          // However, this problem can also be solved if we do an additional database-check to ensure there aren't any users left.
+          // The count includes the current user.
+
           // This doesn't delete all the subcollections here, so users and tasks aren't deleted yet.
           // TODO: delete tasks collection when that part is implemented
-
-          return Promise.all([groupRef.delete()]);
+          return groupRef.delete();
         } else {
-          return '';
+          return;
         }
       })
       .then(() => dispatch(leaveGroup(gid)));

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { history } from '../routers/AppRouter';
@@ -19,6 +19,7 @@ const LeaveGroupModal = ({
 
   const onSubmit = e => {
     e.preventDefault();
+    // There is another admin in the group already, or this group will be empty after leaving.
     renderLoad();
     startLeaveGroup(gid, users.length).then(() => {
       onRequestClose();
