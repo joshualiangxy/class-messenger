@@ -34,6 +34,9 @@ export const TaskListFilters = ({
       case 'nameReversed':
         sortByNameReversed();
         break;
+      default:
+        sortByDeadline();
+        break;
     }
   };
 

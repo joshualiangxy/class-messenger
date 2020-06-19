@@ -45,7 +45,7 @@ export const TaskListItem = ({
 
   useEffect(() => {
     if (!(dashboard || userInvolved)) setCompleted(false);
-  }, [userInvolved]);
+  }, [dashboard, userInvolved]);
 
   const toggleVisibility = () => setVisible(!visible);
 

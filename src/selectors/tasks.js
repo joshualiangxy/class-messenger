@@ -49,6 +49,8 @@ const getSortedTasks = (
             return taskOne.title.localeCompare(taskTwo.title);
           case 'nameReversed':
             return taskTwo.title.localeCompare(taskOne.title);
+          default:
+            return taskOne.deadline - taskTwo.deadline;
         }
       }
     });
