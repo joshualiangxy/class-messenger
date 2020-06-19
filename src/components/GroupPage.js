@@ -59,6 +59,15 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
 
   const removeGroupTask = id => setTasks(tasks.filter(task => task.id !== id));
 
+  const toggleGroupTaskComplete = id => {
+    setTasks(
+      tasks.map(task => {
+        if (task.id === id) task.completed[uid] = !task.completed[uid];
+        return task;
+      })
+    );
+  };
+
   const closeAddUser = () => setAddUserOpen(false);
 
   const openAddUser = () => setAddUserOpen(true);
@@ -90,10 +99,12 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
           {canLeave && <button onClick={openLeave}>Leave Group</button>}
           <GroupTaskList
             tasks={tasks}
+            users={users}
             admin={admin}
             groupName={group.name}
             editGroupTask={editGroupTask}
             removeGroupTask={removeGroupTask}
+            toggleGroupTaskComplete={toggleGroupTaskComplete}
           />
           <AddUserModal
             isOpen={addUserOpen}
@@ -116,6 +127,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
             groupModule={group.module}
             groupName={group.name}
             addGroupTask={addGroupTask}
+            users={users}
           />
         </div>
       )}

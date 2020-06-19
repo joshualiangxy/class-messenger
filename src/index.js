@@ -32,7 +32,9 @@ const firstLogin = user => {
   return userRef
     .get()
     .then(snapshot =>
-      snapshot.exists
+      snapshot.exists &&
+      snapshot.get('displayName') &&
+      snapshot.get('studentNum')
         ? store.dispatch(startGetUserData())
         : store.dispatch(startNewUser())
     );
@@ -46,9 +48,9 @@ firebase.auth().onAuthStateChanged(user => {
       .then(() => store.dispatch(startSetGroups())) // Not finishing properly
       .then(() => store.dispatch(startSetTasks()))
       .then(() => renderApp())
-      .then(
-        () => history.location.pathname === '/' && history.push('/dashboard')
-      );
+      .then(() => {
+        if (history.location.pathname === '/') history.push('/dashboard');
+      });
   } else {
     store.dispatch(logout());
     renderApp();

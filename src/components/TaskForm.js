@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 import { v4 as uuid } from 'uuid';
+import SelectUserModal from './SelectUserModal';
 
 const TaskForm = ({
   gid,
+  users,
   groupModule,
   task = {},
   submitTask,
@@ -16,16 +18,28 @@ const TaskForm = ({
     description: initialDescription = '',
     module: initialModule = '',
     deadline: initialDeadline,
-    completed = false
+    completed = gid
+      ? users.reduce((obj, user) => {
+          obj[user.uid] = false;
+
+          return obj;
+        }, {})
+      : false
   } = task;
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [module, setModule] = useState(gid ? groupModule : initialModule);
   const [deadline, setDeadline] = useState(
     initialDeadline ? moment(initialDeadline) : null
   );
+  const [groupCompletedState, setGroupCompletedState] = useState(completed);
   const [calendarFocused, setCalendarFocus] = useState(false);
   const [error, setError] = useState('');
+
+  const openSelectUserModal = () => setOpen(true);
+
+  const closeSelectUserModal = () => setOpen(false);
 
   const onTitleChange = e => {
     const title = e.target.value;
@@ -48,6 +62,17 @@ const TaskForm = ({
     setCalendarFocus(focused);
   };
 
+  const addUser = uid =>
+    setGroupCompletedState({
+      ...groupCompletedState,
+      [uid]: false
+    });
+
+  const removeUser = uid => {
+    const { [uid]: omit, ...rest } = groupCompletedState;
+    setGroupCompletedState(rest);
+  };
+
   const onSubmit = e => {
     e.preventDefault();
 
@@ -62,17 +87,11 @@ const TaskForm = ({
         title: submittedTitle,
         description: submittedDescription,
         module: submittedModule,
-        completed
+        completed: gid ? groupCompletedState : completed
       };
       if (gid) task.gid = gid;
-      submitTask(
-        deadline
-          ? {
-              ...task,
-              deadline: deadline.valueOf()
-            }
-          : task
-      );
+      if (deadline) task.deadline = deadline.valueOf();
+      submitTask(task);
     }
   };
 
@@ -80,7 +99,7 @@ const TaskForm = ({
     setTitle(initialTitle);
     setModule(gid ? groupModule : initialModule);
     setDescription(initialDescription);
-    setDeadline(initialDeadline ? moment(initialDeadline) : undefined);
+    setDeadline(initialDeadline ? moment(initialDeadline) : null);
     setCalendarFocus(false);
     setError('');
     onRequestClose();
@@ -91,7 +110,7 @@ const TaskForm = ({
       {error && <p>{error}</p>}
       <input
         type="text"
-        placeholder="Title"
+        placeholder="Title (required)"
         value={title}
         onChange={onTitleChange}
         autoFocus={true}
@@ -121,6 +140,21 @@ const TaskForm = ({
         value={description}
         onChange={onDescriptionChange}
       />
+      {gid && (
+        <div>
+          <SelectUserModal
+            users={users}
+            groupCompletedState={groupCompletedState}
+            removeUser={removeUser}
+            addUser={addUser}
+            isOpen={open}
+            onRequestClose={closeSelectUserModal}
+          />
+          <button type="button" onClick={openSelectUserModal}>
+            Select users
+          </button>
+        </div>
+      )}
       <button>{initialTitle ? 'Edit Task' : 'Add Task'}</button>
       <button type="button" onClick={onCancel}>
         Cancel

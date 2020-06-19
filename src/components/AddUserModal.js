@@ -5,7 +5,7 @@ import { addNewUser, getUser } from '../actions/groups';
 
 const AddUserModal = ({ isOpen, onRequestClose, group, users, setUsers }) => {
   const [userEmail, setUserEmail] = useState('');
-  const [error, setError] = useState('');  
+  const [error, setError] = useState('');
 
   const onUserEmailChange = e => {
     setUserEmail(e.target.value);
@@ -19,27 +19,27 @@ const AddUserModal = ({ isOpen, onRequestClose, group, users, setUsers }) => {
   const onSubmit = e => {
     e.preventDefault();
     const submittedEmail = userEmail.trim();
-    console.log(submittedEmail)
+
     if (!submittedEmail) {
       setError('Please enter an email');
     } else {
       // Retrieve the user's data, and add it to the array of users.
       // user contains {admin, displayName, studentNum, uid} fields
-      getUser(submittedEmail)
-        .then(user => {
-          console.log(user);
-          if (typeof user !== 'undefined') {
-            addNewUser(user, group).then(() => {
+      getUser(submittedEmail).then(user => {
+        if (typeof user !== 'undefined') {
+          addNewUser(user, group)
+            .then(() => {
               setUsers([...users, user]);
               setError('Added!');
               setUserEmail('');
-            }).catch(() => {
-              setError('Something went wrong');
             })
-          } else {
-            setError('No user found');
-          }
-        })
+            .catch(() => {
+              setError('Something went wrong');
+            });
+        } else {
+          setError('No user found');
+        }
+      });
     }
   };
 

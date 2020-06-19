@@ -12,8 +12,25 @@ const getSortedTasks = (
         task.module.toLowerCase().includes(lowercaseText)
     )
     .sort((taskOne, taskTwo) => {
-      if (taskOne.completed && !taskTwo.completed) return 1;
-      else if (!taskOne.completed && taskTwo.completed) return -1;
+      const taskOneCompleted =
+        typeof taskOne.completed === 'object'
+          ? Object.values(taskOne.completed).reduce(
+              (userOneCompletedState, userTwoCompletedState) =>
+                userOneCompletedState && userTwoCompletedState,
+              true
+            )
+          : taskOne.completed;
+      const taskTwoCompleted =
+        typeof taskTwo.completed === 'object'
+          ? Object.values(taskTwo.completed).reduce(
+              (userOneCompletedState, userTwoCompletedState) =>
+                userOneCompletedState && userTwoCompletedState,
+              true
+            )
+          : taskTwo.completed;
+
+      if (taskOneCompleted && !taskTwoCompleted) return 1;
+      else if (!taskOneCompleted && taskTwoCompleted) return -1;
       else {
         switch (sortBy) {
           case 'deadline':

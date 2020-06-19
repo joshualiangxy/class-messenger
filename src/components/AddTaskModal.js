@@ -12,7 +12,8 @@ export const AddTaskModal = ({
   gid,
   groupModule,
   groupName,
-  addGroupTask
+  addGroupTask,
+  users
 }) => {
   const submitTask = task =>
     gid
@@ -33,6 +34,7 @@ export const AddTaskModal = ({
       <TaskForm
         gid={gid}
         groupModule={groupModule}
+        users={users}
         submitTask={submitTask}
         onRequestClose={onRequestClose}
       />

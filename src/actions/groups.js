@@ -1,6 +1,5 @@
 import firebase from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
-import { firestore } from 'firebase';
 import { addGroup } from './user';
 
 export const newGroup = (name, groupId, module) => ({
@@ -102,6 +101,7 @@ export const startSetGroups = () => {
               })
           );
         });
+
         return Promise.all(promises);
       })
       .then(() => dispatch(setGroups(groups)))

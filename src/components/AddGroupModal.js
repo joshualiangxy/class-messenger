@@ -9,16 +9,17 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
   const [module, setModule] = useState('');
   const [error, setError] = useState('');
 
-  const onGroupNameChange = e => {
-    setGroupName(e.target.value);
-  };
+  const onGroupNameChange = e => setGroupName(e.target.value);
 
   const onModuleChange = e => {
-    setModule(e.target.value);
+    const module = e.target.value.toUpperCase();
+
+    setModule(module);
   };
 
   const onCancel = () => {
     setGroupName('');
+    setModule('');
     onRequestClose();
   };
 
@@ -30,6 +31,8 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
       setError('Please enter a group name');
     } else {
       setError('');
+      setGroupName('');
+      setModule('');
       startNewGroup(submittedName, submittedMod).then(() => onRequestClose());
     }
   };
@@ -51,7 +54,7 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
         />
         <input
           type="text"
-          placeholder="Module code (Optional)"
+          placeholder="Module code/Class name (Optional)"
           value={module}
           onChange={onModuleChange}
         />

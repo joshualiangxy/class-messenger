@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import {
   startRemovePersonalTask,
   startRemoveGroupTask,
-  startToggleCompletedPersonal
+  startToggleCompletedPersonal,
+  startToggleCompletedGroup
 } from '../actions/tasks';
 import EditTaskModal from './EditTaskModal';
 
 export const TaskListItem = ({
+  uid,
   task,
+  users,
+  dashboard,
   startRemovePersonalTask,
   startRemoveGroupTask,
   startToggleCompletedPersonal,
+  startToggleCompletedGroup,
   removeGroupTask,
+  toggleGroupTaskComplete,
   showGroup,
   admin,
   groupName,
@@ -28,17 +34,27 @@ export const TaskListItem = ({
     completed: initialComplete,
     gid
   } = task;
+  const userInvolved = initialComplete.hasOwnProperty(uid);
   const [visible, setVisible] = useState(false);
-  const [completed, setCompleted] = useState(initialComplete);
+  const [completed, setCompleted] = useState(
+    !dashboard ? (userInvolved ? initialComplete[uid] : false) : initialComplete
+  );
   const [open, setOpen] = useState(false);
   const now = moment().valueOf;
   const deadlineClass = deadline > now ? 'before-deadline' : 'after-deadline';
+
+  useEffect(() => {
+    if (!(dashboard || userInvolved)) setCompleted(false);
+  }, [userInvolved]);
 
   const toggleVisibility = () => setVisible(!visible);
 
   const toggleCompleted = () => {
     setCompleted(!completed);
-    startToggleCompletedPersonal(id, completed);
+    if (gid) {
+      startToggleCompletedGroup(id, gid, completed);
+      toggleGroupTaskComplete(id);
+    } else startToggleCompletedPersonal(id, completed);
   };
 
   const onRemove = e => {
@@ -57,7 +73,12 @@ export const TaskListItem = ({
 
   return (
     <div>
-      <input type="checkbox" checked={completed} onChange={toggleCompleted} />
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={toggleCompleted}
+        disabled={!(dashboard || userInvolved)}
+      />
       <div onClick={toggleVisibility}>
         <h3>{title}</h3>
         {deadline && (
@@ -83,17 +104,22 @@ export const TaskListItem = ({
         groupModule={module}
         groupName={groupName}
         task={task}
+        users={users}
         editGroupTask={editGroupTask}
       />
     </div>
   );
 };
 
+const mapStateToProps = state => ({ uid: state.auth.user.uid });
+
 const mapDispatchToProps = dispatch => ({
   startRemovePersonalTask: id => dispatch(startRemovePersonalTask(id)),
   startRemoveGroupTask: (gid, id) => dispatch(startRemoveGroupTask(gid, id)),
   startToggleCompletedPersonal: (id, completedState) =>
-    dispatch(startToggleCompletedPersonal(id, completedState))
+    dispatch(startToggleCompletedPersonal(id, completedState)),
+  startToggleCompletedGroup: (id, gid, completedState) =>
+    dispatch(startToggleCompletedGroup(id, gid, completedState))
 });
 
-export default connect(undefined, mapDispatchToProps)(TaskListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskListItem);

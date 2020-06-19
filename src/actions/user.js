@@ -41,7 +41,7 @@ export const startSetUserData = (displayName, studentNum) => {
       .firestore()
       .collection('users')
       .doc(uid)
-      .set({ displayName, studentNum })
+      .update({ displayName, studentNum })
       .then(() => dispatch(setUserData(displayName, studentNum)));
   };
 };
@@ -52,13 +52,20 @@ export const startNewUser = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const email = getState().auth.user.email;
+    const promises = [];
 
-    return firebase
-      .firestore()
-      .collection('emailToUid')
-      .doc(email)
-      .set({ uid, groups: [] })
-      .then(() => dispatch(newUser()));
+    promises.push(
+      firebase.firestore().collection('emailToUid').doc(email).set({ uid })
+    );
+    promises.push(
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(uid)
+        .set({ displayName: '', studentNum: '', groups: [] })
+    );
+
+    return Promise.all(promises).then(() => dispatch(newUser()));
   };
 };
 

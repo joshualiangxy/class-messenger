@@ -19,19 +19,15 @@ export const startAddPersonalTask = task => {
 };
 
 export const startAddGroupTask = (task, groupName) => {
-  return dispatch => {
-    const gid = task.gid;
-    const id = task.id;
-
-    return firebase
+  return dispatch =>
+    firebase
       .firestore()
       .collection('groups')
-      .doc(gid)
+      .doc(task.gid)
       .collection('tasks')
-      .doc(id)
+      .doc(task.id)
       .set(task)
       .then(() => dispatch(addTask({ ...task, groupName })));
-  };
 };
 
 export const removeTask = id => ({ type: 'REMOVE_TASK', id });
@@ -85,18 +81,15 @@ export const startEditPersonalTask = (id, updates) => {
 };
 
 export const startEditGroupTask = (id, updates, groupName) => {
-  return dispatch => {
-    const gid = updates.gid;
-
-    return firebase
+  return dispatch =>
+    firebase
       .firestore()
       .collection('groups')
-      .doc(gid)
+      .doc(updates.gid)
       .collection('tasks')
       .doc(id)
       .set(updates)
       .then(() => dispatch(editTask(id, { ...updates, groupName })));
-  };
 };
 
 export const setTasks = tasks => ({ type: 'SET_TASKS', tasks });
@@ -135,12 +128,16 @@ export const startSetTasks = () => {
             groupsPromises.push(
               Promise.all(groupPromises).then(
                 ([groupName, queryTaskCollectionSnapshot]) =>
-                  queryTaskCollectionSnapshot.forEach(queryTaskDocSnapshot =>
-                    tasks.push({
-                      groupName,
-                      ...queryTaskDocSnapshot.data()
-                    })
-                  )
+                  queryTaskCollectionSnapshot.forEach(queryTaskDocSnapshot => {
+                    if (
+                      queryTaskDocSnapshot.get('completed').hasOwnProperty(uid)
+                    )
+                      tasks.push({
+                        ...queryTaskDocSnapshot.data(),
+                        groupName,
+                        completed: queryTaskDocSnapshot.get('completed')[uid]
+                      });
+                  })
               )
             );
           });
@@ -152,8 +149,8 @@ export const startSetTasks = () => {
   };
 };
 
-export const toggleCompletedPersonal = (id, completedState) => ({
-  type: 'TOGGLE_COMPLETED_PERSONAL',
+export const toggleCompleted = (id, completedState) => ({
+  type: 'TOGGLE_COMPLETED',
   id,
   completedState
 });
@@ -169,7 +166,24 @@ export const startToggleCompletedPersonal = (id, completedState) => {
       .collection('tasks')
       .doc(id)
       .update({ completed: !completedState })
-      .then(() => dispatch(toggleCompletedPersonal(id, completedState)));
+      .then(() => dispatch(toggleCompleted(id, completedState)));
+  };
+};
+
+export const startToggleCompletedGroup = (id, gid, completedState) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+    const toggle = {};
+    toggle[`completed.${uid}`] = !completedState;
+
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .update(toggle)
+      .then(() => dispatch(toggleCompleted(id, completedState)));
   };
 };
 

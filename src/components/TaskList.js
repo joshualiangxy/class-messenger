@@ -14,7 +14,12 @@ export const TaskList = ({ sortedList, grouped }) => (
       ))
     ) : (
       Object.values(sortedList)[0].tasks.map(task => (
-        <TaskListItem key={task.id} task={task} showGroup={true} />
+        <TaskListItem
+          key={task.id}
+          task={task}
+          showGroup={true}
+          dashboard={true}
+        />
       ))
     )}
   </div>
