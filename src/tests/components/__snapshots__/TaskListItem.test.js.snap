@@ -4,6 +4,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
 <div>
   <input
     checked={false}
+    disabled={true}
     onChange={[Function]}
     type="checkbox"
   />
@@ -35,6 +36,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
     </div>
   </div>
   <Connect(EditTaskModal)
+    groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
     task={
@@ -55,6 +57,7 @@ exports[`render should render TaskListItem 1`] = `
 <div>
   <input
     checked={false}
+    disabled={true}
     onChange={[Function]}
     type="checkbox"
   />
@@ -71,6 +74,7 @@ exports[`render should render TaskListItem 1`] = `
     </h3>
   </div>
   <Connect(EditTaskModal)
+    groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
     task={
@@ -91,6 +95,7 @@ exports[`render should render TaskListItem with alt task 1`] = `
 <div>
   <input
     checked={false}
+    disabled={true}
     onChange={[Function]}
     type="checkbox"
   />
@@ -102,6 +107,7 @@ exports[`render should render TaskListItem with alt task 1`] = `
     </h3>
   </div>
   <Connect(EditTaskModal)
+    groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
     task={

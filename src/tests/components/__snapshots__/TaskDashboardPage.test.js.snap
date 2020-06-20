@@ -3,7 +3,7 @@
 exports[`render should render TaskDashboardPage 1`] = `
 <div>
   <h1>
-    This is the task dashboard page
+    Dashboard
   </h1>
   <Connect(TaskListFilters) />
   <Connect(TaskList) />

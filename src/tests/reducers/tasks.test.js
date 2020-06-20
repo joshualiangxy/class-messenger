@@ -24,7 +24,7 @@ describe('reducer', () => {
 
   it('should remove personal task', () => {
     const state = tasksReducer(tasks, {
-      type: 'REMOVE_PERSONAL_TASK',
+      type: 'REMOVE_TASK',
       id: tasks[2].id
     });
 
@@ -33,7 +33,7 @@ describe('reducer', () => {
 
   it('should not remove personal task if id not found', () => {
     const state = tasksReducer(tasks, {
-      type: 'REMOVE_PERSONAL_TASK',
+      type: 'REMOVE_TASK',
       id: 'testid'
     });
 
@@ -50,7 +50,7 @@ describe('reducer', () => {
       title: 'Fix up midterms'
     };
     const state = tasksReducer(tasks, {
-      type: 'EDIT_PERSONAL_TASK',
+      type: 'EDIT_TASK',
       id,
       updates
     });
@@ -68,7 +68,7 @@ describe('reducer', () => {
       title: 'Fix up midterms'
     };
     const state = tasksReducer(tasks, {
-      type: 'EDIT_PERSONAL_TASK',
+      type: 'EDIT_TASK',
       id,
       updates
     });
@@ -95,7 +95,7 @@ describe('reducer', () => {
     const id = tasks[3].id;
     const completedState = tasks[3].completed;
     const state = tasksReducer(tasks, {
-      type: 'TOGGLE_COMPLETED_PERSONAL',
+      type: 'TOGGLE_COMPLETED',
       id,
       completedState
     });
@@ -115,7 +115,7 @@ describe('reducer', () => {
     const id = 'testid';
     const completedState = tasks[3].completed;
     const state = tasksReducer(tasks, {
-      type: 'TOGGLE_COMPLETED_PERSONAL',
+      type: 'TOGGLE_COMPLETED',
       id,
       completedState
     });

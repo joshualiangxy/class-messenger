@@ -48,7 +48,7 @@ import {
   startEditPersonalTask,
   setTasks,
   startSetTasks,
-  toggleCompletedPersonal,
+  toggleCompleted,
   startToggleCompletedPersonal,
   removeTaskData
 } from '../../actions/tasks';
@@ -263,8 +263,8 @@ describe('set tasks', () => {
 describe('toggle completed state for personal task', () => {
   const completedState = task.completed;
   it('should generate action object', () => {
-    expect(toggleCompletedPersonal(id, completedState)).toEqual({
-      type: 'TOGGLE_COMPLETED_PERSONAL',
+    expect(toggleCompleted(id, completedState)).toEqual({
+      type: 'TOGGLE_COMPLETED',
       id,
       completedState
     });
@@ -296,7 +296,7 @@ describe('toggle completed state for personal task', () => {
         });
 
         expect(actions).toHaveLength(1);
-        expect(actions[0]).toEqual(toggleCompletedPersonal(id, completedState));
+        expect(actions[0]).toEqual(toggleCompleted(id, completedState));
       }));
 });
 

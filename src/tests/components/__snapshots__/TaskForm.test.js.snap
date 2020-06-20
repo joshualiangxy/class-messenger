@@ -10,7 +10,7 @@ exports[`cancel button should remove errors after call 1`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value=""
   />
@@ -139,7 +139,7 @@ exports[`cancel button should remove errors after call 2`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="Do homework"
   />
@@ -268,7 +268,7 @@ exports[`render should render TaskForm for adding 1`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value=""
   />
@@ -397,7 +397,7 @@ exports[`render should render TaskForm with task for editing 1`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
@@ -529,7 +529,7 @@ exports[`submit task should remove error after valid submission 1`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value=""
   />
@@ -658,7 +658,7 @@ exports[`submit task should remove error after valid submission 2`] = `
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
@@ -787,7 +787,7 @@ exports[`submit task should render error on submit if title input is empty 1`] =
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
@@ -919,7 +919,7 @@ exports[`submit task should render error on submit if title input is empty 2`] =
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value=""
   />
@@ -1048,7 +1048,7 @@ exports[`submit task should render error on submit if title input is empty after
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
@@ -1180,7 +1180,7 @@ exports[`submit task should render error on submit if title input is empty after
   <input
     autoFocus={true}
     onChange={[Function]}
-    placeholder="Title"
+    placeholder="Title (required)"
     type="text"
     value="            "
   />

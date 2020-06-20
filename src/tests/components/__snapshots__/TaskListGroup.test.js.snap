@@ -6,6 +6,7 @@ exports[`render should render TaskListGroup 1`] = `
     CS2030
   </h3>
   <Connect(TaskListItem)
+    dashboard={true}
     key="5feb18c0-78a8-49b6-8584-75b8c1b40abc"
     showGroup={false}
     task={
@@ -20,6 +21,7 @@ exports[`render should render TaskListGroup 1`] = `
     }
   />
   <Connect(TaskListItem)
+    dashboard={true}
     key="a1050220-fa88-4dc2-aa9d-9521ae95de47"
     showGroup={false}
     task={
@@ -41,6 +43,7 @@ exports[`render should render TaskListGroup with alt group 1`] = `
     others
   </h3>
   <Connect(TaskListItem)
+    dashboard={true}
     key="d2b10492-853d-4290-baf8-cb47cd4ec04e"
     showGroup={false}
     task={
