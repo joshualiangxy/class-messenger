@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(user => {
     ReactDOM.render(<LoadingPage />, document.getElementById('root'));
     store.dispatch(login(user));
     firstLogin(user)
-      .then(() => store.dispatch(startSetGroups())) // Not finishing properly
+      .then(() => store.dispatch(startSetGroups())) // Not finishing properly?
       .then(() => store.dispatch(startSetTasks()))
       .then(() => renderApp())
       .then(() => {
@@ -54,7 +54,7 @@ firebase.auth().onAuthStateChanged(user => {
   } else {
     store.dispatch(logout());
     renderApp();
-    history.push('/');
+    if (history.location.pathname !== '/') history.push('/');
   }
 });
 

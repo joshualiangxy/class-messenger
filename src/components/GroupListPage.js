@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import firebase from '../firebase/firebase';
 import AddGroupModal from './AddGroupModal';
-import { startGetGroups } from '../actions/groups';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -40,8 +38,6 @@ const GroupListPage = ({ groups }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  groups: state.groups
-});
+const mapStateToProps = state => ({ groups: state.groups });
 
 export default connect(mapStateToProps)(GroupListPage);

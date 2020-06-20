@@ -19,7 +19,7 @@ export const startAddPersonalTask = task => {
 };
 
 export const startAddGroupTask = (task, groupName) => {
-  return dispatch =>
+  return (dispatch, getState) =>
     firebase
       .firestore()
       .collection('groups')
@@ -27,7 +27,12 @@ export const startAddGroupTask = (task, groupName) => {
       .collection('tasks')
       .doc(task.id)
       .set(task)
-      .then(() => dispatch(addTask({ ...task, groupName })));
+      .then(() => {
+        const uid = getState().auth.user.uid;
+        const userInvolved = task.completed.hasOwnProperty(uid);
+        if (userInvolved)
+          dispatch(addTask({ ...task, groupName, completed: false }));
+      });
 };
 
 export const removeTask = id => ({ type: 'REMOVE_TASK', id });
@@ -48,7 +53,7 @@ export const startRemovePersonalTask = id => {
 };
 
 export const startRemoveGroupTask = (gid, id) => {
-  return dispatch =>
+  return (dispatch, getState) =>
     firebase
       .firestore()
       .collection('groups')
@@ -56,7 +61,10 @@ export const startRemoveGroupTask = (gid, id) => {
       .collection('tasks')
       .doc(id)
       .delete()
-      .then(() => dispatch(removeTask(id)));
+      .then(() => {
+        const task = getState().tasks.find(task => task.id === id);
+        if (task) dispatch(removeTask(id));
+      });
 };
 
 export const editTask = (id, updates) => ({
@@ -81,7 +89,7 @@ export const startEditPersonalTask = (id, updates) => {
 };
 
 export const startEditGroupTask = (id, updates, groupName) => {
-  return dispatch =>
+  return (dispatch, getState) =>
     firebase
       .firestore()
       .collection('groups')
@@ -89,7 +97,18 @@ export const startEditGroupTask = (id, updates, groupName) => {
       .collection('tasks')
       .doc(id)
       .set(updates)
-      .then(() => dispatch(editTask(id, { ...updates, groupName })));
+      .then(() => {
+        const uid = getState().auth.user.uid;
+        const task = getState().tasks.find(task => task.id === id);
+        const userInvolved = updates.completed.hasOwnProperty(uid);
+
+        if (userInvolved) {
+          if (task) {
+            const completed = task.completed;
+            dispatch(editTask(id, { ...updates, groupName, completed }));
+          } else dispatch(addTask({ ...updates, groupName, completed: false }));
+        } else if (task) dispatch(removeTask(id));
+      });
 };
 
 export const setTasks = tasks => ({ type: 'SET_TASKS', tasks });
@@ -174,16 +193,28 @@ export const startToggleCompletedGroup = (id, gid, completedState) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const toggle = {};
-    toggle[`completed.${uid}`] = !completedState;
-
-    return firebase
+    const taskRef = firebase
       .firestore()
       .collection('groups')
       .doc(gid)
       .collection('tasks')
-      .doc(id)
-      .update(toggle)
-      .then(() => dispatch(toggleCompleted(id, completedState)));
+      .doc(id);
+
+    toggle[`completed.${uid}`] = !completedState;
+
+    return taskRef.get().then(snapshot => {
+      const completedState = snapshot.get('completed');
+
+      if (completedState.hasOwnProperty(uid)) {
+        return taskRef.update(toggle).then(() => {
+          dispatch(toggleCompleted(id, completedState));
+          return true;
+        });
+      } else {
+        dispatch(removeTask(id));
+        return false;
+      }
+    });
   };
 };
 

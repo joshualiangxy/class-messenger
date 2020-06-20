@@ -34,7 +34,9 @@ export const TaskListItem = ({
     completed: initialComplete,
     gid
   } = task;
-  const userInvolved = initialComplete.hasOwnProperty(uid);
+  const [userInvolved, setUserInvolved] = useState(
+    initialComplete.hasOwnProperty(uid)
+  );
   const [visible, setVisible] = useState(false);
   const [completed, setCompleted] = useState(
     !dashboard ? (userInvolved ? initialComplete[uid] : false) : initialComplete
@@ -50,10 +52,13 @@ export const TaskListItem = ({
   const toggleVisibility = () => setVisible(!visible);
 
   const toggleCompleted = () => {
+    if (!(userInvolved || dashboard)) return;
     setCompleted(!completed);
     if (gid) {
-      startToggleCompletedGroup(id, gid, completed);
-      toggleGroupTaskComplete(id);
+      startToggleCompletedGroup(id, gid, completed).then(userInvolved => {
+        if (!userInvolved) setUserInvolved(false);
+        if (!dashboard) toggleGroupTaskComplete(id);
+      });
     } else startToggleCompletedPersonal(id, completed);
   };
 

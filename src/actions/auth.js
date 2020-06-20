@@ -1,4 +1,5 @@
 import firebase, { googleAuthProvider } from '../firebase/firebase';
+import { history } from '../routers/AppRouter';
 import { removeUserData } from './user';
 import { removeTaskData } from './tasks';
 
@@ -19,6 +20,7 @@ export const startLogout = () => {
       .auth()
       .signOut()
       .then(() => {
+        history.push('/');
         dispatch(removeUserData());
         dispatch(removeTaskData());
       });
