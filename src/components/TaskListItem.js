@@ -49,9 +49,6 @@ export const TaskListItem = ({
     if (!(dashboard || userInvolved)) setCompleted(false);
   }, [dashboard, userInvolved]);
 
-  console.log(completed);
-  console.log(users);
-
   const toggleVisibility = () => setVisible(!visible);
 
   const toggleCompleted = () => {
