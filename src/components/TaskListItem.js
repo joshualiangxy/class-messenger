@@ -104,16 +104,16 @@ export const TaskListItem = ({
 
                   return userOne.displayName.localeCompare(userTwo.displayName);
                 })
-                .map(uid => (
-                  <div key={uid}>
+                .map(id => (
+                  <div key={id}>
                     <input
                       type="checkbox"
-                      checked={initialComplete[uid]}
-                      htmlFor={uid}
+                      checked={id === uid ? completed : initialComplete[id]}
+                      htmlFor={id}
                       disabled={true}
                     />
-                    <label id={uid}>
-                      {users.find(user => user.uid === uid).displayName}
+                    <label id={id}>
+                      {users.find(user => user.uid === id).displayName}
                     </label>
                   </div>
                 ))}

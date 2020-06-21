@@ -207,7 +207,7 @@ export const startToggleCompletedGroup = (id, gid, completedState) => {
 
       if (completedState.hasOwnProperty(uid)) {
         return taskRef.update(toggle).then(() => {
-          dispatch(toggleCompleted(id, completedState));
+          dispatch(toggleCompleted(id, completedState[uid]));
           return true;
         });
       } else {
