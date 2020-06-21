@@ -49,10 +49,14 @@ export const TaskListItem = ({
     if (!(dashboard || userInvolved)) setCompleted(false);
   }, [dashboard, userInvolved]);
 
+  console.log(completed);
+  console.log(users);
+
   const toggleVisibility = () => setVisible(!visible);
 
   const toggleCompleted = () => {
     if (!(userInvolved || dashboard)) return;
+
     setCompleted(!completed);
     if (gid) {
       startToggleCompletedGroup(id, gid, completed).then(userInvolved => {
@@ -95,6 +99,20 @@ export const TaskListItem = ({
           <div>
             {showGroup && module && <h5>{module}</h5>}
             {description && <p>{description}</p>}
+            {!dashboard &&
+              Object.keys(initialComplete).map(uid => (
+                <div key={uid}>
+                  <input
+                    type="checkbox"
+                    checked={initialComplete[uid]}
+                    htmlFor={uid}
+                    disabled={true}
+                  />
+                  <label id={uid}>
+                    {users.find(user => user.uid === uid).displayName}
+                  </label>
+                </div>
+              ))}
             {(admin || !gid) && (
               <button onClick={openEditTask}>Edit Task</button>
             )}
