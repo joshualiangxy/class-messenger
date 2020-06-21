@@ -97,19 +97,26 @@ export const TaskListItem = ({
             {showGroup && module && <h5>{module}</h5>}
             {description && <p>{description}</p>}
             {!dashboard &&
-              Object.keys(initialComplete).map(uid => (
-                <div key={uid}>
-                  <input
-                    type="checkbox"
-                    checked={initialComplete[uid]}
-                    htmlFor={uid}
-                    disabled={true}
-                  />
-                  <label id={uid}>
-                    {users.find(user => user.uid === uid).displayName}
-                  </label>
-                </div>
-              ))}
+              Object.keys(initialComplete)
+                .sort((uidOne, uidTwo) => {
+                  const userOne = users.find(user => user.uid === uidOne);
+                  const userTwo = users.find(user => user.uid === uidTwo);
+
+                  return userOne.displayName.localeCompare(userTwo.displayName);
+                })
+                .map(uid => (
+                  <div key={uid}>
+                    <input
+                      type="checkbox"
+                      checked={initialComplete[uid]}
+                      htmlFor={uid}
+                      disabled={true}
+                    />
+                    <label id={uid}>
+                      {users.find(user => user.uid === uid).displayName}
+                    </label>
+                  </div>
+                ))}
             {(admin || !gid) && (
               <button onClick={openEditTask}>Edit Task</button>
             )}

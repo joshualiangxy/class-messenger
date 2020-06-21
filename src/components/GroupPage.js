@@ -26,7 +26,14 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
   useEffect(() => {
     if (!userGroups.find(id => id === gid)) history.push('/groups');
     const promises = [];
-    promises.push(getAllUsers(gid).then(users => setUsers(users)));
+    promises.push(
+      getAllUsers(gid).then(users => {
+        users.sort((userOne, userTwo) =>
+          userOne.displayName.localeCompare(userTwo.displayName)
+        );
+        setUsers(users);
+      })
+    );
     promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
     Promise.all(promises).then(() => setLoading(false));
   }, [gid, userGroups]);
