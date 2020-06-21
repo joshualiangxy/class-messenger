@@ -18,6 +18,7 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
   };
 
   const onCancel = () => {
+    setError('');
     setGroupName('');
     setModule('');
     onRequestClose();
@@ -41,7 +42,7 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
     <Modal
       isOpen={isOpen}
       contentLabel="New Group"
-      onRequestClose={() => onRequestClose()}
+      onRequestClose={onCancel}
       appElement={document.getElementById('root')}
     >
       <form onSubmit={onSubmit}>

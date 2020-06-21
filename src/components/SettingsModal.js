@@ -31,6 +31,7 @@ export const SettingsModal = ({
   };
 
   const onCancel = () => {
+    setError('');
     setDisplayName(initialDisplayName);
     setStudentNum(initialStudentNum);
     onRequestClose(false);
@@ -61,7 +62,7 @@ export const SettingsModal = ({
     <Modal
       isOpen={isOpen}
       contentLabel="Settings"
-      onRequestClose={() => onRequestClose(false)}
+      onRequestClose={onCancel}
       appElement={document.getElementById('root')}
     >
       {isNewUser ? (
