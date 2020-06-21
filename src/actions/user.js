@@ -36,13 +36,32 @@ export const setUserData = (displayName, studentNum) => ({
 export const startSetUserData = (displayName, studentNum) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
+    const userRef = firebase.firestore().collection('users').doc(uid);
 
-    return firebase
-      .firestore()
-      .collection('users')
-      .doc(uid)
-      .update({ displayName, studentNum })
-      .then(() => dispatch(setUserData(displayName, studentNum)));
+    return userRef
+      .get()
+      .then(snapshot => {
+        const groups = snapshot.get('groups');
+        const promises = [];
+
+        groups.forEach(gid => {
+          const groupRef = firebase.firestore().collection('groups').doc(gid);
+
+          promises.push(
+            groupRef
+              .collection('users')
+              .doc(uid)
+              .update({ displayName, studentNum })
+          );
+        });
+
+        return Promise.all(promises);
+      })
+      .then(() =>
+        userRef
+          .update({ displayName, studentNum })
+          .then(() => dispatch(setUserData(displayName, studentNum)))
+      );
   };
 };
 
