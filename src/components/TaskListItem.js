@@ -49,6 +49,10 @@ export const TaskListItem = ({
     if (!(dashboard || userInvolved)) setCompleted(false);
   }, [dashboard, userInvolved]);
 
+  useEffect(() => {
+    setUserInvolved(initialComplete.hasOwnProperty(uid));
+  }, [initialComplete]);
+
   const toggleVisibility = () => setVisible(!visible);
 
   const toggleCompleted = () => {
