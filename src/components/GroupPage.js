@@ -9,10 +9,15 @@ import { getAllUsers } from '../actions/groups';
 import { getAllGroupTasks } from '../actions/tasks';
 import { history } from '../routers/AppRouter';
 
-const GroupPage = ({ match, groups, userGroups, uid }) => {
-  const gid = match.params.id;
-  const group = groups.find(group => group.gid === gid);
-
+const GroupPage = ({
+  gid,
+  groupName,
+  groupModule,
+  authorised,
+  uid,
+  getAllUsers,
+  getAllGroupTasks
+}) => {
   // For Modal
   const [addUserOpen, setAddUserOpen] = useState(false);
   const [leaveOpen, setLeaveOpen] = useState(false);
@@ -24,19 +29,22 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
   const [canLeave, setCanLeave] = useState(false); // Hide the option to leave a group by default.
 
   useEffect(() => {
-    if (!userGroups.find(id => id === gid)) history.push('/groups');
-    const promises = [];
-    promises.push(
-      getAllUsers(gid).then(users => {
-        users.sort((userOne, userTwo) =>
-          userOne.displayName.localeCompare(userTwo.displayName)
-        );
-        setUsers(users);
-      })
-    );
-    promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
-    Promise.all(promises).then(() => setLoading(false));
-  }, [gid, userGroups]);
+    if (!authorised) {
+      history.push('/groups');
+    } else {
+      const promises = [];
+      promises.push(
+        getAllUsers(gid).then(users => {
+          users.sort((userOne, userTwo) =>
+            userOne.displayName.localeCompare(userTwo.displayName)
+          );
+          setUsers(users);
+        })
+      );
+      promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
+      Promise.all(promises).then(() => setLoading(false));
+    }
+  }, [gid, authorised]);
 
   useEffect(() => {
     if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);
@@ -95,7 +103,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
         <LoadingPage />
       ) : (
         <div>
-          <h1>{group.name}</h1>
+          <h1>{groupName}</h1>
           <button onClick={() => console.log(canLeave)}>log</button>
           {admin && (
             <div>
@@ -108,7 +116,7 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
             tasks={tasks}
             users={users}
             admin={admin}
-            groupName={group.name}
+            groupName={groupName}
             editGroupTask={editGroupTask}
             removeGroupTask={removeGroupTask}
             toggleGroupTaskComplete={toggleGroupTaskComplete}
@@ -131,8 +139,8 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
             isOpen={addTaskOpen}
             onRequestClose={closeAddTask}
             gid={gid}
-            groupModule={group.module}
-            groupName={group.name}
+            groupModule={groupModule}
+            groupName={groupName}
             addGroupTask={addGroupTask}
             users={users}
           />
@@ -142,10 +150,27 @@ const GroupPage = ({ match, groups, userGroups, uid }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  groups: state.groups,
-  userGroups: state.user.groups,
-  uid: state.auth.user.uid
-});
+const mapStateToProps = (state, { match }) => {
+  const gid = match.params.id;
+  const group = state.groups.find(group => group.gid === gid);
+  const authorised = !!state.user.groups.find(id => id === gid);
 
-export default connect(mapStateToProps)(GroupPage);
+  return {
+    gid,
+    groupName: group.name,
+    groupModule: group.module,
+    authorised,
+    uid: state.auth.user.uid
+  };
+};
+
+const mapDispatchToProps = (dispatch, { match }) => {
+  const gid = match.params.id;
+
+  return {
+    getAllUsers: () => dispatch(getAllUsers(gid)),
+    getAllGroupTasks: () => dispatch(getAllGroupTasks(gid))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupPage);

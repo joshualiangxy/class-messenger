@@ -178,17 +178,18 @@ export const getUser = email => {
 
 // Not to be confused with getUser, this one is for all the users in a group.
 export const getAllUsers = gid => {
-  return firebase
-    .firestore()
-    .collection('groups')
-    .doc(gid)
-    .collection('users')
-    .get()
-    .then(query => {
-      const result = [];
-      query.forEach(doc => {
-        result.push(doc.data());
+  return () =>
+    firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('users')
+      .get()
+      .then(query => {
+        const result = [];
+        query.forEach(doc => {
+          result.push(doc.data());
+        });
+        return result;
       });
-      return result;
-    });
 };

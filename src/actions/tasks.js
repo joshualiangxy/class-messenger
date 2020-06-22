@@ -221,16 +221,17 @@ export const startToggleCompletedGroup = (id, gid, completedState) => {
 export const removeTaskData = () => ({ type: 'REMOVE_TASK_DATA' });
 
 export const getAllGroupTasks = gid => {
-  return firebase
-    .firestore()
-    .collection('groups')
-    .doc(gid)
-    .collection('tasks')
-    .get()
-    .then(tasksQuerySnapshot => {
-      const tasks = [];
-      tasksQuerySnapshot.forEach(taskDoc => tasks.push(taskDoc.data()));
+  return () =>
+    firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .get()
+      .then(tasksQuerySnapshot => {
+        const tasks = [];
+        tasksQuerySnapshot.forEach(taskDoc => tasks.push(taskDoc.data()));
 
-      return tasks;
-    });
+        return tasks;
+      });
 };
