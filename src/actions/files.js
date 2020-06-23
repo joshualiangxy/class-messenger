@@ -42,16 +42,17 @@ export const downloadFile = (gid, id) => {
       .then(snapshot => {
         const downloadURLs = Object.values(snapshot.get('downloadURLs'));
         const zip = new JSZip();
+        const promises = [];
 
         downloadURLs.forEach(({ downloadURL, fileName }) => {
           JSZipUtils.getBinaryContent(downloadURL, (err, data) => {
             if (err) throw err;
-            zip.file(fileName, data, { base64: true });
+            promises.push(zip.file(fileName, data, { base64: true }));
           });
         });
 
-        return zip
-          .generateAsync({ type: 'blob' })
+        return Promise.all(promises)
+          .then(() => zip.generateAsync({ type: 'blob' }))
           .then(blob => saveAs(blob, 'submissions.zip'));
       });
 };
