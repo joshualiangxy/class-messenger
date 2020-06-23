@@ -24,7 +24,10 @@ const TaskForm = ({
 
           return obj;
         }, {})
-      : false
+      : false,
+    namingConvention: initialNamingConvention = '',
+    uploadRequired: initialUploadRequired,
+    downloadURLs = {}
   } = task;
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(initialTitle);
@@ -35,6 +38,13 @@ const TaskForm = ({
   );
   const [groupCompletedState, setGroupCompletedState] = useState(completed);
   const [calendarFocused, setCalendarFocus] = useState(false);
+  const [uploadRequired, setUploadRequired] = useState(initialUploadRequired);
+  const [enforceNamingConvention, setEnforceNamingConvention] = useState(
+    initialNamingConvention ? true : false
+  );
+  const [namingConvention, setNamingConvention] = useState(
+    initialNamingConvention
+  );
   const [error, setError] = useState('');
 
   const openSelectUserModal = () => setOpen(true);
@@ -73,13 +83,34 @@ const TaskForm = ({
     setGroupCompletedState(rest);
   };
 
+  const toggleUploadRequired = () => {
+    if (uploadRequired) {
+      setNamingConvention('');
+      setEnforceNamingConvention(false);
+    }
+    setUploadRequired(!uploadRequired);
+  };
+
+  const toggleEnforceNamingConvention = () => {
+    if (enforceNamingConvention) setNamingConvention('');
+    setEnforceNamingConvention(!enforceNamingConvention);
+  };
+
+  const onNamingConventionChange = e => {
+    const namingConvention = e.target.value;
+    setNamingConvention(namingConvention);
+  };
+
   const onSubmit = e => {
     e.preventDefault();
 
     const submittedTitle = title.trim();
     const submittedDescription = description.trim();
     const submittedModule = module.trim();
+    const submittedNamingConvention = namingConvention.trim();
     if (!submittedTitle) setError('Please provide title of task');
+    else if (enforceNamingConvention && !submittedNamingConvention)
+      setError('Naming convention cannot be empty');
     else {
       setError('');
       const task = {
@@ -91,6 +122,12 @@ const TaskForm = ({
       };
       if (gid) task.gid = gid;
       if (deadline) task.deadline = deadline.valueOf();
+      if (uploadRequired) {
+        task.uploadRequired = true;
+        task.downloadURLs = downloadURLs;
+      }
+      if (enforceNamingConvention)
+        task.namingConvention = submittedNamingConvention;
       submitTask(task);
     }
   };
@@ -101,6 +138,9 @@ const TaskForm = ({
     setDescription(initialDescription);
     setDeadline(initialDeadline ? moment(initialDeadline) : null);
     setCalendarFocus(false);
+    setUploadRequired(false);
+    setEnforceNamingConvention(false);
+    setNamingConvention('');
     setError('');
     onRequestClose();
   };
@@ -153,6 +193,34 @@ const TaskForm = ({
           <button type="button" onClick={openSelectUserModal}>
             Select users
           </button>
+          <input
+            type="checkbox"
+            id="uploadRequired"
+            checked={uploadRequired}
+            onChange={toggleUploadRequired}
+          />
+          <label htmlFor="uploadRequired">Require submission</label>
+          {uploadRequired && (
+            <div>
+              <input
+                type="checkbox"
+                id="namingConvention"
+                checked={enforceNamingConvention}
+                onChange={toggleEnforceNamingConvention}
+              />
+              <label htmlFor="namingConvention">
+                Enforce naming convention
+              </label>
+              {enforceNamingConvention && (
+                <input
+                  type="text"
+                  value={namingConvention}
+                  onChange={onNamingConventionChange}
+                  placeholder="Naming convention"
+                />
+              )}
+            </div>
+          )}
         </div>
       )}
       <button>{initialTitle ? 'Edit Task' : 'Add Task'}</button>

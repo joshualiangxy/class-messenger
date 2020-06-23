@@ -6,6 +6,7 @@ const UserListItem = ({ user, removeUser, addUser, initialPick }) => {
 
   const togglePick = () => {
     setPick(!pick);
+
     if (pick) removeUser(uid);
     else addUser(uid);
   };

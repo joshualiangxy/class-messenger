@@ -17,6 +17,29 @@ const tasksReducer = (state = [], action) => {
               completed: !action.completedState
             }
       );
+    case 'UPDATE_DOWNLOAD_URL':
+      return state.map(task =>
+        task.id !== action.id
+          ? task
+          : {
+              ...task,
+              downloadURLs: {
+                ...task.downloadURLs,
+                [action.uid]: {
+                  downloadURL: action.downloadURL,
+                  fileName: action.fileName
+                }
+              }
+            }
+      );
+    case 'REMOVE_DOWNLOAD_URL':
+      return state.map(task => {
+        if (task.id !== action.id) return task;
+        else {
+          const { [action.uid]: omit, ...rest } = task.downloadURLs;
+          return { ...task, downloadURLs: rest };
+        }
+      });
     case 'REMOVE_TASK_DATA':
       return [];
     default:

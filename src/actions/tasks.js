@@ -1,4 +1,5 @@
 import firebase from '../firebase/firebase';
+import { startRemoveUserFile } from './files';
 
 export const addTask = task => ({ type: 'ADD_TASK', task });
 
@@ -100,14 +101,31 @@ export const startEditGroupTask = (id, updates, groupName) => {
       .then(() => {
         const uid = getState().auth.user.uid;
         const task = getState().tasks.find(task => task.id === id);
+        const originalUsersInvolved = Object.keys(task.completed);
+        const usersInvolved = Object.keys(updates.completed);
         const userInvolved = updates.completed.hasOwnProperty(uid);
+        const promises = [];
 
-        if (userInvolved) {
-          if (task) {
-            const completed = task.completed;
-            dispatch(editTask(id, { ...updates, groupName, completed }));
-          } else dispatch(addTask({ ...updates, groupName, completed: false }));
-        } else if (task) dispatch(removeTask(id));
+        originalUsersInvolved.forEach(uid => {
+          if (!usersInvolved.includes(uid))
+            promises.push(
+              dispatch(startRemoveUserFile(id, uid)).then(() =>
+                dispatch(startRemoveDownloadURL(id, updates.gid, uid))
+              )
+            );
+        });
+
+        return Promise.all(promises).then(() => {
+          if (userInvolved) {
+            if (task) {
+              const completed = task.completed;
+              dispatch(editTask(id, { ...updates, groupName, completed }));
+            } else
+              dispatch(addTask({ ...updates, groupName, completed: false }));
+          } else if (task) {
+            dispatch(removeTask(id));
+          }
+        });
       });
 };
 
@@ -234,4 +252,54 @@ export const getAllGroupTasks = gid => {
 
         return tasks;
       });
+};
+
+export const updateDownloadURL = (uid, id, downloadURL, fileName) => ({
+  type: 'UPDATE_DOWNLOAD_URL',
+  downloadURL,
+  id,
+  uid,
+  fileName
+});
+
+export const startUpdateDownloadURL = (id, gid, downloadURL, fileName) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+    const update = {};
+    update[`downloadURLs.${uid}`] = {
+      downloadURL,
+      fileName
+    };
+
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .update(update)
+      .then(() => dispatch(updateDownloadURL(uid, id, downloadURL, fileName)));
+  };
+};
+
+export const removeDownloadURL = (id, uid) => ({
+  type: 'REMOVE_DOWNLOAD_URL',
+  uid,
+  id
+});
+
+export const startRemoveDownloadURL = (id, gid, uid) => {
+  return (dispatch, getState) => {
+    const update = {};
+    update[`downloadURLs.${uid}`] = firebase.firestore.FieldValue.delete();
+
+    return firebase
+      .firestore()
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .doc(id)
+      .update(update)
+      .then(() => dispatch(removeDownloadURL(id, uid)));
+  };
 };

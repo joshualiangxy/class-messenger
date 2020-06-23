@@ -29,9 +29,8 @@ const GroupPage = ({
   const [canLeave, setCanLeave] = useState(false); // Hide the option to leave a group by default.
 
   useEffect(() => {
-    if (!authorised) {
-      history.push('/groups');
-    } else {
+    if (!authorised) history.push('/groups');
+    else {
       const promises = [];
       promises.push(
         getAllUsers(gid).then(users => {
@@ -44,7 +43,7 @@ const GroupPage = ({
       promises.push(getAllGroupTasks(gid).then(tasks => setTasks(tasks)));
       Promise.all(promises).then(() => setLoading(false));
     }
-  }, [gid, authorised]);
+  }, [gid, authorised, getAllUsers, getAllGroupTasks]);
 
   useEffect(() => {
     if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);

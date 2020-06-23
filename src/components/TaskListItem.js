@@ -8,6 +8,8 @@ import {
   startToggleCompletedGroup
 } from '../actions/tasks';
 import EditTaskModal from './EditTaskModal';
+import FileUploadForm from './FileUploadForm';
+import { downloadFile } from '../actions/files';
 
 export const TaskListItem = ({
   uid,
@@ -23,7 +25,8 @@ export const TaskListItem = ({
   showGroup,
   admin,
   groupName,
-  editGroupTask
+  editGroupTask,
+  downloadFile
 }) => {
   const {
     id,
@@ -32,7 +35,9 @@ export const TaskListItem = ({
     module,
     deadline,
     completed: initialComplete,
-    gid
+    gid,
+    namingConvention,
+    uploadRequired
   } = task;
   const [userInvolved, setUserInvolved] = useState(
     initialComplete.hasOwnProperty(uid)
@@ -51,7 +56,7 @@ export const TaskListItem = ({
 
   useEffect(() => {
     setUserInvolved(initialComplete.hasOwnProperty(uid));
-  }, [initialComplete]);
+  }, [initialComplete, uid]);
 
   const toggleVisibility = () => setVisible(!visible);
 
@@ -81,6 +86,8 @@ export const TaskListItem = ({
 
   const onRequestClose = () => setOpen(false);
 
+  const onDownload = () => downloadFile(gid, id);
+
   return (
     <div>
       <input
@@ -100,6 +107,18 @@ export const TaskListItem = ({
           <div>
             {showGroup && module && <h5>{module}</h5>}
             {description && <p>{description}</p>}
+            {userInvolved && uploadRequired && (
+              <div>
+                <FileUploadForm
+                  id={id}
+                  gid={gid}
+                  namingConvention={namingConvention}
+                />
+                {admin && (
+                  <button onClick={onDownload}>Download submissions</button>
+                )}
+              </div>
+            )}
             {!dashboard &&
               Object.keys(initialComplete)
                 .sort((uidOne, uidTwo) => {
@@ -150,7 +169,8 @@ const mapDispatchToProps = dispatch => ({
   startToggleCompletedPersonal: (id, completedState) =>
     dispatch(startToggleCompletedPersonal(id, completedState)),
   startToggleCompletedGroup: (id, gid, completedState) =>
-    dispatch(startToggleCompletedGroup(id, gid, completedState))
+    dispatch(startToggleCompletedGroup(id, gid, completedState)),
+  downloadFile: (gid, id) => dispatch(downloadFile(gid, id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskListItem);
