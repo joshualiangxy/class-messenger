@@ -39,14 +39,14 @@ export const downloadFile = (gid, id) => {
       .collection('tasks')
       .doc(id)
       .get()
-      .then(async snapshot => {
+      .then(snapshot => {
         const downloadURLs = Object.values(snapshot.get('downloadURLs'));
         const zip = new JSZip();
 
-        downloadURLs.forEach(({ downloadURL, fileName }) => {
+        downloadURLs.forEach(async ({ downloadURL, fileName }) => {
           await JSZipUtils.getBinaryContent(downloadURL, {
             done(data) {
-              zip.file(fileName, data, { base64: true })
+              zip.file(fileName, data, { base64: true });
             },
             fail(err) {
               throw err;
