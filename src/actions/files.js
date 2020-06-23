@@ -42,20 +42,18 @@ export const downloadFile = (gid, id) => {
       .then(snapshot => {
         const downloadURLs = Object.values(snapshot.get('downloadURLs'));
         const zip = new JSZip();
+        const promises = [];
 
-        downloadURLs.forEach(async ({ downloadURL, fileName }) => {
-          await JSZipUtils.getBinaryContent(downloadURL, {
-            done(data) {
-              zip.file(fileName, data, { base64: true });
-            },
-            fail(err) {
-              throw err;
-            }
-          });
+        downloadURLs.forEach(({ downloadURL, fileName }) => {
+          promises.push(
+            JSZipUtils.getBinaryContent(downloadURL).then(data =>
+              zip.file(fileName, data, { base64: true })
+            )
+          );
         });
 
-        return zip
-          .generateAsync({ type: 'blob' })
+        return Promise.all(promises)
+          .then(() => zip.generateAsync({ type: 'blob' }))
           .then(blob => saveAs(blob, 'submissions.zip'));
       });
 };
