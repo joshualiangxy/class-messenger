@@ -89,7 +89,7 @@ export const startEditPersonalTask = (id, updates) => {
   };
 };
 
-export const startEditGroupTask = (id, updates, groupName) => {
+export const startEditGroupTask = (id, updates, groupName, originalTask) => {
   return (dispatch, getState) =>
     firebase
       .firestore()
@@ -101,7 +101,7 @@ export const startEditGroupTask = (id, updates, groupName) => {
       .then(() => {
         const uid = getState().auth.user.uid;
         const task = getState().tasks.find(task => task.id === id);
-        const originalUsersInvolved = Object.keys(task.completed);
+        const originalUsersInvolved = Object.keys(originalTask.completed);
         const usersInvolved = Object.keys(updates.completed);
         const userInvolved = updates.completed.hasOwnProperty(uid);
         const promises = [];

@@ -123,8 +123,14 @@ const TaskForm = ({
       if (gid) task.gid = gid;
       if (deadline) task.deadline = deadline.valueOf();
       if (uploadRequired) {
+        const usersInvolved = Object.keys(groupCompletedState);
+
         task.uploadRequired = true;
-        task.downloadURLs = downloadURLs;
+        task.downloadURLs = {};
+        usersInvolved.forEach(uid => {
+          if (downloadURLs.hasOwnProperty(uid))
+            task.downloadURLs[uid] = downloadURLs[uid];
+        });
       }
       if (enforceNamingConvention)
         task.namingConvention = submittedNamingConvention;
