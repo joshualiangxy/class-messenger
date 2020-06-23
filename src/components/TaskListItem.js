@@ -86,7 +86,10 @@ export const TaskListItem = ({
 
   const onRequestClose = () => setOpen(false);
 
-  const onDownload = () => downloadFile(gid, id);
+  const onDownload = e => {
+    e.stopPropagation();
+    downloadFile(gid, id);
+  };
 
   return (
     <div>
