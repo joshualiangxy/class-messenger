@@ -41,8 +41,8 @@ export const downloadFile = (gid, id) => {
       .get()
       .then(snapshot => {
         const downloadURLs = Object.values(snapshot.get('downloadURLs'));
-
         const zip = new JSZip();
+
         downloadURLs.forEach(({ downloadURL, fileName }) => {
           JSZipUtils.getBinaryContent(downloadURL, (err, data) => {
             if (err) throw err;
