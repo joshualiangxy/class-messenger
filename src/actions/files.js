@@ -54,8 +54,8 @@ export const downloadFile = (gid, id) => {
           });
         });
 
-        return Promise.all(promises)
-          .then(() => zip.generateAsync({ type: 'blob' }))
+        return zip
+          .generateAsync({ type: 'blob' })
           .then(blob => saveAs(blob, 'submissions.zip'));
       });
 };
