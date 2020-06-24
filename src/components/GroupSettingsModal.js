@@ -2,8 +2,16 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { addNewUser, getUser } from '../actions/groups';
+import UserListing from './UserListing';
 
-const AddUserModal = ({ isOpen, onRequestClose, group, users, setUsers }) => {
+const GroupSettingsModal = ({
+  isOpen,
+  onRequestClose,
+  group,
+  users,
+  setUsers,
+  admin
+}) => {
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
 
@@ -62,10 +70,13 @@ const AddUserModal = ({ isOpen, onRequestClose, group, users, setUsers }) => {
         <button onClick={onCancel}>Cancel</button>
         <div>{error}</div>
       </form>
-      <h3>Added Users:</h3>
-      {users.map(user => (
-        <div key={user.studentNum}>{user.displayName}</div>
-      ))}
+      <h3>Users:</h3>
+      <UserListing
+        users={users}
+        setUsers={setUsers}
+        group={group}
+        admin={admin}
+      />
     </Modal>
   );
 };
@@ -75,4 +86,4 @@ const mapDispatchToProps = dispatch => ({
   getUser: email => dispatch(getUser(email))
 });
 
-export default connect(null, mapDispatchToProps)(AddUserModal);
+export default connect(null, mapDispatchToProps)(GroupSettingsModal);

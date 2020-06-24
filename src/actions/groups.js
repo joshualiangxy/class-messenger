@@ -115,6 +115,7 @@ export const leaveGroup = gid => ({
 });
 
 export const startLeaveGroup = (gid, count) => {
+  console.log(count);
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const groupRef = firebase.firestore().collection('groups').doc(gid);
@@ -192,4 +193,52 @@ export const getAllUsers = gid => {
         });
         return result;
       });
+};
+
+export const kickUser = (user, gid) => {
+  // user is a user object, group is gid
+  // Since users aren't stored inside the store, no need to dispatch
+  const uid = user.uid;
+  // Remove this user from the group's collection of users
+  const groupPromise = firebase
+    .firestore()
+    .collection('groups')
+    .doc(gid)
+    .collection('users')
+    .doc(uid)
+    .delete();
+  // Remove this group from the user's groups
+  const userPromise = firebase
+    .firestore()
+    .collection('users')
+    .doc(uid)
+    .update({
+      groups: firebase.firestore.FieldValue.arrayRemove(gid)
+    });
+  return Promise.all([groupPromise, userPromise]);
+};
+
+export const promoteUser = (user, gid) => {
+  const uid = user.uid;
+  return firebase
+    .firestore()
+    .collection('groups')
+    .doc(gid)
+    .collection('users')
+    .doc(uid)
+    .update({
+      admin: true
+    });
+};
+export const demoteUser = (user, gid) => {
+  const uid = user.uid;
+  return firebase
+    .firestore()
+    .collection('groups')
+    .doc(gid)
+    .collection('users')
+    .doc(uid)
+    .update({
+      admin: false
+    });
 };

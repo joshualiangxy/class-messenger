@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import LoadingPage from './LoadingPage';
-import AddUserModal from './AddUserModal';
+import GroupSettingsModal from './GroupSettingsModal';
 import LeaveGroupModal from './LeaveGroupModal';
 import AddTaskModal from './AddTaskModal';
 import GroupTaskList from './GroupTaskList';
@@ -25,8 +25,7 @@ const GroupPage = ({
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [canLeave, setCanLeave] = useState(false); // Hide the option to leave a group by default.
+  const [loading, setLoading] = useState(true);  
 
   useEffect(() => {
     if (!authorised) history.push('/groups');
@@ -48,23 +47,6 @@ const GroupPage = ({
   useEffect(() => {
     if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);
   }, [users, uid]);
-
-  // For determining if a user should be allowed to leave
-  useEffect(() => {
-    if (users.length <= 1) {
-      // This user is the only one in the group, so let him leave.
-      setCanLeave(true);
-    } else if (users.find(user => user.uid !== uid && user.admin)) {
-      // There is another user in this group who is an admin.
-      setCanLeave(true);
-    } else if (!admin) {
-      // This person is not an admin.
-      setCanLeave(true);
-    } else {
-      // This person is an admin, there are other people in the group, and there aren't any other admins.
-      setCanLeave(true); // Can't leave.
-    }
-  }, [users, admin, uid]);
 
   const addGroupTask = task => setTasks([...tasks, task]);
 
@@ -103,14 +85,13 @@ const GroupPage = ({
       ) : (
         <div>
           <h1>{groupName}</h1>
-          <button onClick={() => console.log(canLeave)}>log</button>
           {admin && (
             <div>
               <button onClick={openAddTask}>Add Task</button>
-              <button onClick={openAddUser}>Add new user</button>
+              <button onClick={openAddUser}>Group Settings</button>
             </div>
           )}
-          {canLeave && <button onClick={openLeave}>Leave Group</button>}
+          <button onClick={openLeave}>Leave Group</button>
           <GroupTaskList
             tasks={tasks}
             users={users}
@@ -120,12 +101,13 @@ const GroupPage = ({
             removeGroupTask={removeGroupTask}
             toggleGroupTaskComplete={toggleGroupTaskComplete}
           />
-          <AddUserModal
+          <GroupSettingsModal
             isOpen={addUserOpen}
             onRequestClose={closeAddUser}
             group={gid}
             users={users}
             setUsers={setUsers}
+            admin={admin}
           />
           <LeaveGroupModal
             isOpen={leaveOpen}
@@ -133,6 +115,8 @@ const GroupPage = ({
             gid={gid}
             users={users}
             renderLoad={renderLoad}
+            uid={uid}
+            admin={admin}
           />
           <AddTaskModal
             isOpen={addTaskOpen}
