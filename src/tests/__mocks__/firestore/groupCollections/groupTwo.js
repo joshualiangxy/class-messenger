@@ -23,7 +23,22 @@ export const groupTwoTaskCollectionGet = jest.fn(() =>
 
 const groupTwoTaskCollectionRef = { get: groupTwoTaskCollectionGet };
 
-export const groupTwoDocCollection = jest.fn(() => groupTwoTaskCollectionRef);
+export const groupTwoUserDocUpdate = jest.fn();
+
+const groupTwoUserDocRef = { update: groupTwoUserDocUpdate };
+
+export const groupTwoUserDoc = jest.fn(() => groupTwoUserDocRef);
+
+const groupTwoUserCollectionRef = { doc: groupTwoUserDoc };
+
+export const groupTwoDocCollection = jest.fn(collectionName => {
+  switch (collectionName) {
+    case 'tasks':
+      return groupTwoTaskCollectionRef;
+    case 'users':
+      return groupTwoUserCollectionRef;
+  }
+});
 
 const groupTwoDocRef = {
   get: groupTwoDocGet,

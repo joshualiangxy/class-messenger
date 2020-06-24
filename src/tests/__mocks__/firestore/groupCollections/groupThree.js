@@ -23,9 +23,22 @@ export const groupThreeTaskCollectionGet = jest.fn(() =>
 
 const groupThreeTaskCollectionRef = { get: groupThreeTaskCollectionGet };
 
-export const groupThreeDocCollection = jest.fn(
-  () => groupThreeTaskCollectionRef
-);
+export const groupThreeUserDocUpdate = jest.fn();
+
+const groupThreeUserDocRef = { update: groupThreeUserDocUpdate };
+
+export const groupThreeUserDoc = jest.fn(() => groupThreeUserDocRef);
+
+const groupThreeUserCollectionRef = { doc: groupThreeUserDoc };
+
+export const groupThreeDocCollection = jest.fn(collectionName => {
+  switch (collectionName) {
+    case 'tasks':
+      return groupThreeTaskCollectionRef;
+    case 'users':
+      return groupThreeUserCollectionRef;
+  }
+});
 
 const groupThreeDocRef = {
   get: groupThreeDocGet,

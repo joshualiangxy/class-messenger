@@ -9,9 +9,12 @@ export const userDocGet = jest.fn(() => Promise.resolve(userDocSnapshot));
 
 export const userDocSet = jest.fn(() => Promise.resolve());
 
+export const userDocUpdate = jest.fn(() => Promise.resolve());
+
 const userDocRef = {
   get: userDocGet,
   set: userDocSet,
+  update: userDocUpdate,
   collection: userDocCollection
 };
 

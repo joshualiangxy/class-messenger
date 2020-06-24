@@ -10,7 +10,8 @@ import {
   userDoc,
   userDocGet,
   userDocSet,
-  userDocSnapshotGet
+  userDocSnapshotGet,
+  userDocUpdate
 } from '../__mocks__/firestore/users';
 import {
   getUserData,
@@ -19,8 +20,25 @@ import {
   setUserData,
   startSetUserData,
   newUser,
-  startNewUser
+  startNewUser,
+  addGroup
 } from '../../actions/user';
+import {
+  groupOneDocCollection,
+  groupOneUserDoc,
+  groupOneUserDocUpdate
+} from '../__mocks__/firestore/groupCollections/groupOne';
+import { groupDoc } from '../__mocks__/firestore/groups';
+import {
+  groupTwoDocCollection,
+  groupTwoUserDoc,
+  groupTwoUserDocUpdate
+} from '../__mocks__/firestore/groupCollections/groupTwo';
+import {
+  groupThreeDocCollection,
+  groupThreeUserDoc,
+  groupThreeUserDocUpdate
+} from '../__mocks__/firestore/groupCollections/groupThree';
 
 firebase.firestore = firestore;
 
@@ -89,16 +107,65 @@ describe('set user data', () => {
     store.dispatch(startSetUserData(displayName, studentNum)).then(() => {
       const actions = store.getActions();
 
-      expect(firestore).toHaveBeenCalledTimes(1);
+      expect(firestore).toHaveBeenCalledTimes(4);
 
-      expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenLastCalledWith('users');
+      expect(collection).toHaveBeenCalledTimes(4);
+      expect(collection).toHaveBeenNthCalledWith(1, 'users');
+      expect(collection).toHaveBeenNthCalledWith(2, 'groups');
+      expect(collection).toHaveBeenNthCalledWith(3, 'groups');
+      expect(collection).toHaveBeenNthCalledWith(4, 'groups');
 
       expect(userDoc).toHaveBeenCalledTimes(1);
       expect(userDoc).toHaveBeenLastCalledWith(uid);
 
-      expect(userDocSet).toHaveBeenCalledTimes(1);
-      expect(userDocSet).toHaveBeenLastCalledWith({
+      expect(userDocGet).toHaveBeenCalledTimes(1);
+
+      expect(userDocSnapshotGet).toHaveBeenCalledTimes(1);
+      expect(userDocSnapshotGet).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(3);
+      expect(groupDoc).toHaveBeenNthCalledWith(1, groups[0]);
+      expect(groupDoc).toHaveBeenNthCalledWith(2, groups[1]);
+      expect(groupDoc).toHaveBeenNthCalledWith(3, groups[2]);
+
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('users');
+
+      expect(groupOneUserDoc).toHaveBeenCalledTimes(1);
+      expect(groupOneUserDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(groupOneUserDocUpdate).toHaveBeenCalledTimes(1);
+      expect(groupOneUserDocUpdate).toHaveBeenLastCalledWith({
+        displayName,
+        studentNum
+      });
+
+      expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupTwoDocCollection).toHaveBeenLastCalledWith('users');
+
+      expect(groupTwoUserDoc).toHaveBeenCalledTimes(1);
+      expect(groupTwoUserDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(groupTwoUserDocUpdate).toHaveBeenCalledTimes(1);
+      expect(groupTwoUserDocUpdate).toHaveBeenLastCalledWith({
+        displayName,
+        studentNum
+      });
+
+      expect(groupThreeDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupThreeDocCollection).toHaveBeenLastCalledWith('users');
+
+      expect(groupThreeUserDoc).toHaveBeenCalledTimes(1);
+      expect(groupThreeUserDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(groupThreeUserDocUpdate).toHaveBeenCalledTimes(1);
+      expect(groupThreeUserDocUpdate).toHaveBeenLastCalledWith({
+        displayName,
+        studentNum
+      });
+
+      expect(userDocUpdate).toHaveBeenCalledTimes(1);
+      expect(userDocUpdate).toHaveBeenLastCalledWith({
         displayName,
         studentNum
       });
@@ -112,22 +179,38 @@ describe('new user', () => {
   it('should generate action object', () =>
     expect(newUser()).toEqual({ type: 'NEW_USER' }));
 
-  it('should add emailToUid document', () =>
+  it('should add emailToUid document and set default fields', () =>
     store.dispatch(startNewUser()).then(() => {
       const actions = store.getActions();
 
-      expect(firestore).toHaveBeenCalledTimes(1);
+      expect(firestore).toHaveBeenCalledTimes(2);
 
-      expect(collection).toHaveBeenCalledTimes(1);
-      expect(collection).toHaveBeenLastCalledWith('emailToUid');
+      expect(collection).toHaveBeenCalledTimes(2);
+      expect(collection).toHaveBeenNthCalledWith(1, 'emailToUid');
+      expect(collection).toHaveBeenNthCalledWith(2, 'users');
 
       expect(emailToUidDoc).toHaveBeenCalledTimes(1);
       expect(emailToUidDoc).toHaveBeenLastCalledWith(email);
 
       expect(emailToUidDocSet).toHaveBeenCalledTimes(1);
-      expect(emailToUidDocSet).toHaveBeenLastCalledWith({ uid, groups: [] });
+      expect(emailToUidDocSet).toHaveBeenLastCalledWith({ uid });
+
+      expect(userDoc).toHaveBeenCalledTimes(1);
+      expect(userDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(userDocSet).toHaveBeenCalledTimes(1);
+      expect(userDocSet).toHaveBeenLastCalledWith({
+        displayName: '',
+        studentNum: '',
+        groups: []
+      });
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(newUser());
     }));
+});
+
+describe('add group', () => {
+  it('should generate action object', () =>
+    expect(addGroup(groups[0])).toEqual({ type: 'ADD_GROUP', gid: groups[0] }));
 });
