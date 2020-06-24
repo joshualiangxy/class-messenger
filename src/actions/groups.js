@@ -137,14 +137,15 @@ export const startLeaveGroup = (gid, count) => {
           // However, this problem can also be solved if we do an additional database-check to ensure there aren't any users left.
           // The count includes the current user.
 
-          // This doesn't delete all the subcollections here, so tasks aren't deleted yet.
-          // TODO: delete tasks collection when that part is implemented
-
           // Deletes all of the documents under the users collection.
           const usersPromise = groupRef.collection('users').get().then(snapshot => {
             snapshot.forEach(doc => doc.ref.delete())
           })
-          return usersPromise.then(() => groupRef.delete());
+            // Deletes all of the documents under the tasks collection.
+          const tasksPromise = groupRef.collection('tasks').get().then(snapshot => {
+            snapshot.forEach(doc => doc.ref.delete())
+          })
+          return Promise.all([usersPromise, tasksPromise]).then(() => groupRef.delete());
         } else {
           return;
         }
@@ -223,6 +224,7 @@ export const kickUser = (user, gid) => {
   // Remove the user from any tasks 
   const tasksPromise = firebase.firestore().collection('tasks').get().then(query => {
     // Not fully implemented yet. 
+    // TODO: This should remove the person's field from the completed object of the doc.
     query.forEach(doc => {
       const update = {};
 

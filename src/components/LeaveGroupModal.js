@@ -43,9 +43,7 @@ const LeaveGroupModal = ({
     // There is another admin in the group already, or this group will be empty after leaving.
     renderLoad();
     history.push('/groups');
-    startLeaveGroup(gid, users.length).then(() => {
-      onRequestClose();
-    });
+    startLeaveGroup(gid, users.length).then(() => onRequestClose());
   };
 
   return (
