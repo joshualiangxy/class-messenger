@@ -137,9 +137,14 @@ export const startLeaveGroup = (gid, count) => {
           // However, this problem can also be solved if we do an additional database-check to ensure there aren't any users left.
           // The count includes the current user.
 
-          // This doesn't delete all the subcollections here, so users and tasks aren't deleted yet.
+          // This doesn't delete all the subcollections here, so tasks aren't deleted yet.
           // TODO: delete tasks collection when that part is implemented
-          return groupRef.delete();
+
+          // Deletes all of the documents under the users collection.
+          const usersPromise = groupRef.collection('users').get().then(snapshot => {
+            snapshot.forEach(doc => doc.ref.delete())
+          })
+          return usersPromise.then(() => groupRef.delete());
         } else {
           return;
         }
