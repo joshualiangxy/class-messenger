@@ -108,6 +108,7 @@ const GroupPage = ({
             users={users}
             setUsers={setUsers}
             admin={admin}
+            uid={uid}
           />
           <LeaveGroupModal
             isOpen={leaveOpen}

@@ -10,7 +10,8 @@ const GroupSettingsModal = ({
   group,
   users,
   setUsers,
-  admin
+  admin,
+  uid
 }) => {
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +27,7 @@ const GroupSettingsModal = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    const submittedEmail = userEmail.trim();
+    const submittedEmail = userEmail.trim().toLowerCase();
 
     if (!submittedEmail) {
       setError('Please enter an email');
@@ -76,6 +77,7 @@ const GroupSettingsModal = ({
         setUsers={setUsers}
         group={group}
         admin={admin}
+        uid={uid}
       />
     </Modal>
   );

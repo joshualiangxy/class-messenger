@@ -220,6 +220,16 @@ export const kickUser = (user, gid) => {
     .update({
       groups: firebase.firestore.FieldValue.arrayRemove(gid)
     });
+  // Remove the user from any tasks 
+  const tasksPromise = firebase.firestore().collection('tasks').get().then(query => {
+    // Not fully implemented yet. 
+    query.forEach(doc => {
+      const update = {};
+
+      update[`completed.${uid}`] = firebase.firestore.FieldValue.delete();
+      doc.update(update);
+    })
+  })
   return Promise.all([groupPromise, userPromise]);
 };
 

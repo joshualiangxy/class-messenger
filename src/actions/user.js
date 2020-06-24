@@ -70,7 +70,7 @@ export const newUser = () => ({ type: 'NEW_USER' });
 export const startNewUser = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const email = getState().auth.user.email;
+    const email = getState().auth.user.email.toLowerCase();
     const promises = [];
 
     promises.push(
