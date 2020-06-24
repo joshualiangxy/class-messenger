@@ -30,4 +30,39 @@ const tasks = [
   }
 ];
 
+export const groupTasks = [
+  {
+    completed: { testuid: false },
+    description: 'Finish by Sunday!',
+    downloadURLs: {
+      testuid: { fileName: 'Homework.pdf', downloadURL: 'website.com' }
+    },
+    gid: '72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9',
+    id: '076e610e-aade-4d2b-897f-81a29f00c76b',
+    module: 'CS1231',
+    title: 'Homework 1',
+    uploadRequired: true
+  },
+  {
+    completed: {},
+    deadline: 1593403200000,
+    description: '',
+    gid: 'ce5c9b1b-e4d2-4dd2-bae4-7c559e8235ea',
+    id: '0b80e917-78a4-4f87-a379-cdc1733923d6',
+    module: 'CS2040S',
+    title: 'Do problem set'
+  },
+  {
+    completed: { testuid: false },
+    deadline: 1593489600000,
+    description: 'Finish readings',
+    downloadURLs: {},
+    gid: '3e28d54d-ebc1-4469-be21-e59ce210f245',
+    id: 'c1511c73-07b9-44cd-a4bd-01758515acb5',
+    module: 'GEQ1000',
+    title: 'Physics readings',
+    uploadRequired: true
+  }
+];
+
 export default tasks;

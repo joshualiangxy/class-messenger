@@ -1,8 +1,9 @@
 import createMockStore from '../../setupTests';
-import tasks from '../fixtures/tasks';
+import tasks, { groupTasks } from '../fixtures/tasks';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
 import firestore, { collection } from '../__mocks__/firestore.mock';
+import storage from '../__mocks__/firebase.storage.mock';
 import {
   userDoc,
   userDocGet,
@@ -23,14 +24,20 @@ import {
   groupOneDocCollection,
   groupOneDocSnapshotGet,
   groupOneTaskCollectionGet,
-  queryGroupOneTaskSnapshot
+  queryGroupOneTaskSnapshot,
+  groupOneTaskDoc,
+  groupOneTaskDocSet,
+  groupOneTaskDocRef
 } from '../__mocks__/firestore/groupCollections/groupOne';
 import {
   groupTwoDocGet,
   groupTwoDocCollection,
   groupTwoDocSnapshotGet,
   groupTwoTaskCollectionGet,
-  queryGroupTwoTaskSnapshot
+  queryGroupTwoTaskSnapshot,
+  groupTwoTaskDoc,
+  groupTwoTaskDocSet,
+  groupTwoTaskDocRef
 } from '../__mocks__/firestore/groupCollections/groupTwo';
 import {
   groupThreeDocGet,
@@ -42,29 +49,42 @@ import {
 import {
   addTask,
   startAddPersonalTask,
-  removePersonalTask,
+  removeTask,
   startRemovePersonalTask,
-  editPersonalTask,
+  editTask,
   startEditPersonalTask,
   setTasks,
   startSetTasks,
   toggleCompleted,
   startToggleCompletedPersonal,
-  removeTaskData
+  removeTaskData,
+  startAddGroupTask,
+  startRemoveGroupTask,
+  startEditGroupTask,
+  startRemoveDownloadURL,
+  removeDownloadURL
 } from '../../actions/tasks';
+import { startRemoveUserFile } from '../../actions/files';
 
 firebase.firestore = firestore;
+firebase.storage = storage;
 
 const uid = 'testuid';
-const store = createMockStore({
-  auth: {
-    user: { uid }
-  }
-});
 const task = tasks[0];
 const id = task.id;
+const groupName = 'Test Group';
+const groupTask = groupTasks[0];
+const groupTaskId = groupTask.id;
+const groupTaskGid = groupTask.gid;
+let store;
 
 beforeEach(() => {
+  store = createMockStore({
+    auth: {
+      user: { uid }
+    },
+    tasks: [{ ...groupTask, completed: false }]
+  });
   jest.clearAllMocks();
   store.clearActions();
 });
@@ -97,14 +117,62 @@ describe('add task', () => {
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(addTask(task));
     }));
+
+  it('should add group task to firestore', () =>
+    store.dispatch(startAddGroupTask(groupTask, groupName)).then(() => {
+      const actions = store.getActions();
+
+      expect(firestore).toHaveBeenCalledTimes(1);
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+      expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+      expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+      expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
+      expect(groupOneTaskDocSet).toHaveBeenLastCalledWith(groupTask);
+
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toEqual(
+        addTask({ ...groupTask, groupName, completed: false })
+      );
+    }));
+
+  it('should not add group task to store if user not involved', () =>
+    store.dispatch(startAddGroupTask(groupTasks[1], groupName)).then(() => {
+      const actions = store.getActions();
+
+      expect(firestore).toHaveBeenCalledTimes(1);
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[1].gid);
+
+      expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
+
+      expect(groupTwoTaskDoc).toHaveBeenCalledTimes(1);
+      expect(groupTwoTaskDoc).toHaveBeenLastCalledWith(groupTasks[1].id);
+
+      expect(groupTwoTaskDocSet).toHaveBeenCalledTimes(1);
+      expect(groupTwoTaskDocSet).toHaveBeenLastCalledWith(groupTasks[1]);
+
+      expect(actions).toHaveLength(0);
+    }));
 });
 
-describe('remove personal task', () => {
+describe('remove task', () => {
   it('should generate action object', () =>
-    expect(removePersonalTask(id)).toEqual({
-      type: 'REMOVE_PERSONAL_TASK',
-      id
-    }));
+    expect(removeTask(id)).toEqual({ type: 'REMOVE_TASK', id }));
 
   it('should remove personal task from firestore', () =>
     store.dispatch(startRemovePersonalTask(id)).then(() => {
@@ -127,20 +195,67 @@ describe('remove personal task', () => {
       expect(userTaskDocRef.delete).toHaveBeenCalledTimes(1);
 
       expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(removePersonalTask(id));
+      expect(actions[0]).toEqual(removeTask(id));
     }));
+
+  it('should remove group task from firestore', () =>
+    store.dispatch(startRemoveGroupTask(groupTaskGid, groupTaskId)).then(() => {
+      const actions = store.getActions();
+
+      expect(firestore).toHaveBeenCalledTimes(1);
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+      expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+      expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+      expect(groupOneTaskDocRef.delete).toHaveBeenCalledTimes(1);
+
+      expect(actions).toHaveLength(1);
+      expect(actions[0]).toEqual(removeTask(groupTaskId));
+    }));
+
+  it('should not remove task from store if user is not involved', () =>
+    store
+      .dispatch(startRemoveGroupTask(groupTasks[1].gid, groupTasks[1].id))
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[1].gid);
+
+        expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupTwoTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupTwoTaskDoc).toHaveBeenLastCalledWith(groupTasks[1].id);
+
+        expect(groupTwoTaskDocRef.delete).toHaveBeenCalledTimes(1);
+
+        expect(actions).toHaveLength(0);
+      }));
 });
 
-describe('edit personal task', () => {
+describe('edit task', () => {
   const updates = tasks[1];
+  const groupUpdates = Object.assign({}, groupTask);
+  groupUpdates.description = '';
+  groupUpdates.title = 'New title';
 
-  it('should generate action object', () => {
-    expect(editPersonalTask(id, updates)).toEqual({
-      type: 'EDIT_PERSONAL_TASK',
-      id,
-      updates
-    });
-  });
+  it('should generate action object', () =>
+    expect(editTask(id, updates)).toEqual({ type: 'EDIT_TASK', id, updates }));
 
   it('should update personal task in firestore', () =>
     store.dispatch(startEditPersonalTask(id, updates)).then(() => {
@@ -154,12 +269,123 @@ describe('edit personal task', () => {
       expect(userDoc).toHaveBeenCalledTimes(1);
       expect(userDoc).toHaveBeenLastCalledWith(uid);
 
-      expect(userTaskUpdate).toHaveBeenCalledTimes(1);
-      expect(userTaskUpdate).toHaveBeenLastCalledWith(updates);
+      expect(userTaskSet).toHaveBeenCalledTimes(1);
+      expect(userTaskSet).toHaveBeenLastCalledWith(updates);
 
       expect(actions).toHaveLength(1);
-      expect(actions[0]).toEqual(editPersonalTask(id, updates));
+      expect(actions[0]).toEqual(editTask(id, updates));
     }));
+
+  it('should update group task in firestore', () =>
+    store
+      .dispatch(
+        startEditGroupTask(groupTaskId, groupUpdates, groupName, groupTask)
+      )
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocSet).toHaveBeenLastCalledWith(groupUpdates);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(
+          editTask(groupTaskId, {
+            ...groupUpdates,
+            groupName,
+            completed: false
+          })
+        );
+      }));
+
+  it('should dispatch add task if user is involved and task is not found in store', () => {
+    store = createMockStore({
+      auth: {
+        user: { uid }
+      },
+      tasks: []
+    });
+
+    return store
+      .dispatch(
+        startEditGroupTask(groupTaskId, groupUpdates, groupName, groupTask)
+      )
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocSet).toHaveBeenLastCalledWith(groupUpdates);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(
+          addTask({
+            ...groupUpdates,
+            groupName,
+            completed: false
+          })
+        );
+      });
+  });
+
+  it('should dispatch remove task if task was in store, but user is no longer involved', () => {
+    groupUpdates.completed = {};
+
+    return store
+      .dispatch(
+        startEditGroupTask(groupTaskId, groupUpdates, groupName, groupTask)
+      )
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(2);
+
+        expect(collection).toHaveBeenCalledTimes(2);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(2);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(2);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocSet).toHaveBeenLastCalledWith(groupUpdates);
+
+        expect(actions).toHaveLength(2);
+        expect(actions[0]).toEqual(removeDownloadURL(groupTaskId, uid));
+        expect(actions[1]).toEqual(removeTask(groupTaskId));
+      });
+  });
 });
 
 describe('set tasks', () => {
@@ -208,7 +434,15 @@ describe('set tasks', () => {
       expect(groupOneTaskCollectionGet).toHaveBeenCalledTimes(1);
 
       expect(queryGroupOneTaskSnapshot).toHaveLength(1);
-      expect(queryGroupOneTaskSnapshot[0].data).toHaveBeenCalledTimes(1);
+      expect(queryGroupOneTaskSnapshot[0].get).toHaveBeenCalledTimes(2);
+      expect(queryGroupOneTaskSnapshot[0].get).toHaveBeenNthCalledWith(
+        1,
+        'completed'
+      );
+      expect(queryGroupOneTaskSnapshot[0].get).toHaveBeenNthCalledWith(
+        2,
+        'completed'
+      );
 
       expect(groupTwoDocGet).toHaveBeenCalledTimes(1);
 
@@ -221,7 +455,11 @@ describe('set tasks', () => {
       expect(groupTwoTaskCollectionGet).toHaveBeenCalledTimes(1);
 
       expect(queryGroupTwoTaskSnapshot).toHaveLength(1);
-      expect(queryGroupTwoTaskSnapshot[0].data).toHaveBeenCalledTimes(1);
+      expect(queryGroupTwoTaskSnapshot[0].get).toHaveBeenCalledTimes(1);
+      expect(queryGroupTwoTaskSnapshot[0].get).toHaveBeenNthCalledWith(
+        1,
+        'completed'
+      );
 
       expect(groupThreeDocGet).toHaveBeenCalledTimes(1);
 
@@ -234,26 +472,31 @@ describe('set tasks', () => {
       expect(groupThreeTaskCollectionGet).toHaveBeenCalledTimes(1);
 
       expect(queryGroupThreeTaskSnapshot).toHaveLength(1);
-      expect(queryGroupThreeTaskSnapshot[0].data).toHaveBeenCalledTimes(1);
+      expect(queryGroupThreeTaskSnapshot[0].get).toHaveBeenCalledTimes(2);
+      expect(queryGroupThreeTaskSnapshot[0].get).toHaveBeenNthCalledWith(
+        1,
+        'completed'
+      );
+      expect(queryGroupThreeTaskSnapshot[0].get).toHaveBeenNthCalledWith(
+        2,
+        'completed'
+      );
 
       expect(actions).toHaveLength(1);
       expect(actions[0]).toEqual(
         setTasks([
           tasks[0],
           {
-            ...tasks[1],
+            ...groupTasks[0],
             gid: user.groups[0],
-            groupName: 'groupOne'
+            groupName: 'groupOne',
+            completed: groupTasks[0].completed[uid]
           },
           {
-            ...tasks[2],
-            gid: user.groups[1],
-            groupName: 'groupTwo'
-          },
-          {
-            ...tasks[3],
+            ...groupTasks[2],
             gid: user.groups[2],
-            groupName: 'groupThree'
+            groupName: 'groupThree',
+            completed: groupTasks[2].completed[uid]
           }
         ])
       );

@@ -3,7 +3,7 @@ import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 
-const renameFile = (original, newName) =>
+export const renameFile = (original, newName) =>
   new File([original], newName, {
     type: original.type,
     lastModified: original.lastModified
@@ -23,8 +23,8 @@ export const uploadFile = (file, id, nameConvention) => {
         file,
         `${studentNum}_${nameConvention}${fileExtension}`
       );
+      fileName = file.name;
     }
-    fileName = file.name;
 
     return firebase.storage().ref(`${id}/${uid}/${fileName}`).put(file);
   };

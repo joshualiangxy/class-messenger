@@ -1,4 +1,4 @@
-import tasks from '../../../fixtures/tasks';
+import { groupTasks as tasks } from '../../../fixtures/tasks';
 
 export const groupOneDocSnapshotGet = jest.fn(() =>
   Promise.resolve('groupOne')
@@ -12,8 +12,9 @@ export const groupOneDocGet = jest.fn(() =>
 
 export const queryGroupOneTaskSnapshot = [
   {
-    id: tasks[1].id,
-    data: jest.fn(() => tasks[1])
+    id: tasks[0].id,
+    data: jest.fn(() => tasks[0]),
+    get: jest.fn(() => tasks[0].completed)
   }
 ];
 
@@ -21,7 +22,22 @@ export const groupOneTaskCollectionGet = jest.fn(() =>
   Promise.resolve(queryGroupOneTaskSnapshot)
 );
 
-const groupOneTaskCollectionRef = { get: groupOneTaskCollectionGet };
+export const groupOneTaskDocSet = jest.fn(() => Promise.resolve());
+
+export const groupOneTaskDocUpdate = jest.fn(() => Promise.resolve());
+
+export const groupOneTaskDocRef = {
+  set: groupOneTaskDocSet,
+  update: groupOneTaskDocUpdate,
+  delete: jest.fn(() => Promise.resolve())
+};
+
+export const groupOneTaskDoc = jest.fn(() => groupOneTaskDocRef);
+
+const groupOneTaskCollectionRef = {
+  get: groupOneTaskCollectionGet,
+  doc: groupOneTaskDoc
+};
 
 export const groupOneUserDocUpdate = jest.fn();
 
