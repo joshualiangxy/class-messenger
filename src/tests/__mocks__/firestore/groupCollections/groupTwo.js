@@ -26,10 +26,15 @@ export const groupTwoTaskDocSet = jest.fn(() => Promise.resolve());
 
 export const groupTwoTaskDocUpdate = jest.fn(() => Promise.resolve());
 
+export const groupTwoTaskDocGet = jest.fn(() =>
+  Promise.resolve(queryGroupTwoTaskSnapshot[0])
+);
+
 export const groupTwoTaskDocRef = {
   set: groupTwoTaskDocSet,
   update: groupTwoTaskDocUpdate,
-  delete: jest.fn(() => Promise.resolve())
+  delete: jest.fn(() => Promise.resolve()),
+  get: groupTwoTaskDocGet
 };
 
 export const groupTwoTaskDoc = jest.fn(() => groupTwoTaskDocRef);

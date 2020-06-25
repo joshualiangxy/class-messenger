@@ -2,7 +2,7 @@ import createMockStore from '../../setupTests';
 import tasks, { groupTasks } from '../fixtures/tasks';
 import user from '../fixtures/user';
 import firebase from '../../firebase/firebase';
-import firestore, { collection } from '../__mocks__/firestore.mock';
+import firestore, { collection, FieldValue } from '../__mocks__/firestore.mock';
 import storage from '../__mocks__/firebase.storage.mock';
 import {
   userDoc,
@@ -26,8 +26,10 @@ import {
   groupOneTaskCollectionGet,
   queryGroupOneTaskSnapshot,
   groupOneTaskDoc,
+  groupOneTaskDocGet,
   groupOneTaskDocSet,
-  groupOneTaskDocRef
+  groupOneTaskDocRef,
+  groupOneTaskDocUpdate
 } from '../__mocks__/firestore/groupCollections/groupOne';
 import {
   groupTwoDocGet,
@@ -37,7 +39,8 @@ import {
   queryGroupTwoTaskSnapshot,
   groupTwoTaskDoc,
   groupTwoTaskDocSet,
-  groupTwoTaskDocRef
+  groupTwoTaskDocRef,
+  groupTwoTaskDocGet
 } from '../__mocks__/firestore/groupCollections/groupTwo';
 import {
   groupThreeDocGet,
@@ -62,9 +65,12 @@ import {
   startRemoveGroupTask,
   startEditGroupTask,
   startRemoveDownloadURL,
-  removeDownloadURL
+  removeDownloadURL,
+  startToggleCompletedGroup,
+  getAllGroupTasks,
+  updateDownloadURL,
+  startUpdateDownloadURL
 } from '../../actions/tasks';
-import { startRemoveUserFile } from '../../actions/files';
 
 firebase.firestore = firestore;
 firebase.storage = storage;
@@ -542,10 +548,208 @@ describe('toggle completed state for task', () => {
         expect(actions[0]).toEqual(toggleCompleted(id, completedState));
       }));
 
-  it('should toggle completed state for group task in firestore', () => {});
+  it('should toggle completed state for group task in firestore', () =>
+    store
+      .dispatch(
+        startToggleCompletedGroup(
+          groupTaskId,
+          groupTaskGid,
+          groupTask.completed.testuid
+        )
+      )
+      .then(returnValue => {
+        const actions = store.getActions();
+        const toggle = {};
+        toggle[`completed.${uid}`] = !completedState;
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocGet).toHaveBeenCalledTimes(1);
+
+        expect(groupOneTaskDocUpdate).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocUpdate).toHaveBeenLastCalledWith(toggle);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(
+          toggleCompleted(groupTaskId, groupTask.completed.testuid)
+        );
+
+        expect(returnValue).toBe(true);
+      }));
+
+  it('should remove task from store and not write to firestore if user not involved', () =>
+    store
+      .dispatch(
+        startToggleCompletedGroup(groupTasks[1].id, groupTasks[1].gid, false)
+      )
+      .then(returnValue => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[1].gid);
+
+        expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupTwoTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupTwoTaskDoc).toHaveBeenLastCalledWith(groupTasks[1].id);
+
+        expect(groupTwoTaskDocGet).toHaveBeenCalledTimes(1);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(removeTask(groupTasks[1].id));
+
+        expect(returnValue).toBe(false);
+      }));
 });
 
 describe('remove task data', () => {
   it('should generate action object', () =>
     expect(removeTaskData()).toEqual({ type: 'REMOVE_TASK_DATA' }));
+});
+
+describe('get group tasks', () => {
+  it('should get all tasks in groupOne', () =>
+    store.dispatch(getAllGroupTasks(groupTaskGid)).then(tasks => {
+      expect(firestore).toHaveBeenCalledTimes(1);
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+      expect(groupOneTaskCollectionGet).toHaveBeenCalledTimes(1);
+
+      expect(tasks).toEqual([groupTask]);
+    }));
+
+  it('should get all tasks in groupTwo', () =>
+    store.dispatch(getAllGroupTasks(groupTasks[1].gid)).then(tasks => {
+      expect(firestore).toHaveBeenCalledTimes(1);
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[1].gid);
+
+      expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
+
+      expect(groupTwoTaskCollectionGet).toHaveBeenCalledTimes(1);
+
+      expect(tasks).toEqual([groupTasks[1]]);
+    }));
+});
+
+describe('update download url', () => {
+  const downloadURL = 'abc.com';
+  const fileName = 'file.pdf';
+
+  it('should generate action object', () =>
+    expect(updateDownloadURL(uid, groupTaskId, downloadURL, fileName)).toEqual({
+      type: 'UPDATE_DOWNLOAD_URL',
+      downloadURL,
+      id: groupTaskId,
+      uid,
+      fileName
+    }));
+
+  it('should update download url in firestore', () =>
+    store
+      .dispatch(
+        startUpdateDownloadURL(groupTaskId, groupTaskGid, downloadURL, fileName)
+      )
+      .then(() => {
+        const actions = store.getActions();
+        const update = {};
+        update[`downloadURLs.${uid}`] = {
+          downloadURL,
+          fileName
+        };
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocUpdate).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocUpdate).toHaveBeenLastCalledWith(update);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(
+          updateDownloadURL(uid, groupTaskId, downloadURL, fileName)
+        );
+      }));
+});
+
+describe('remove download url', () => {
+  it('should generate action object', () =>
+    expect(removeDownloadURL(groupTaskId, uid)).toEqual({
+      type: 'REMOVE_DOWNLOAD_URL',
+      uid,
+      id: groupTaskId
+    }));
+
+  it('should remove download url from firestore', () =>
+    store
+      .dispatch(startRemoveDownloadURL(groupTaskId, groupTaskGid, uid))
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(firestore).toHaveBeenCalledTimes(1);
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(FieldValue.delete).toHaveBeenCalledTimes(1);
+
+        const update = {};
+        update[`downloadURLs.${uid}`] = firebase.firestore.FieldValue.delete();
+
+        expect(groupOneTaskDocUpdate).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocUpdate).toHaveBeenLastCalledWith(update);
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(removeDownloadURL(groupTaskId, uid));
+      }));
 });

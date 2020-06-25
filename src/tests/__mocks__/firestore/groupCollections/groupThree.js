@@ -26,10 +26,15 @@ export const groupThreeTaskDocSet = jest.fn(() => Promise.resolve());
 
 export const groupThreeTaskDocUpdate = jest.fn(() => Promise.resolve());
 
+export const groupThreeTaskDocGet = jest.fn(() =>
+  Promise.resolve(queryGroupThreeTaskSnapshot[0])
+);
+
 export const groupThreeTaskDocRef = {
   set: groupThreeTaskDocSet,
   update: groupThreeTaskDocUpdate,
-  delete: jest.fn(() => Promise.resolve())
+  delete: jest.fn(() => Promise.resolve()),
+  get: groupThreeTaskDocGet
 };
 
 export const groupThreeTaskDoc = jest.fn(() => groupThreeTaskDocRef);

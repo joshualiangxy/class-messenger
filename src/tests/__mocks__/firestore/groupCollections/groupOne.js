@@ -26,10 +26,15 @@ export const groupOneTaskDocSet = jest.fn(() => Promise.resolve());
 
 export const groupOneTaskDocUpdate = jest.fn(() => Promise.resolve());
 
+export const groupOneTaskDocGet = jest.fn(() =>
+  Promise.resolve(queryGroupOneTaskSnapshot[0])
+);
+
 export const groupOneTaskDocRef = {
   set: groupOneTaskDocSet,
   update: groupOneTaskDocUpdate,
-  delete: jest.fn(() => Promise.resolve())
+  delete: jest.fn(() => Promise.resolve()),
+  get: groupOneTaskDocGet
 };
 
 export const groupOneTaskDoc = jest.fn(() => groupOneTaskDocRef);
