@@ -106,14 +106,16 @@ export const startEditGroupTask = (id, updates, groupName, originalTask) => {
         const userInvolved = updates.completed.hasOwnProperty(uid);
         const promises = [];
 
-        originalUsersInvolved.forEach(uid => {
-          if (!usersInvolved.includes(uid))
-            promises.push(
-              dispatch(startRemoveUserFile(id, uid)).then(() =>
-                dispatch(startRemoveDownloadURL(id, updates.gid, uid))
-              )
-            );
-        });
+        if (updates.uploadRequired) {
+          originalUsersInvolved.forEach(uid => {
+            if (!usersInvolved.includes(uid))
+              promises.push(
+                dispatch(startRemoveUserFile(id, uid)).then(() =>
+                  dispatch(startRemoveDownloadURL(id, updates.gid, uid))
+                )
+              );
+          });
+        }
 
         return Promise.all(promises).then(() => {
           if (userInvolved) {
@@ -303,4 +305,3 @@ export const startRemoveDownloadURL = (id, gid, uid) => {
       .then(() => dispatch(removeDownloadURL(id, uid)));
   };
 };
-

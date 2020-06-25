@@ -503,7 +503,7 @@ describe('set tasks', () => {
     }));
 });
 
-describe('toggle completed state for personal task', () => {
+describe('toggle completed state for task', () => {
   const completedState = task.completed;
   it('should generate action object', () => {
     expect(toggleCompleted(id, completedState)).toEqual({
@@ -513,7 +513,7 @@ describe('toggle completed state for personal task', () => {
     });
   });
 
-  it('should toggle completed state for task in firestore', () =>
+  it('should toggle completed state for personal task in firestore', () =>
     store
       .dispatch(startToggleCompletedPersonal(id, completedState))
       .then(() => {
@@ -541,6 +541,8 @@ describe('toggle completed state for personal task', () => {
         expect(actions).toHaveLength(1);
         expect(actions[0]).toEqual(toggleCompleted(id, completedState));
       }));
+
+  it('should toggle completed state for group task in firestore', () => {});
 });
 
 describe('remove task data', () => {
