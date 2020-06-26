@@ -1,7 +1,7 @@
-import firebase from '../firebase/firebase';
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
+import firebase from '../firebase/firebase';
 
 export const renameFile = (original, newName) =>
   new File([original], newName, {

@@ -14,7 +14,7 @@ export const queryGroupThreeTaskSnapshot = [
   {
     id: tasks[2].id,
     data: jest.fn(() => tasks[2]),
-    get: jest.fn(() => tasks[2].completed)
+    get: jest.fn(field => tasks[2][field])
   }
 ];
 

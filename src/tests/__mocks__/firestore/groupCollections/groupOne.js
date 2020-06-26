@@ -14,7 +14,7 @@ export const queryGroupOneTaskSnapshot = [
   {
     id: tasks[0].id,
     data: jest.fn(() => tasks[0]),
-    get: jest.fn(() => tasks[0].completed)
+    get: jest.fn(field => tasks[0][field])
   }
 ];
 
