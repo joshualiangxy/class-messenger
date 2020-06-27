@@ -4,15 +4,21 @@ import tasks from '../fixtures/tasks';
 import { EditTaskModal } from '../../components/EditTaskModal';
 
 const startEditPersonalTask = jest.fn(() => Promise.resolve());
+const startEditGroupTask = jest.fn(() => Promise.resolve());
 const onRequestClose = jest.fn();
 const task = tasks[2];
-const wrapper = shallow(
-  <EditTaskModal
-    startEditPersonalTask={startEditPersonalTask}
-    onRequestClose={onRequestClose}
-    task={task}
-  />
-);
+let wrapper;
+
+beforeEach(() => {
+  wrapper = shallow(
+    <EditTaskModal
+      startEditPersonalTask={startEditPersonalTask}
+      startEditGroupTask={startEditGroupTask}
+      onRequestClose={onRequestClose}
+      task={task}
+    />
+  );
+});
 
 describe('render', () => {
   it('should render EditTaskModal', () => expect(wrapper).toMatchSnapshot());
@@ -30,13 +36,13 @@ describe('submit task', () => {
     wrapper
       .find('TaskForm')
       .prop('submitTask')({
-        ...task[0],
+        ...tasks[0],
         id
       })
       .then(() => {
         expect(startEditPersonalTask).toHaveBeenCalledTimes(1);
         expect(startEditPersonalTask).toHaveBeenLastCalledWith(id, {
-          ...task[0],
+          ...tasks[0],
           id
         });
 

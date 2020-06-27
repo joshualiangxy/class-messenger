@@ -5,7 +5,10 @@ import tasks from '../fixtures/tasks';
 
 let wrapper;
 const startRemovePersonalTask = jest.fn();
+const startRemoveGroupTask = jest.fn(() => Promise.resolve());
+const removeGroupTask = jest.fn();
 const startToggleCompletedPersonal = jest.fn();
+const startToggleCompletedGroup = jest.fn(() => Promise.resolve());
 const task = tasks[0];
 const id = task.id;
 const completed = task.completed;
@@ -15,8 +18,12 @@ beforeEach(() => {
     <TaskListItem
       task={task}
       startRemovePersonalTask={startRemovePersonalTask}
+      startRemoveGroupTask={startRemoveGroupTask}
+      removeGroupTask={removeGroupTask}
       startToggleCompletedPersonal={startToggleCompletedPersonal}
+      startToggleCompletedGroup={startToggleCompletedGroup}
       showGroup={false}
+      dashboard={true}
     />
   );
 });

@@ -4,7 +4,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
 <div>
   <input
     checked={false}
-    disabled={true}
+    disabled={false}
     onChange={[Function]}
     type="checkbox"
   />
@@ -57,7 +57,7 @@ exports[`render should render TaskListItem 1`] = `
 <div>
   <input
     checked={false}
-    disabled={true}
+    disabled={false}
     onChange={[Function]}
     type="checkbox"
   />
@@ -95,7 +95,7 @@ exports[`render should render TaskListItem with alt task 1`] = `
 <div>
   <input
     checked={false}
-    disabled={true}
+    disabled={false}
     onChange={[Function]}
     type="checkbox"
   />
