@@ -6,4 +6,4 @@ The webapp is built on ReactJS and redux, and tested using jest.
 
 You can view the tests [here](./jest_html_reporters.html)
 
-You can visit the site [here](class-board-tasks.herokuapp.com/)
+You can visit the site [here](https://class-board-tasks.herokuapp.com/)
