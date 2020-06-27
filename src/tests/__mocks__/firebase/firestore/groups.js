@@ -1,4 +1,4 @@
-import user from '../../fixtures/user';
+import user from '../../../fixtures/user';
 import groupOneDocRef from './groupCollections/groupOne';
 import groupTwoDocRef from './groupCollections/groupTwo';
 import groupThreeDocRef from './groupCollections/groupThree';

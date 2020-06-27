@@ -1,4 +1,4 @@
-import firebase from '../firebase/firebase';
+import { firestore } from '../firebase/firebase';
 
 export const getUserData = (displayName, studentNum, groups) => ({
   type: 'GET_USER_DATA',
@@ -11,8 +11,7 @@ export const startGetUserData = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('users')
       .doc(uid)
       .get()
@@ -36,7 +35,7 @@ export const setUserData = (displayName, studentNum) => ({
 export const startSetUserData = (displayName, studentNum) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const userRef = firebase.firestore().collection('users').doc(uid);
+    const userRef = firestore.collection('users').doc(uid);
 
     return userRef
       .get()
@@ -45,7 +44,7 @@ export const startSetUserData = (displayName, studentNum) => {
         const promises = [];
 
         groups.forEach(gid => {
-          const groupRef = firebase.firestore().collection('groups').doc(gid);
+          const groupRef = firestore.collection('groups').doc(gid);
 
           promises.push(
             groupRef
@@ -73,12 +72,9 @@ export const startNewUser = () => {
     const email = getState().auth.user.email.toLowerCase();
     const promises = [];
 
+    promises.push(firestore.collection('emailToUid').doc(email).set({ uid }));
     promises.push(
-      firebase.firestore().collection('emailToUid').doc(email).set({ uid })
-    );
-    promises.push(
-      firebase
-        .firestore()
+      firestore
         .collection('users')
         .doc(uid)
         .set({ displayName: '', studentNum: '', groups: [] })

@@ -1,18 +1,17 @@
 import createMockStore from '../../setupTests';
 import user from '../fixtures/user';
-import firebase from '../../firebase/firebase';
-import firestore, { collection } from '../__mocks__/firestore.mock';
+import { collection } from '../__mocks__/firebase/firestore';
 import {
   emailToUidDoc,
   emailToUidDocSet
-} from '../__mocks__/firestore/emailToUid';
+} from '../__mocks__/firebase/firestore/emailToUid';
 import {
   userDoc,
   userDocGet,
   userDocSet,
   userDocSnapshotGet,
   userDocUpdate
-} from '../__mocks__/firestore/users';
+} from '../__mocks__/firebase/firestore/users';
 import {
   getUserData,
   startGetUserData,
@@ -27,20 +26,18 @@ import {
   groupOneDocCollection,
   groupOneUserDoc,
   groupOneUserDocUpdate
-} from '../__mocks__/firestore/groupCollections/groupOne';
-import { groupDoc } from '../__mocks__/firestore/groups';
+} from '../__mocks__/firebase/firestore/groupCollections/groupOne';
+import { groupDoc } from '../__mocks__/firebase/firestore/groups';
 import {
   groupTwoDocCollection,
   groupTwoUserDoc,
   groupTwoUserDocUpdate
-} from '../__mocks__/firestore/groupCollections/groupTwo';
+} from '../__mocks__/firebase/firestore/groupCollections/groupTwo';
 import {
   groupThreeDocCollection,
   groupThreeUserDoc,
   groupThreeUserDocUpdate
-} from '../__mocks__/firestore/groupCollections/groupThree';
-
-firebase.firestore = firestore;
+} from '../__mocks__/firebase/firestore/groupCollections/groupThree';
 
 const uid = 'testuid';
 const email = 'abc@123';
@@ -69,8 +66,6 @@ describe('get user data', () => {
   it('should get data from firestore', () =>
     store.dispatch(startGetUserData()).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('users');
@@ -106,8 +101,6 @@ describe('set user data', () => {
   it('should set data in firestore', () =>
     store.dispatch(startSetUserData(displayName, studentNum)).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(4);
 
       expect(collection).toHaveBeenCalledTimes(4);
       expect(collection).toHaveBeenNthCalledWith(1, 'users');
@@ -182,8 +175,6 @@ describe('new user', () => {
   it('should add emailToUid document and set default fields', () =>
     store.dispatch(startNewUser()).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(2);
 
       expect(collection).toHaveBeenCalledTimes(2);
       expect(collection).toHaveBeenNthCalledWith(1, 'emailToUid');

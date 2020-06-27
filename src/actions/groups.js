@@ -1,4 +1,4 @@
-import firebase from '../firebase/firebase';
+import firebase, { firestore } from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 import { addGroup } from './user';
 
@@ -14,8 +14,8 @@ export const startNewGroup = (groupName, module) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const gid = uuid();
-    const userRef = firebase.firestore().collection('users').doc(uid);
-    const groupRef = firebase.firestore().collection('groups').doc(gid);
+    const userRef = firestore.collection('users').doc(uid);
+    const groupRef = firestore.collection('groups').doc(gid);
 
     const userPromise = userRef.update({
       groups: firebase.firestore.FieldValue.arrayUnion(gid)
@@ -47,8 +47,7 @@ export const startNewGroup = (groupName, module) => {
 export const addNewUser = (user, gid) => {
   // Note: No checking on this side, since only valid users can be added by getUser
   // Add user to group
-  const groupPromise = firebase
-    .firestore()
+  const groupPromise = firestore
     .collection('groups')
     .doc(gid)
     .collection('users')
@@ -60,8 +59,7 @@ export const addNewUser = (user, gid) => {
       admin: false
     });
   // Add group to user's groups array.
-  const userPromise = firebase
-    .firestore()
+  const userPromise = firestore
     .collection('users')
     .doc(user.uid)
     .update({
@@ -75,8 +73,7 @@ export const setGroups = groups => ({ type: 'SET_GROUPS', groups });
 export const startSetGroups = () => {
   const groups = []; // The array of objects to be pushed
   return (dispatch, getState) => {
-    firebase
-      .firestore()
+    firestore
       .collection('users')
       .doc(getState().auth.user.uid)
       .get()
@@ -87,8 +84,7 @@ export const startSetGroups = () => {
 
         groupIds.forEach(gid => {
           promises.push(
-            firebase
-              .firestore()
+            firestore
               .collection('groups')
               .doc(gid)
               .get()
@@ -118,11 +114,10 @@ export const startLeaveGroup = (gid, count) => {
   console.log(count);
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
-    const groupRef = firebase.firestore().collection('groups').doc(gid);
+    const groupRef = firestore.collection('groups').doc(gid);
 
     // Promises
-    const userPromise = firebase
-      .firestore()
+    const userPromise = firestore
       .collection('users')
       .doc(uid)
       .update({
@@ -138,14 +133,22 @@ export const startLeaveGroup = (gid, count) => {
           // The count includes the current user.
 
           // Deletes all of the documents under the users collection.
-          const usersPromise = groupRef.collection('users').get().then(snapshot => {
-            snapshot.forEach(doc => doc.ref.delete())
-          })
-            // Deletes all of the documents under the tasks collection.
-          const tasksPromise = groupRef.collection('tasks').get().then(snapshot => {
-            snapshot.forEach(doc => doc.ref.delete())
-          })
-          return Promise.all([usersPromise, tasksPromise]).then(() => groupRef.delete());
+          const usersPromise = groupRef
+            .collection('users')
+            .get()
+            .then(snapshot => {
+              snapshot.forEach(doc => doc.ref.delete());
+            });
+          // Deletes all of the documents under the tasks collection.
+          const tasksPromise = groupRef
+            .collection('tasks')
+            .get()
+            .then(snapshot => {
+              snapshot.forEach(doc => doc.ref.delete());
+            });
+          return Promise.all([usersPromise, tasksPromise]).then(() =>
+            groupRef.delete()
+          );
         } else {
           return;
         }
@@ -156,16 +159,14 @@ export const startLeaveGroup = (gid, count) => {
 
 export const getUser = email => {
   // Get UID from email
-  return firebase
-    .firestore()
+  return firestore
     .collection('emailToUid')
     .doc(email)
     .get()
     .then(uidDoc => {
       if (uidDoc.exists) {
         // If this user exists, find the UID associated
-        return firebase
-          .firestore()
+        return firestore
           .collection('users')
           .doc(uidDoc.data().uid)
           .get()
@@ -186,8 +187,7 @@ export const getUser = email => {
 // Not to be confused with getUser, this one is for all the users in a group.
 export const getAllUsers = gid => {
   return () =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(gid)
       .collection('users')
@@ -206,39 +206,39 @@ export const kickUser = (user, gid) => {
   // Since users aren't stored inside the store, no need to dispatch
   const uid = user.uid;
   // Remove this user from the group's collection of users
-  const groupPromise = firebase
-    .firestore()
+  const groupPromise = firestore
     .collection('groups')
     .doc(gid)
     .collection('users')
     .doc(uid)
     .delete();
   // Remove this group from the user's groups
-  const userPromise = firebase
-    .firestore()
+  const userPromise = firestore
     .collection('users')
     .doc(uid)
     .update({
       groups: firebase.firestore.FieldValue.arrayRemove(gid)
     });
-  // Remove the user from any tasks 
-  const tasksPromise = firebase.firestore().collection('tasks').get().then(query => {
-    // Not fully implemented yet. 
-    // TODO: This should remove the person's field from the completed object of the doc.
-    query.forEach(doc => {
-      const update = {};
+  // Remove the user from any tasks
+  const tasksPromise = firestore
+    .collection('tasks')
+    .get()
+    .then(query => {
+      // Not fully implemented yet.
+      // TODO: This should remove the person's field from the completed object of the doc.
+      query.forEach(doc => {
+        const update = {};
 
-      update[`completed.${uid}`] = firebase.firestore.FieldValue.delete();
-      doc.update(update);
-    })
-  })
+        update[`completed.${uid}`] = firebase.firestore.FieldValue.delete();
+        doc.update(update);
+      });
+    });
   return Promise.all([groupPromise, userPromise]);
 };
 
 export const promoteUser = (user, gid) => {
   const uid = user.uid;
-  return firebase
-    .firestore()
+  return firestore
     .collection('groups')
     .doc(gid)
     .collection('users')
@@ -249,8 +249,7 @@ export const promoteUser = (user, gid) => {
 };
 export const demoteUser = (user, gid) => {
   const uid = user.uid;
-  return firebase
-    .firestore()
+  return firestore
     .collection('groups')
     .doc(gid)
     .collection('users')

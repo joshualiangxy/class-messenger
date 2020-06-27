@@ -1,4 +1,4 @@
-import tasks from '../../fixtures/tasks';
+import tasks from '../../../fixtures/tasks';
 
 export const userTaskDoc = jest.fn(() => userTaskDocRef);
 

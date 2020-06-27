@@ -13,7 +13,9 @@ export const collection = jest.fn(collectionName => {
   }
 });
 
-export const FieldValue = { delete: jest.fn() };
+export const deleteReturnValue = 'delete';
+
+export const FieldValue = { delete: jest.fn(() => deleteReturnValue) };
 
 const firestore = jest.fn(() => ({ collection }));
 firestore.FieldValue = FieldValue;

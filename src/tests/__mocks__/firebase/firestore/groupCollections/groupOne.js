@@ -1,4 +1,4 @@
-import { groupTasks as tasks } from '../../../fixtures/tasks';
+import { groupTasks as tasks } from '../../../../fixtures/tasks';
 
 export const groupOneDocSnapshotGet = jest.fn(() =>
   Promise.resolve('groupOne')

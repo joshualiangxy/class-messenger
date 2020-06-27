@@ -1,15 +1,17 @@
 import createMockStore from '../../setupTests';
 import tasks, { groupTasks } from '../fixtures/tasks';
 import user from '../fixtures/user';
-import firebase from '../../firebase/firebase';
-import firestore, { collection, FieldValue } from '../__mocks__/firestore.mock';
-import storage from '../__mocks__/firebase.storage.mock';
+import {
+  collection,
+  FieldValue,
+  deleteReturnValue
+} from '../__mocks__/firebase/firestore';
 import {
   userDoc,
   userDocGet,
   userDocCollection,
   userDocSnapshotGet
-} from '../__mocks__/firestore/users';
+} from '../__mocks__/firebase/firestore/users';
 import {
   userTaskDoc,
   userTaskSet,
@@ -17,8 +19,8 @@ import {
   userTaskUpdate,
   userTaskCollectionGet,
   queryUserTaskSnapshot
-} from '../__mocks__/firestore/userTask';
-import { groupDoc } from '../__mocks__/firestore/groups';
+} from '../__mocks__/firebase/firestore/userTask';
+import { groupDoc } from '../__mocks__/firebase/firestore/groups';
 import {
   groupOneDocGet,
   groupOneDocCollection,
@@ -30,7 +32,7 @@ import {
   groupOneTaskDocSet,
   groupOneTaskDocRef,
   groupOneTaskDocUpdate
-} from '../__mocks__/firestore/groupCollections/groupOne';
+} from '../__mocks__/firebase/firestore/groupCollections/groupOne';
 import {
   groupTwoDocGet,
   groupTwoDocCollection,
@@ -41,14 +43,14 @@ import {
   groupTwoTaskDocSet,
   groupTwoTaskDocRef,
   groupTwoTaskDocGet
-} from '../__mocks__/firestore/groupCollections/groupTwo';
+} from '../__mocks__/firebase/firestore/groupCollections/groupTwo';
 import {
   groupThreeDocGet,
   groupThreeDocCollection,
   groupThreeDocSnapshotGet,
   groupThreeTaskCollectionGet,
   queryGroupThreeTaskSnapshot
-} from '../__mocks__/firestore/groupCollections/groupThree';
+} from '../__mocks__/firebase/firestore/groupCollections/groupThree';
 import {
   addTask,
   startAddPersonalTask,
@@ -71,9 +73,6 @@ import {
   updateDownloadURL,
   startUpdateDownloadURL
 } from '../../actions/tasks';
-
-firebase.firestore = firestore;
-firebase.storage = storage;
 
 const uid = 'testuid';
 const task = tasks[0];
@@ -103,8 +102,6 @@ describe('add task', () => {
     store.dispatch(startAddPersonalTask(task)).then(() => {
       const actions = store.getActions();
 
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('users');
 
@@ -127,8 +124,6 @@ describe('add task', () => {
   it('should add group task to firestore', () =>
     store.dispatch(startAddGroupTask(groupTask, groupName)).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
@@ -154,8 +149,6 @@ describe('add task', () => {
   it('should not add group task to store if user not involved', () =>
     store.dispatch(startAddGroupTask(groupTasks[1], groupName)).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
@@ -184,8 +177,6 @@ describe('remove task', () => {
     store.dispatch(startRemovePersonalTask(id)).then(() => {
       const actions = store.getActions();
 
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('users');
 
@@ -207,8 +198,6 @@ describe('remove task', () => {
   it('should remove group task from firestore', () =>
     store.dispatch(startRemoveGroupTask(groupTaskGid, groupTaskId)).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(1);
 
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
@@ -233,8 +222,6 @@ describe('remove task', () => {
       .dispatch(startRemoveGroupTask(groupTasks[1].gid, groupTasks[1].id))
       .then(() => {
         const actions = store.getActions();
-
-        expect(firestore).toHaveBeenCalledTimes(1);
 
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
@@ -267,8 +254,6 @@ describe('edit task', () => {
     store.dispatch(startEditPersonalTask(id, updates)).then(() => {
       const actions = store.getActions();
 
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('users');
 
@@ -289,8 +274,6 @@ describe('edit task', () => {
       )
       .then(() => {
         const actions = store.getActions();
-
-        expect(firestore).toHaveBeenCalledTimes(1);
 
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
@@ -332,8 +315,6 @@ describe('edit task', () => {
       .then(() => {
         const actions = store.getActions();
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -370,8 +351,6 @@ describe('edit task', () => {
       .then(() => {
         const actions = store.getActions();
 
-        expect(firestore).toHaveBeenCalledTimes(2);
-
         expect(collection).toHaveBeenCalledTimes(2);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -401,8 +380,6 @@ describe('set tasks', () => {
   it('should get personal and group tasks from firestore', () =>
     store.dispatch(startSetTasks()).then(() => {
       const actions = store.getActions();
-
-      expect(firestore).toHaveBeenCalledTimes(2);
 
       expect(collection).toHaveBeenCalledTimes(2);
       expect(collection).toHaveBeenNthCalledWith(1, 'users');
@@ -525,8 +502,6 @@ describe('toggle completed state for task', () => {
       .then(() => {
         const actions = store.getActions();
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('users');
 
@@ -562,8 +537,6 @@ describe('toggle completed state for task', () => {
         const toggle = {};
         toggle[`completed.${uid}`] = !completedState;
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -597,8 +570,6 @@ describe('toggle completed state for task', () => {
       .then(returnValue => {
         const actions = store.getActions();
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -628,8 +599,6 @@ describe('remove task data', () => {
 describe('get group tasks', () => {
   it('should get all tasks in groupOne', () =>
     store.dispatch(getAllGroupTasks(groupTaskGid)).then(tasks => {
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -646,8 +615,6 @@ describe('get group tasks', () => {
 
   it('should get all tasks in groupTwo', () =>
     store.dispatch(getAllGroupTasks(groupTasks[1].gid)).then(tasks => {
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -689,8 +656,6 @@ describe('update download url', () => {
           fileName
         };
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -727,8 +692,6 @@ describe('remove download url', () => {
       .then(() => {
         const actions = store.getActions();
 
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -744,7 +707,7 @@ describe('remove download url', () => {
         expect(FieldValue.delete).toHaveBeenCalledTimes(1);
 
         const update = {};
-        update[`downloadURLs.${uid}`] = firebase.firestore.FieldValue.delete();
+        update[`downloadURLs.${uid}`] = deleteReturnValue;
 
         expect(groupOneTaskDocUpdate).toHaveBeenCalledTimes(1);
         expect(groupOneTaskDocUpdate).toHaveBeenLastCalledWith(update);

@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
-import firebase from '../firebase/firebase';
+import { storage, firestore } from '../firebase/firebase';
 
 export const renameFile = (original, newName) =>
   new File([original], newName, {
@@ -26,14 +26,13 @@ export const uploadFile = (file, id, nameConvention) => {
       fileName = file.name;
     }
 
-    return firebase.storage().ref(`${id}/${uid}/${fileName}`).put(file);
+    return storage.ref(`${id}/${uid}/${fileName}`).put(file);
   };
 };
 
 export const downloadFile = (gid, id) => {
   return () =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
@@ -60,7 +59,7 @@ export const downloadFile = (gid, id) => {
 
 export const startRemoveUserFile = (id, uid) => {
   return () => {
-    const ref = firebase.storage().ref(`${id}/${uid}`);
+    const ref = storage.ref(`${id}/${uid}`);
 
     return ref.listAll().then(dir => {
       const promises = [];

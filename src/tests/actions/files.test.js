@@ -2,39 +2,28 @@ import JSZip, { blob, data } from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import createMockStore from '../../setupTests';
-import firebase from '../../firebase/firebase';
-import storage, {
-  ref,
-  put,
-  listAll,
-  item
-} from '../__mocks__/firebase.storage.mock';
-import firestore, { collection } from '../__mocks__/firestore.mock';
+import { ref, put, listAll, item } from '../__mocks__/firebase/storage';
+import { collection } from '../__mocks__/firebase/firestore';
 import {
   renameFile,
   uploadFile,
   downloadFile,
   startRemoveUserFile
 } from '../../actions/files';
-import { groupDoc } from '../__mocks__/firestore/groups';
+import { groupDoc } from '../__mocks__/firebase/firestore/groups';
 import {
   groupOneDocCollection,
   groupOneTaskDoc,
   groupOneTaskDocGet
-} from '../__mocks__/firestore/groupCollections/groupOne';
+} from '../__mocks__/firebase/firestore/groupCollections/groupOne';
 import { groupTasks } from '../fixtures/tasks';
 import {
   groupThreeDocCollection,
   groupThreeTaskDoc,
   groupThreeTaskDocGet
-} from '../__mocks__/firestore/groupCollections/groupThree';
-
-firebase.storage = storage;
-firebase.firestore = firestore;
+} from '../__mocks__/firebase/firestore/groupCollections/groupThree';
 
 jest.mock('file-saver');
-jest.mock('jszip');
-
 JSZipUtils.getBinaryContent = jest.fn(() => Promise.resolve(data));
 
 const fileName = 'foo.txt';
@@ -65,8 +54,6 @@ describe('upload file', () => {
   it('should upload file to firebase storage', () => {
     store.dispatch(uploadFile(file, id));
 
-    expect(storage).toHaveBeenCalledTimes(1);
-
     expect(ref).toHaveBeenCalledTimes(1);
     expect(ref).toHaveBeenLastCalledWith(`${id}/${uid}/${fileName}`);
 
@@ -77,8 +64,6 @@ describe('upload file', () => {
   it('should rename file before uploading if naming convention is specified', () => {
     const nameConvention = 'nameConvention';
     store.dispatch(uploadFile(file, id, nameConvention));
-
-    expect(storage).toHaveBeenCalledTimes(1);
 
     expect(ref).toHaveBeenCalledTimes(1);
     expect(ref).toHaveBeenLastCalledWith(
@@ -93,8 +78,6 @@ describe('upload file', () => {
 describe('download files', () => {
   it('should download files from storage', () =>
     store.dispatch(downloadFile(gid, id)).then(() => {
-      expect(firestore).toHaveBeenCalledTimes(1);
-
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -138,8 +121,6 @@ describe('download files', () => {
     store
       .dispatch(downloadFile(groupTasks[2].gid, groupTasks[2].id))
       .then(() => {
-        expect(firestore).toHaveBeenCalledTimes(1);
-
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
@@ -171,8 +152,6 @@ describe('download files', () => {
 describe('remove user files', () => {
   it('should have removed the user files for the task in firebase storage', () =>
     store.dispatch(startRemoveUserFile(id, uid)).then(() => {
-      expect(storage).toHaveBeenCalledTimes(1);
-
       expect(ref).toHaveBeenCalledTimes(1);
       expect(ref).toHaveBeenLastCalledWith(`${id}/${uid}`);
 

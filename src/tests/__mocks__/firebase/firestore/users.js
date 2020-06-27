@@ -1,4 +1,4 @@
-import user from '../../fixtures/user';
+import user from '../../../fixtures/user';
 import userTaskCollectionRef from './userTask';
 
 export const userDocCollection = jest.fn(() => userTaskCollectionRef);

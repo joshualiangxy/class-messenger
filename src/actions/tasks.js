@@ -1,4 +1,4 @@
-import firebase from '../firebase/firebase';
+import firebase, { firestore } from '../firebase/firebase';
 import { startRemoveUserFile } from './files';
 
 export const addTask = task => ({ type: 'ADD_TASK', task });
@@ -8,8 +8,7 @@ export const startAddPersonalTask = task => {
     const uid = getState().auth.user.uid;
     const id = task.id;
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -21,8 +20,7 @@ export const startAddPersonalTask = task => {
 
 export const startAddGroupTask = (task, groupName) => {
   return (dispatch, getState) =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(task.gid)
       .collection('tasks')
@@ -42,8 +40,7 @@ export const startRemovePersonalTask = id => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -55,8 +52,7 @@ export const startRemovePersonalTask = id => {
 
 export const startRemoveGroupTask = (gid, id) => {
   return (dispatch, getState) =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
@@ -78,8 +74,7 @@ export const startEditPersonalTask = (id, updates) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -91,8 +86,7 @@ export const startEditPersonalTask = (id, updates) => {
 
 export const startEditGroupTask = (id, updates, groupName, originalTask) => {
   return (dispatch, getState) =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(updates.gid)
       .collection('tasks')
@@ -137,7 +131,7 @@ export const startSetTasks = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const tasks = [];
-    const userRef = firebase.firestore().collection('users').doc(uid);
+    const userRef = firestore.collection('users').doc(uid);
     const tasksRef = userRef.collection('tasks');
 
     return tasksRef
@@ -149,7 +143,7 @@ export const startSetTasks = () => {
       )
       .then(() =>
         userRef.get().then(userDocSnapshot => {
-          const groupsCollection = firebase.firestore().collection('groups');
+          const groupsCollection = firestore.collection('groups');
           const groupIds = userDocSnapshot.get('groups') || [];
           const groupsPromises = [];
 
@@ -198,8 +192,7 @@ export const startToggleCompletedPersonal = (id, completedState) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('users')
       .doc(uid)
       .collection('tasks')
@@ -213,8 +206,7 @@ export const startToggleCompletedGroup = (id, gid, completedState) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const toggle = {};
-    const taskRef = firebase
-      .firestore()
+    const taskRef = firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
@@ -242,8 +234,7 @@ export const removeTaskData = () => ({ type: 'REMOVE_TASK_DATA' });
 
 export const getAllGroupTasks = gid => {
   return () =>
-    firebase
-      .firestore()
+    firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
@@ -268,13 +259,9 @@ export const startUpdateDownloadURL = (id, gid, downloadURL, fileName) => {
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const update = {};
-    update[`downloadURLs.${uid}`] = {
-      downloadURL,
-      fileName
-    };
+    update[`downloadURLs.${uid}`] = { downloadURL, fileName };
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
@@ -295,8 +282,7 @@ export const startRemoveDownloadURL = (id, gid, uid) => {
     const update = {};
     update[`downloadURLs.${uid}`] = firebase.firestore.FieldValue.delete();
 
-    return firebase
-      .firestore()
+    return firestore
       .collection('groups')
       .doc(gid)
       .collection('tasks')
