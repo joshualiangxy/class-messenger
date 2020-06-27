@@ -39,6 +39,7 @@ const LeaveGroupModal = ({
   };
 
   const onSubmit = e => {
+    // Leaves the group. This removes the group from the store, and the tasks this group has from the store. 
     e.preventDefault();
     // There is another admin in the group already, or this group will be empty after leaving.
     renderLoad();

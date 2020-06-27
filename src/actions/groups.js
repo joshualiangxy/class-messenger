@@ -220,20 +220,20 @@ export const kickUser = (user, gid) => {
       groups: firebase.firestore.FieldValue.arrayRemove(gid)
     });
   // Remove the user from any tasks
-  const tasksPromise = firestore
+  const tasksPromise = firestore.collection('groups').doc(gid)
     .collection('tasks')
     .get()
     .then(query => {
       // Not fully implemented yet.
       // TODO: This should remove the person's field from the completed object of the doc.
       query.forEach(doc => {
-        const update = {};
-
-        update[`completed.${uid}`] = firebase.firestore.FieldValue.delete();
-        doc.update(update);
+        // doc = QueryDocumentSnapshot
+        const completed = doc.get('completed'); // Object of {${uid}: boolean}
+        delete completed[uid];
+        doc.ref.update({completed});
       });
-    });
-  return Promise.all([groupPromise, userPromise]);
+    }).catch(error => console.log(error));
+  return Promise.all([groupPromise, userPromise, tasksPromise]);
 };
 
 export const promoteUser = (user, gid) => {
