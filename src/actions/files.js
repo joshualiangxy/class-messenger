@@ -69,3 +69,20 @@ export const startRemoveUserFile = (id, uid) => {
     });
   };
 };
+
+export const startRemoveTaskFile = id => {
+  return dispatch => {
+    return storage
+      .ref(id)
+      .listAll()
+      .then(uidResult => {
+        const promises = [];
+
+        uidResult.prefixes.forEach(uidRef =>
+          promises.push(dispatch(startRemoveUserFile(id, uidRef.name)))
+        );
+
+        return Promise.all(promises);
+      });
+  };
+};

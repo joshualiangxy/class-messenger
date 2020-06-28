@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { kickUser, promoteUser, demoteUser } from '../actions/groups';
 
 /**
@@ -6,7 +7,7 @@ import { kickUser, promoteUser, demoteUser } from '../actions/groups';
  * list of users, as well as the respective buttons for kicking
  * or editing.
  */
-const UserListing = ({ users, setUsers, group, admin, uid }) => {
+const UserListing = ({ users, setUsers, group, admin, uid, kickUser }) => {
   const onKick = (user, group) => {
     // Remove from users
     kickUser(user, group)
@@ -50,4 +51,8 @@ const UserListing = ({ users, setUsers, group, admin, uid }) => {
   ));
 };
 
-export default UserListing;
+const mapDispatchToProps = dispatch => ({
+  kickUser: (user, group) => dispatch(kickUser(user, group))
+});
+
+export default connect(undefined, mapDispatchToProps)(UserListing);

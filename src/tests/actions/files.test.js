@@ -2,13 +2,24 @@ import JSZip, { blob, data } from 'jszip';
 import JSZipUtils from 'jszip-utils';
 import { saveAs } from 'file-saver';
 import createMockStore from '../../setupTests';
-import { ref, put, listAll, item } from '../__mocks__/firebase/storage';
+import {
+  ref,
+  put,
+  listAll,
+  itemOne,
+  itemTwo,
+  itemThree,
+  prefixOne,
+  prefixTwo,
+  prefixThree
+} from '../__mocks__/firebase/storage';
 import { collection } from '../__mocks__/firebase/firestore';
 import {
   renameFile,
   uploadFile,
   downloadFile,
-  startRemoveUserFile
+  startRemoveUserFile,
+  startRemoveTaskFile
 } from '../../actions/files';
 import { groupDoc } from '../__mocks__/firebase/firestore/groups';
 import {
@@ -157,6 +168,25 @@ describe('remove user files', () => {
 
       expect(listAll).toHaveBeenCalledTimes(1);
 
-      expect(item.delete).toHaveBeenCalledTimes(3);
+      expect(itemOne.delete).toHaveBeenCalledTimes(1);
+      expect(itemTwo.delete).toHaveBeenCalledTimes(1);
+      expect(itemThree.delete).toHaveBeenCalledTimes(1);
+    }));
+});
+
+describe('remove task files', () => {
+  it('should have removed the user files for the task in firebase storage', () =>
+    store.dispatch(startRemoveTaskFile(id)).then(() => {
+      expect(ref).toHaveBeenCalledTimes(4);
+      expect(ref).toHaveBeenNthCalledWith(1, id);
+      expect(ref).toHaveBeenNthCalledWith(2, `${id}/${prefixOne.name}`);
+      expect(ref).toHaveBeenNthCalledWith(3, `${id}/${prefixTwo.name}`);
+      expect(ref).toHaveBeenNthCalledWith(4, `${id}/${prefixThree.name}`);
+
+      expect(listAll).toHaveBeenCalledTimes(4);
+
+      expect(itemOne.delete).toHaveBeenCalledTimes(3);
+      expect(itemTwo.delete).toHaveBeenCalledTimes(3);
+      expect(itemThree.delete).toHaveBeenCalledTimes(3);
     }));
 });

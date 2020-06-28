@@ -1,8 +1,20 @@
-export const item = { delete: jest.fn(() => Promise.resolve()) };
+export const itemOne = { delete: jest.fn(() => Promise.resolve()) };
 
-const items = [item, item, item];
+export const itemTwo = { delete: jest.fn(() => Promise.resolve()) };
 
-const dir = { items };
+export const itemThree = { delete: jest.fn(() => Promise.resolve()) };
+
+const items = [itemOne, itemTwo, itemThree];
+
+export const prefixOne = { name: 'folderOne' };
+
+export const prefixTwo = { name: 'folderTwo' };
+
+export const prefixThree = { name: 'folderThree' };
+
+const prefixes = [prefixOne, prefixTwo, prefixThree];
+
+const dir = { items, prefixes };
 
 export const listAll = jest.fn(() => Promise.resolve(dir));
 

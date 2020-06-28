@@ -25,7 +25,7 @@ const GroupPage = ({
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);  
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!authorised) history.push('/groups');
@@ -141,8 +141,8 @@ const mapStateToProps = (state, { match }) => {
 
   return {
     gid,
-    groupName: group.name,
-    groupModule: group.module,
+    groupName: group ? group.name : '',
+    groupModule: group ? group.module : '',
     authorised,
     uid: state.auth.user.uid
   };

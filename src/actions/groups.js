@@ -1,6 +1,8 @@
 import firebase, { firestore } from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 import { addGroup } from './user';
+import { startRemoveDownloadURL } from './tasks';
+import { startRemoveUserFile } from './files';
 
 export const newGroup = (name, groupId, module) => ({
   type: 'NEW_GROUP',
@@ -111,7 +113,6 @@ export const leaveGroup = gid => ({
 });
 
 export const startLeaveGroup = (gid, count) => {
-  console.log(count);
   return (dispatch, getState) => {
     const uid = getState().auth.user.uid;
     const groupRef = firestore.collection('groups').doc(gid);
@@ -202,42 +203,59 @@ export const getAllUsers = gid => {
 };
 
 export const kickUser = (user, gid) => {
-  // user is a user object, group is gid
-  // Since users aren't stored inside the store, no need to dispatch
-  const uid = user.uid;
-  // Remove this user from the group's collection of users
-  const groupPromise = firestore
-    .collection('groups')
-    .doc(gid)
-    .collection('users')
-    .doc(uid)
-    .delete();
-  // Remove this group from the user's groups
-  const userPromise = firestore
-    .collection('users')
-    .doc(uid)
-    .update({
-      groups: firebase.firestore.FieldValue.arrayRemove(gid)
-    });
-  // Remove the user from any tasks
-  const tasksPromise = firestore.collection('groups').doc(gid)
-    .collection('tasks')
-    .get()
-    .then(query => {
-      // Not fully implemented yet.
-      // TODO: This should remove the person's field from the completed object of the doc.
-      query.forEach(doc => {
-        // doc = QueryDocumentSnapshot
-        const completed = doc.get('completed'); // Object of {${uid}: boolean}
-        delete completed[uid];
-        doc.ref.update({completed});
+  return dispatch => {
+    // user is a user object, group is gid
+    // Since users aren't stored inside the store, no need to dispatch
+    const uid = user.uid;
+    // Remove this user from the group's collection of users
+    const groupPromise = firestore
+      .collection('groups')
+      .doc(gid)
+      .collection('users')
+      .doc(uid)
+      .delete();
+    // Remove this group from the user's groups
+    const userPromise = firestore
+      .collection('users')
+      .doc(uid)
+      .update({
+        groups: firebase.firestore.FieldValue.arrayRemove(gid)
       });
-    }).catch(error => console.log(error));
-  return Promise.all([groupPromise, userPromise, tasksPromise]);
+    // Remove the user from any tasks
+    const tasksPromise = firestore
+      .collection('groups')
+      .doc(gid)
+      .collection('tasks')
+      .get()
+      .then(query => {
+        // Not fully implemented yet.
+        // TODO: This should remove the person's field from the completed object of the doc.
+        const promises = [];
+        query.forEach(doc => {
+          // doc = QueryDocumentSnapshot
+
+          const update = {};
+          update[`completed.${uid}`] = firebase.firestore.FieldValue.delete();
+          //const completed = doc.get('completed'); // Object of {${uid}: boolean}
+          //delete completed[uid];
+          doc.ref.update(update).then(() => {
+            if (doc.get('uploadRequired')) {
+              promises.push(dispatch(startRemoveDownloadURL(doc.id, gid, uid)));
+              promises.push(dispatch(startRemoveUserFile(doc.id, uid)));
+            }
+          });
+        });
+
+        return Promise.all(promises);
+      })
+      .catch(error => console.log(error));
+    return Promise.all([groupPromise, userPromise, tasksPromise]);
+  };
 };
 
 export const promoteUser = (user, gid) => {
   const uid = user.uid;
+
   return firestore
     .collection('groups')
     .doc(gid)
@@ -249,6 +267,7 @@ export const promoteUser = (user, gid) => {
 };
 export const demoteUser = (user, gid) => {
   const uid = user.uid;
+
   return firestore
     .collection('groups')
     .doc(gid)

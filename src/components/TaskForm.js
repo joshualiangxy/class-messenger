@@ -26,7 +26,7 @@ const TaskForm = ({
         }, {})
       : false,
     namingConvention: initialNamingConvention = '',
-    uploadRequired: initialUploadRequired,
+    uploadRequired: initialUploadRequired = false,
     downloadURLs = {}
   } = task;
   const [open, setOpen] = useState(false);
@@ -144,7 +144,7 @@ const TaskForm = ({
     setDescription(initialDescription);
     setDeadline(initialDeadline ? moment(initialDeadline) : null);
     setCalendarFocus(false);
-    setUploadRequired(false);
+    setUploadRequired(initialUploadRequired);
     setEnforceNamingConvention(false);
     setNamingConvention('');
     setError('');

@@ -92,7 +92,11 @@ const mapStateToProps = ({ tasks, auth }, { id }) => {
 
   return {
     TaskEvent: firebase.storage.TaskEvent,
-    fileExists: task ? task.downloadURLs.hasOwnProperty(uid) : false,
+    fileExists: task
+      ? task.downloadURLs
+        ? task.downloadURLs.hasOwnProperty(uid)
+        : false
+      : false,
     uid
   };
 };

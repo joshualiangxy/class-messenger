@@ -1,5 +1,5 @@
 import firebase, { firestore } from '../firebase/firebase';
-import { startRemoveUserFile } from './files';
+import { startRemoveUserFile, startRemoveTaskFile } from './files';
 
 export const addTask = task => ({ type: 'ADD_TASK', task });
 
@@ -61,6 +61,8 @@ export const startRemoveGroupTask = (gid, id) => {
       .then(() => {
         const task = getState().tasks.find(task => task.id === id);
         if (task) dispatch(removeTask(id));
+
+        return dispatch(startRemoveTaskFile(id));
       });
 };
 
@@ -118,9 +120,7 @@ export const startEditGroupTask = (id, updates, groupName, originalTask) => {
               dispatch(editTask(id, { ...updates, groupName, completed }));
             } else
               dispatch(addTask({ ...updates, groupName, completed: false }));
-          } else if (task) {
-            dispatch(removeTask(id));
-          }
+          } else if (task) dispatch(removeTask(id));
         });
       });
 };
