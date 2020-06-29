@@ -6,7 +6,7 @@ exports[`render should render Header 1`] = `
     to="/dashboard"
   >
     <h2>
-      Class Board Task
+      Class Board Tasks
     </h2>
   </Link>
   <NavLink
