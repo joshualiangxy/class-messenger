@@ -5,13 +5,13 @@ exports[`render should render TaskDashboardPage 1`] = `
   <h1>
     Dashboard
   </h1>
-  <Connect(TaskListFilters) />
-  <Connect(TaskList) />
   <button
     onClick={[Function]}
   >
     Add Task
   </button>
+  <Connect(TaskListFilters) />
+  <Connect(TaskList) />
   <Connect(AddTaskModal)
     isOpen={false}
     onRequestClose={[Function]}

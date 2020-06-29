@@ -17,9 +17,9 @@ const TaskDashboardPage = () => {
   return (
     <div>
       <h1>Dashboard</h1>
+      <button onClick={openAddTask}>Add Task</button>
       <TaskListFilters />
       <TaskList />
-      <button onClick={openAddTask}>Add Task</button>
       <AddTaskModal isOpen={open} onRequestClose={onRequestClose} />
     </div>
   );
