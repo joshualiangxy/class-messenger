@@ -27,9 +27,7 @@ const UserListing = ({
   const onPromote = (user, group) => {
     promoteUser(user, group).then(() => {
       setUsers(
-        users.map(u =>
-          u.studentNum === user.studentNum ? { ...u, admin: true } : u
-        )
+        users.map(u => (u.uid === user.uid ? { ...u, admin: true } : u))
       );
     });
   };
@@ -37,9 +35,7 @@ const UserListing = ({
   const onDemote = (user, group) => {
     demoteUser(user, group).then(() => {
       setUsers(
-        users.map(u =>
-          u.studentNum === user.studentNum ? { ...u, admin: false } : u
-        )
+        users.map(u => (u.uid === user.uid ? { ...u, admin: false } : u))
       );
     });
   };
