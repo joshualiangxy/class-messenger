@@ -7,11 +7,20 @@ import { kickUser, promoteUser, demoteUser } from '../actions/groups';
  * list of users, as well as the respective buttons for kicking
  * or editing.
  */
-const UserListing = ({ users, setUsers, group, admin, uid, kickUser }) => {
+const UserListing = ({
+  users,
+  setUsers,
+  group,
+  admin,
+  uid,
+  kickUser,
+  kickUserLocal
+}) => {
   const onKick = (user, group) => {
     // Remove from users
     kickUser(user, group)
-      .then(() => setUsers(users.filter(u => u.studentNum !== user.studentNum)))
+      .then(() => kickUserLocal(user.uid))
+      .then(() => setUsers(users.filter(u => u.uid !== user.uid)))
       .catch(error => console.log(error));
   };
 
@@ -24,6 +33,7 @@ const UserListing = ({ users, setUsers, group, admin, uid, kickUser }) => {
       );
     });
   };
+
   const onDemote = (user, group) => {
     demoteUser(user, group).then(() => {
       setUsers(
@@ -36,7 +46,7 @@ const UserListing = ({ users, setUsers, group, admin, uid, kickUser }) => {
 
   // The other buttons can only be seen if the current user is an admin.
   return users.map(user => (
-    <div key={user.studentNum}>
+    <div key={user.uid}>
       {user.displayName} {user.uid === uid && '(You)'}{' '}
       {admin && !user.admin && (
         <button onClick={() => onPromote(user, group)}>Make admin</button>

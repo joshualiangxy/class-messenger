@@ -128,19 +128,24 @@ export const TaskListItem = ({
                   const userOne = users.find(user => user.uid === uidOne);
                   const userTwo = users.find(user => user.uid === uidTwo);
 
+                  if (!(userOne && userTwo)) return 0;
                   return userOne.displayName.localeCompare(userTwo.displayName);
                 })
                 .map(id => (
                   <div key={id}>
-                    <input
-                      type="checkbox"
-                      checked={id === uid ? completed : initialComplete[id]}
-                      htmlFor={id}
-                      disabled={true}
-                    />
-                    <label id={id}>
-                      {users.find(user => user.uid === id).displayName}
-                    </label>
+                    {users.find(user => user.uid === id) && (
+                      <div>
+                        <input
+                          type="checkbox"
+                          checked={id === uid ? completed : initialComplete[id]}
+                          htmlFor={id}
+                          disabled={true}
+                        />
+                        <label id={id}>
+                          {users.find(user => user.uid === id).displayName}
+                        </label>
+                      </div>
+                    )}
                   </div>
                 ))}
             {(admin || !gid) && (

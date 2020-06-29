@@ -11,7 +11,8 @@ const GroupSettingsModal = ({
   users,
   setUsers,
   admin,
-  uid
+  uid,
+  kickUserLocal
 }) => {
   const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState('');
@@ -78,6 +79,7 @@ const GroupSettingsModal = ({
         group={group}
         admin={admin}
         uid={uid}
+        kickUserLocal={kickUserLocal}
       />
     </Modal>
   );

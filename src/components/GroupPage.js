@@ -64,6 +64,24 @@ const GroupPage = ({
     );
   };
 
+  const kickUserLocal = uid =>
+    setTasks(
+      tasks.map(task => {
+        const newTask = { ...task };
+
+        if (task.completed.hasOwnProperty(uid)) {
+          const { [uid]: omit, ...rest } = task.completed;
+          newTask.completed = rest;
+        }
+        if (task.uploadRequired && task.downloadURLs.hasOwnProperty(uid)) {
+          const { [uid]: omit, ...rest } = task.downloadURLs;
+          newTask.downloadURLs = rest;
+        }
+
+        return newTask;
+      })
+    );
+
   const closeAddUser = () => setAddUserOpen(false);
 
   const openAddUser = () => setAddUserOpen(true);
@@ -109,6 +127,7 @@ const GroupPage = ({
             setUsers={setUsers}
             admin={admin}
             uid={uid}
+            kickUserLocal={kickUserLocal}
           />
           <LeaveGroupModal
             isOpen={leaveOpen}
