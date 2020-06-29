@@ -125,7 +125,22 @@ export const startLeaveGroup = (gid, count) => {
         groups: firebase.firestore.FieldValue.arrayRemove(gid)
       }); // Remove this group from the user's groups.
     const groupPromise = groupRef.collection('users').doc(uid).delete(); // Remove the user document from this group
-    return Promise.all([userPromise, groupPromise])
+    const tasksPromise = groupRef.collection('tasks').get().then(query => {
+      const promises = [];
+      query.forEach(doc => {
+        const update = {};
+        update[`completed.${uid}`] = firebase.firestore.FieldValue.delete()
+        doc.ref.update(update).then(() => {
+          if (doc.get('uploadRequired')) {
+            // Removes the user's files from the group's tasks
+            promises.push(dispatch(startRemoveDownloadURL(doc.id, gid, uid)));
+            promises.push(dispatch(startRemoveUserFile(doc.id, uid)))
+          }
+        })
+      })
+      return Promise.all(promises);
+    })
+    return Promise.all([userPromise, groupPromise, tasksPromise])
       .then(() => {
         if (count <= 1) {
           // This is for the case where the user is alone, and only this case, so there shouldn't be
@@ -228,8 +243,6 @@ export const kickUser = (user, gid) => {
       .collection('tasks')
       .get()
       .then(query => {
-        // Not fully implemented yet.
-        // TODO: This should remove the person's field from the completed object of the doc.
         const promises = [];
         query.forEach(doc => {
           // doc = QueryDocumentSnapshot
