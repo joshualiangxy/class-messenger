@@ -55,7 +55,7 @@ const getSortedTasks = (
       }
     });
 
-  const sortedList = {};
+  const sortedList = { others: { groupName: 'others', tasks: [] } };
 
   if (grouped) {
     processedTasks.forEach(task => {
@@ -72,8 +72,6 @@ const getSortedTasks = (
           sortedList[module] = { groupName: task.module, tasks: [] };
         sortedList[module].tasks.push(task);
       } else {
-        if (!sortedList.others)
-          sortedList.others = { groupName: 'others', tasks: [] };
         sortedList.others.tasks.push(task);
       }
     });
