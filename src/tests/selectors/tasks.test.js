@@ -19,7 +19,8 @@ describe('text filter', () => {
       CS2030: {
         groupName: 'CS2030',
         tasks: [tasks[0], tasks[1]]
-      }
+      },
+      others: { groupName: 'others', tasks: [] }
     });
   });
 
@@ -34,7 +35,8 @@ describe('text filter', () => {
       CS2030: {
         groupName: 'CS2030',
         tasks: [tasks[0], tasks[1]]
-      }
+      },
+      others: { groupName: 'others', tasks: [] }
     });
   });
 });

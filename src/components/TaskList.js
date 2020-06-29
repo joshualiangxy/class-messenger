@@ -7,12 +7,15 @@ import TaskListItem from './TaskListItem';
 export const TaskList = ({ sortedList, grouped }) => (
   <div>
     {Object.keys(sortedList).length === 1 &&
-    sortedList.others.task.length === 0 ? (
+    sortedList.others.tasks.length === 0 ? (
       <h3>No tasks yet</h3>
     ) : grouped ? (
-      Object.values(sortedList).map((group, id) => (
-        <TaskListGroup key={Object.keys(sortedList)[id]} group={group} />
-      ))
+      Object.values(sortedList).map((group, id) => {
+        if (group.tasks.length > 0)
+          return (
+            <TaskListGroup key={Object.keys(sortedList)[id]} group={group} />
+          );
+      })
     ) : (
       Object.values(sortedList)[0].tasks.map(task => (
         <TaskListItem
