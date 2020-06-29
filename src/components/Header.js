@@ -20,7 +20,7 @@ export const Header = ({ startLogout, isNewUser }) => {
   return (
     <div>
       <Link to="/dashboard">
-        <h2>Class Board Task</h2>
+        <h2>Class Board Tasks</h2>
       </Link>
       <NavLink to="/groups" exact={true}>
         Groups
