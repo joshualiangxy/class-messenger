@@ -31,7 +31,8 @@ import {
   groupOneTaskDocGet,
   groupOneTaskDocSet,
   groupOneTaskDocRef,
-  groupOneTaskDocUpdate
+  groupOneTaskDocUpdate,
+  groupOneUserCollectionGet
 } from '../__mocks__/firebase/firestore/groupCollections/groupOne';
 import {
   groupTwoDocGet,
@@ -42,14 +43,18 @@ import {
   groupTwoTaskDoc,
   groupTwoTaskDocSet,
   groupTwoTaskDocRef,
-  groupTwoTaskDocGet
+  groupTwoTaskDocGet,
+  groupTwoUserCollectionGet
 } from '../__mocks__/firebase/firestore/groupCollections/groupTwo';
 import {
   groupThreeDocGet,
   groupThreeDocCollection,
   groupThreeDocSnapshotGet,
   groupThreeTaskCollectionGet,
-  queryGroupThreeTaskSnapshot
+  queryGroupThreeTaskSnapshot,
+  groupThreeUserCollectionGet,
+  groupThreeTaskDoc,
+  groupThreeTaskDocSet
 } from '../__mocks__/firebase/firestore/groupCollections/groupThree';
 import {
   addTask,
@@ -94,6 +99,10 @@ beforeEach(() => {
   store.clearActions();
 });
 
+afterEach(() => {
+  groupTasks[2].completed = { [uid]: false };
+});
+
 describe('add task', () => {
   it('should generate action object with task', () =>
     expect(addTask(task)).toEqual({ type: 'ADD_TASK', task }));
@@ -131,8 +140,11 @@ describe('add task', () => {
       expect(groupDoc).toHaveBeenCalledTimes(1);
       expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
 
-      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+      expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+      expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+      expect(groupOneUserCollectionGet).toHaveBeenCalledTimes(1);
 
       expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
       expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
@@ -156,14 +168,45 @@ describe('add task', () => {
       expect(groupDoc).toHaveBeenCalledTimes(1);
       expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[1].gid);
 
-      expect(groupTwoDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupTwoDocCollection).toHaveBeenLastCalledWith('tasks');
+      expect(groupTwoDocCollection).toHaveBeenCalledTimes(2);
+      expect(groupTwoDocCollection).toHaveBeenNthCalledWith(1, 'users');
+      expect(groupTwoDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+      expect(groupTwoUserCollectionGet).toHaveBeenCalledTimes(1);
 
       expect(groupTwoTaskDoc).toHaveBeenCalledTimes(1);
       expect(groupTwoTaskDoc).toHaveBeenLastCalledWith(groupTasks[1].id);
 
       expect(groupTwoTaskDocSet).toHaveBeenCalledTimes(1);
       expect(groupTwoTaskDocSet).toHaveBeenLastCalledWith(groupTasks[1]);
+
+      expect(actions).toHaveLength(0);
+    }));
+
+  it('should not include user if user not found in group', () =>
+    store.dispatch(startAddGroupTask(groupTasks[2], groupName)).then(() => {
+      const actions = store.getActions();
+
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[2].gid);
+
+      expect(groupThreeDocCollection).toHaveBeenCalledTimes(2);
+      expect(groupThreeDocCollection).toHaveBeenNthCalledWith(1, 'users');
+      expect(groupThreeDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+      expect(groupThreeUserCollectionGet).toHaveBeenCalledTimes(1);
+
+      expect(groupThreeTaskDoc).toHaveBeenCalledTimes(1);
+      expect(groupThreeTaskDoc).toHaveBeenLastCalledWith(groupTasks[2].id);
+
+      expect(groupThreeTaskDocSet).toHaveBeenCalledTimes(1);
+      expect(groupThreeTaskDocSet).toHaveBeenLastCalledWith({
+        ...groupTasks[2],
+        completed: {}
+      });
 
       expect(actions).toHaveLength(0);
     }));
@@ -281,8 +324,11 @@ describe('edit task', () => {
         expect(groupDoc).toHaveBeenCalledTimes(1);
         expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
 
-        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
-        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+        expect(groupOneUserCollectionGet).toHaveBeenCalledTimes(1);
 
         expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
         expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
@@ -321,8 +367,11 @@ describe('edit task', () => {
         expect(groupDoc).toHaveBeenCalledTimes(1);
         expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
 
-        expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
-        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+        expect(groupOneUserCollectionGet).toHaveBeenCalledTimes(1);
 
         expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
         expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
@@ -352,16 +401,23 @@ describe('edit task', () => {
         const actions = store.getActions();
 
         expect(collection).toHaveBeenCalledTimes(2);
-        expect(collection).toHaveBeenLastCalledWith('groups');
+        expect(collection).toHaveBeenNthCalledWith(1, 'groups');
+        expect(collection).toHaveBeenNthCalledWith(2, 'groups');
 
         expect(groupDoc).toHaveBeenCalledTimes(2);
-        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+        expect(groupDoc).toHaveBeenNthCalledWith(1, groupTaskGid);
+        expect(groupDoc).toHaveBeenNthCalledWith(2, groupTaskGid);
 
-        expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
-        expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(3);
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(3, 'tasks');
+
+        expect(groupOneUserCollectionGet).toHaveBeenCalledTimes(1);
 
         expect(groupOneTaskDoc).toHaveBeenCalledTimes(2);
-        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+        expect(groupOneTaskDoc).toHaveBeenNthCalledWith(1, groupTaskId);
+        expect(groupOneTaskDoc).toHaveBeenNthCalledWith(2, groupTaskId);
 
         expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
         expect(groupOneTaskDocSet).toHaveBeenLastCalledWith(groupUpdates);
@@ -371,6 +427,50 @@ describe('edit task', () => {
         expect(actions[1]).toEqual(removeTask(groupTaskId));
       });
   });
+
+  it('should not include user if user not found in group', () =>
+    store
+      .dispatch(
+        startEditGroupTask(
+          groupTaskId,
+          { ...groupUpdates, completed: { testuid: false, notPresent: true } },
+          groupName,
+          groupTask
+        )
+      )
+      .then(() => {
+        const actions = store.getActions();
+
+        expect(collection).toHaveBeenCalledTimes(1);
+        expect(collection).toHaveBeenLastCalledWith('groups');
+
+        expect(groupDoc).toHaveBeenCalledTimes(1);
+        expect(groupDoc).toHaveBeenLastCalledWith(groupTaskGid);
+
+        expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+        expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+        expect(groupOneUserCollectionGet).toHaveBeenCalledTimes(1);
+
+        expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDoc).toHaveBeenLastCalledWith(groupTaskId);
+
+        expect(groupOneTaskDocSet).toHaveBeenCalledTimes(1);
+        expect(groupOneTaskDocSet).toHaveBeenLastCalledWith({
+          ...groupUpdates,
+          completed: { testuid: false }
+        });
+
+        expect(actions).toHaveLength(1);
+        expect(actions[0]).toEqual(
+          editTask(groupTaskId, {
+            ...groupUpdates,
+            completed: false,
+            groupName
+          })
+        );
+      }));
 });
 
 describe('set tasks', () => {

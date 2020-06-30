@@ -50,7 +50,16 @@ const groupThreeUserDocRef = { update: groupThreeUserDocUpdate };
 
 export const groupThreeUserDoc = jest.fn(() => groupThreeUserDocRef);
 
-const groupThreeUserCollectionRef = { doc: groupThreeUserDoc };
+const queryGroupThreeUserCollection = [];
+
+export const groupThreeUserCollectionGet = jest.fn(() =>
+  Promise.resolve(queryGroupThreeUserCollection)
+);
+
+const groupThreeUserCollectionRef = {
+  doc: groupThreeUserDoc,
+  get: groupThreeUserCollectionGet
+};
 
 export const groupThreeDocCollection = jest.fn(collectionName => {
   switch (collectionName) {

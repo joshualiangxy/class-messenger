@@ -50,7 +50,16 @@ const groupOneUserDocRef = { update: groupOneUserDocUpdate };
 
 export const groupOneUserDoc = jest.fn(() => groupOneUserDocRef);
 
-const groupOneUserCollectionRef = { doc: groupOneUserDoc };
+const queryGroupOneUserCollection = [{ id: 'testuid' }];
+
+export const groupOneUserCollectionGet = jest.fn(() =>
+  Promise.resolve(queryGroupOneUserCollection)
+);
+
+const groupOneUserCollectionRef = {
+  doc: groupOneUserDoc,
+  get: groupOneUserCollectionGet
+};
 
 export const groupOneDocCollection = jest.fn(collectionName => {
   switch (collectionName) {
