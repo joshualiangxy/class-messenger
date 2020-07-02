@@ -21,17 +21,24 @@ export const startAddPersonalTask = task => {
 export const startAddGroupTask = (task, groupName) => {
   return (dispatch, getState) => {
     const groupRef = firestore.collection('groups').doc(task.gid);
+    const uid = getState().auth.user.uid;
 
     return groupRef
       .collection('users')
       .get()
       .then(querySnapshot => {
+        let isAdmin = false;
         const usersInGroup = [];
-        querySnapshot.forEach(userDoc => usersInGroup.push(userDoc.id));
+        querySnapshot.forEach(userDoc => {
+          usersInGroup.push(userDoc.id);
+          if (userDoc.id === uid && userDoc.get('admin')) isAdmin = true;
+        });
+
+        if (!isAdmin) return false;
 
         const completed = {};
-        Object.keys(task.completed).forEach(uid => {
-          if (usersInGroup.includes(uid)) completed[uid] = false;
+        Object.keys(task.completed).forEach(userId => {
+          if (usersInGroup.includes(userId)) completed[userId] = false;
         });
         task.completed = completed;
 
@@ -40,10 +47,11 @@ export const startAddGroupTask = (task, groupName) => {
           .doc(task.id)
           .set(task)
           .then(() => {
-            const uid = getState().auth.user.uid;
             const userInvolved = task.completed.hasOwnProperty(uid);
+
             if (userInvolved)
               dispatch(addTask({ ...task, groupName, completed: false }));
+            return true;
           });
       });
   };
@@ -66,19 +74,31 @@ export const startRemovePersonalTask = id => {
 };
 
 export const startRemoveGroupTask = (gid, id) => {
-  return (dispatch, getState) =>
-    firestore
-      .collection('groups')
-      .doc(gid)
-      .collection('tasks')
-      .doc(id)
-      .delete()
-      .then(() => {
-        const task = getState().tasks.find(task => task.id === id);
-        if (task) dispatch(removeTask(id));
+  return (dispatch, getState) => {
+    const uid = getState().auth.user.uid;
+    const groupRef = firestore.collection('groups').doc(gid);
 
-        return dispatch(startRemoveTaskFile(id));
+    return groupRef
+      .collection('users')
+      .doc(uid)
+      .get()
+      .then(userSnapshot => userSnapshot.exists && userSnapshot.get('admin'))
+      .then(isAdmin => {
+        if (isAdmin)
+          return groupRef
+            .collection('tasks')
+            .doc(id)
+            .delete()
+            .then(() => {
+              const task = getState().tasks.find(task => task.id === id);
+              if (task) dispatch(removeTask(id));
+
+              return dispatch(startRemoveTaskFile(id));
+            })
+            .then(() => true);
+        else return false;
       });
+  };
 };
 
 export const editTask = (id, updates) => ({
@@ -104,18 +124,25 @@ export const startEditPersonalTask = (id, updates) => {
 export const startEditGroupTask = (id, updates, groupName, originalTask) => {
   return (dispatch, getState) => {
     const groupRef = firestore.collection('groups').doc(updates.gid);
+    const uid = getState().auth.user.uid;
 
     return groupRef
       .collection('users')
       .get()
       .then(querySnapshot => {
+        let isAdmin = false;
         const usersInGroup = [];
-        querySnapshot.forEach(userDoc => usersInGroup.push(userDoc.id));
+        querySnapshot.forEach(userDoc => {
+          usersInGroup.push(userDoc.id);
+          if (userDoc.id === uid && userDoc.get('admin')) isAdmin = true;
+        });
+
+        if (!isAdmin) return false;
 
         const completed = {};
-        Object.keys(updates.completed).forEach(uid => {
-          if (usersInGroup.includes(uid))
-            completed[uid] = updates.completed[uid];
+        Object.keys(updates.completed).forEach(userId => {
+          if (usersInGroup.includes(userId))
+            completed[userId] = updates.completed[userId];
         });
         updates.completed = completed;
 
@@ -124,7 +151,6 @@ export const startEditGroupTask = (id, updates, groupName, originalTask) => {
           .doc(id)
           .set(updates)
           .then(() => {
-            const uid = getState().auth.user.uid;
             const task = getState().tasks.find(task => task.id === id);
             const originalUsersInvolved = Object.keys(originalTask.completed);
             const usersInvolved = Object.keys(updates.completed);
@@ -142,17 +168,21 @@ export const startEditGroupTask = (id, updates, groupName, originalTask) => {
               });
             }
 
-            return Promise.all(promises).then(() => {
-              if (userInvolved) {
-                if (task) {
-                  const completed = task.completed;
-                  dispatch(editTask(id, { ...updates, groupName, completed }));
-                } else
-                  dispatch(
-                    addTask({ ...updates, groupName, completed: false })
-                  );
-              } else if (task) dispatch(removeTask(id));
-            });
+            return Promise.all(promises)
+              .then(() => {
+                if (userInvolved) {
+                  if (task) {
+                    const completed = task.completed;
+                    dispatch(
+                      editTask(id, { ...updates, groupName, completed })
+                    );
+                  } else
+                    dispatch(
+                      addTask({ ...updates, groupName, completed: false })
+                    );
+                } else if (task) dispatch(removeTask(id));
+              })
+              .then(() => true);
           });
       });
   };

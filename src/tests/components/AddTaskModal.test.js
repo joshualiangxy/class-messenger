@@ -5,8 +5,9 @@ import users from '../fixtures/groupUsers';
 import { AddTaskModal } from '../../components/AddTaskModal';
 
 let wrapper;
+const removeAdmin = jest.fn();
 const startAddPersonalTask = jest.fn(() => Promise.resolve());
-const startAddGroupTask = jest.fn(() => Promise.resolve());
+const startAddGroupTask = jest.fn(() => Promise.resolve(true));
 const onRequestClose = jest.fn();
 const addGroupTask = jest.fn();
 const gid = 'testgid';
@@ -18,6 +19,7 @@ beforeEach(() => {
 
   wrapper = shallow(
     <AddTaskModal
+      removeAdmin={removeAdmin}
       startAddPersonalTask={startAddPersonalTask}
       startAddGroupTask={startAddGroupTask}
       onRequestClose={onRequestClose}
@@ -63,6 +65,26 @@ describe('submit task', () => {
 
         expect(addGroupTask).toHaveBeenCalledTimes(1);
         expect(addGroupTask).toHaveBeenLastCalledWith(groupTasks[0]);
+
+        expect(onRequestClose).toHaveBeenCalledTimes(1);
+      });
+  });
+
+  it('should remove admin if user is not admin', () => {
+    wrapper.setProps({ gid, groupModule, groupName, users });
+    startAddGroupTask.mockImplementation(() => Promise.resolve(false));
+
+    return wrapper
+      .find('TaskForm')
+      .prop('submitTask')(groupTasks[0])
+      .then(() => {
+        expect(startAddGroupTask).toHaveBeenCalledTimes(1);
+        expect(startAddGroupTask).toHaveBeenLastCalledWith(
+          groupTasks[0],
+          groupName
+        );
+
+        expect(removeAdmin).toHaveBeenCalledTimes(1);
 
         expect(onRequestClose).toHaveBeenCalledTimes(1);
       });

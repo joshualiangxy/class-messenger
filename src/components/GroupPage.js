@@ -94,6 +94,8 @@ const GroupPage = ({
 
   const closeAddTask = () => setAddTaskOpen(false);
 
+  const removeAdmin = () => setAdmin(false);
+
   const renderLoad = () => setLoading(true);
 
   return (
@@ -111,6 +113,7 @@ const GroupPage = ({
           )}
           <button onClick={openLeave}>Leave Group</button>
           <GroupTaskList
+            removeAdmin={removeAdmin}
             tasks={tasks}
             users={users}
             admin={admin}
@@ -139,6 +142,7 @@ const GroupPage = ({
             admin={admin}
           />
           <AddTaskModal
+            removeAdmin={removeAdmin}
             isOpen={addTaskOpen}
             onRequestClose={closeAddTask}
             gid={gid}

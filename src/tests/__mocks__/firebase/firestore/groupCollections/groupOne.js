@@ -46,11 +46,37 @@ const groupOneTaskCollectionRef = {
 
 export const groupOneUserDocUpdate = jest.fn();
 
-const groupOneUserDocRef = { update: groupOneUserDocUpdate };
+export const groupOneUserDocTwoGet = jest.fn(() =>
+  Promise.resolve(queryGroupOneUserCollection[1])
+);
 
-export const groupOneUserDoc = jest.fn(() => groupOneUserDocRef);
+const groupOneUserDocRefTwo = {
+  update: groupOneUserDocUpdate,
+  get: groupOneUserDocTwoGet
+};
 
-const queryGroupOneUserCollection = [{ id: 'testuid' }];
+export const groupOneUserDocOneGet = jest.fn(() =>
+  Promise.resolve(queryGroupOneUserCollection[0])
+);
+
+const groupOneUserDocRefOne = {
+  update: groupOneUserDocUpdate,
+  get: groupOneUserDocOneGet
+};
+
+export const groupOneUserDoc = jest.fn(uid => {
+  switch (uid) {
+    case 'testuid':
+      return groupOneUserDocRefOne;
+    case 'differentUser':
+      return groupOneUserDocRefTwo;
+  }
+});
+
+export const queryGroupOneUserCollection = [
+  { id: 'testuid', get: jest.fn(() => true), exists: true },
+  { id: 'differentUser', get: jest.fn(() => false), exists: true }
+];
 
 export const groupOneUserCollectionGet = jest.fn(() =>
   Promise.resolve(queryGroupOneUserCollection)

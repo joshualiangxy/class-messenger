@@ -7,6 +7,7 @@ import TaskForm from './TaskForm';
 export const EditTaskModal = ({
   startEditPersonalTask,
   startEditGroupTask,
+  removeAdmin,
   isOpen,
   onRequestClose,
   gid,
@@ -18,10 +19,12 @@ export const EditTaskModal = ({
 }) => {
   const submitTask = updates =>
     gid
-      ? startEditGroupTask(task.id, updates, groupName, task).then(() => {
-          editGroupTask(task.id, updates);
-          onRequestClose();
-        })
+      ? startEditGroupTask(task.id, updates, groupName, task)
+          .then(isAdmin => {
+            if (isAdmin) return editGroupTask(task.id, updates);
+            else return removeAdmin();
+          })
+          .then(() => onRequestClose())
       : startEditPersonalTask(task.id, updates).then(() => onRequestClose());
 
   return (

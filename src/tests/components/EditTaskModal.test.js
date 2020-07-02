@@ -32,7 +32,7 @@ describe('render', () => {
 describe('submit task', () => {
   const id = task.id;
 
-  it('should handle submitTask', () =>
+  it('should handle submitTask for personal tasks', () =>
     wrapper
       .find('TaskForm')
       .prop('submitTask')({

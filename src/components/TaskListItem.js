@@ -12,6 +12,7 @@ import FileUploadForm from './FileUploadForm';
 import { downloadFile } from '../actions/files';
 
 export const TaskListItem = ({
+  removeAdmin,
   uid,
   task,
   users,
@@ -75,7 +76,10 @@ export const TaskListItem = ({
   const onRemove = e => {
     e.stopPropagation();
     gid
-      ? startRemoveGroupTask(gid, id).then(() => removeGroupTask(id))
+      ? startRemoveGroupTask(gid, id).then(isAdmin => {
+          if (isAdmin) return removeGroupTask(id);
+          else return removeAdmin();
+        })
       : startRemovePersonalTask(id);
   };
 
@@ -156,6 +160,7 @@ export const TaskListItem = ({
         )}
       </div>
       <EditTaskModal
+        removeAdmin={removeAdmin}
         isOpen={open}
         onRequestClose={onRequestClose}
         gid={gid}

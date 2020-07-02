@@ -46,11 +46,20 @@ const groupThreeTaskCollectionRef = {
 
 export const groupThreeUserDocUpdate = jest.fn();
 
-const groupThreeUserDocRef = { update: groupThreeUserDocUpdate };
+export const groupThreeUserDocGet = jest.fn(() =>
+  Promise.resolve(queryGroupThreeUserCollection[0])
+);
+
+const groupThreeUserDocRef = {
+  update: groupThreeUserDocUpdate,
+  get: groupThreeUserDocGet
+};
 
 export const groupThreeUserDoc = jest.fn(() => groupThreeUserDocRef);
 
-const queryGroupThreeUserCollection = [];
+export const queryGroupThreeUserCollection = [
+  { id: 'testuid', get: jest.fn(() => true), exists: true }
+];
 
 export const groupThreeUserCollectionGet = jest.fn(() =>
   Promise.resolve(queryGroupThreeUserCollection)

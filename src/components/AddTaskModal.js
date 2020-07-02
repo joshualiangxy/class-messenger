@@ -7,6 +7,7 @@ import TaskForm from './TaskForm';
 export const AddTaskModal = ({
   startAddPersonalTask,
   startAddGroupTask,
+  removeAdmin,
   isOpen,
   onRequestClose,
   gid,
@@ -17,10 +18,12 @@ export const AddTaskModal = ({
 }) => {
   const submitTask = task =>
     gid
-      ? startAddGroupTask(task, groupName).then(() => {
-          addGroupTask(task);
-          onRequestClose();
-        })
+      ? startAddGroupTask(task, groupName)
+          .then(isAdmin => {
+            if (isAdmin) return addGroupTask(task);
+            else return removeAdmin();
+          })
+          .then(() => onRequestClose())
       : startAddPersonalTask(task).then(() => onRequestClose());
 
   return (

@@ -46,11 +46,20 @@ const groupTwoTaskCollectionRef = {
 
 export const groupTwoUserDocUpdate = jest.fn();
 
-const groupTwoUserDocRef = { update: groupTwoUserDocUpdate };
+export const groupTwoUserDocGet = jest.fn(() =>
+  Promise.resolve(queryGroupTwoUserCollection[0])
+);
+
+const groupTwoUserDocRef = {
+  update: groupTwoUserDocUpdate,
+  get: groupTwoUserDocGet
+};
 
 export const groupTwoUserDoc = jest.fn(() => groupTwoUserDocRef);
 
-const queryGroupTwoUserCollection = [{ id: 'testuid' }];
+export const queryGroupTwoUserCollection = [
+  { id: 'testuid', get: jest.fn(() => true), exists: true }
+];
 
 export const groupTwoUserCollectionGet = jest.fn(() =>
   Promise.resolve(queryGroupTwoUserCollection)
