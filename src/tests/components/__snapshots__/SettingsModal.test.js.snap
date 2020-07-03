@@ -1,5 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cancel button should render error and not reset input fields if user is new 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  closeTimeoutMS={0}
+  contentLabel="Settings"
+  isOpen={false}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <h2>
+      Welcome to Class Board Tasks!
+    </h2>
+    <h4>
+      Please enter your information to get started
+    </h4>
+  </div>
+  <p>
+    Please submit display name and student number
+  </p>
+  <form
+    onSubmit={[Function]}
+  >
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      placeholder="Display name (required)"
+      type="text"
+      value="robert"
+    />
+    <input
+      onChange={[Function]}
+      placeholder="Student number (required)"
+      type="text"
+      value="A0000000A"
+    />
+    <button>
+      Submit
+    </button>
+    <button
+      disabled={true}
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </form>
+</Modal>
+`;
+
 exports[`render should render SettingsModal 1`] = `
 <Modal
   appElement={null}

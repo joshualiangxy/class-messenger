@@ -92,7 +92,9 @@ export const TaskListItem = ({
 
   const onDownload = e => {
     e.stopPropagation();
-    downloadFile(gid, id);
+    downloadFile(gid, id).then(isAdmin => {
+      if (!isAdmin) return removeAdmin();
+    });
   };
 
   return (
@@ -121,10 +123,10 @@ export const TaskListItem = ({
                   gid={gid}
                   namingConvention={namingConvention}
                 />
-                {admin && (
-                  <button onClick={onDownload}>Download submissions</button>
-                )}
               </div>
+            )}
+            {uploadRequired && admin && (
+              <button onClick={onDownload}>Download submissions</button>
             )}
             {!dashboard &&
               Object.keys(initialComplete)

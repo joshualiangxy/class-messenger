@@ -261,6 +261,376 @@ exports[`cancel button should remove errors after call 2`] = `
 </form>
 `;
 
+exports[`naming convention should not render naming convention text input if not enabled 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={true}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+    <div>
+      <input
+        checked={false}
+        id="namingConvention"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="namingConvention"
+      >
+        Enforce naming convention
+      </label>
+    </div>
+  </div>
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
+exports[`naming convention should render naming convention text input if enabled 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={true}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+    <div>
+      <input
+        checked={true}
+        id="namingConvention"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="namingConvention"
+      >
+        Enforce naming convention
+      </label>
+      <input
+        onChange={[Function]}
+        placeholder="Naming convention"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
 exports[`render should render TaskForm for adding 1`] = `
 <form
   onSubmit={[Function]}
@@ -390,6 +760,176 @@ exports[`render should render TaskForm for adding 1`] = `
 </form>
 `;
 
+exports[`render should render TaskForm for adding group task 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value=""
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value=""
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+          "testuid2": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={false}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+  </div>
+  <button>
+    Add Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
 exports[`render should render TaskForm with task for editing 1`] = `
 <form
   onSubmit={[Function]}
@@ -507,6 +1047,188 @@ exports[`render should render TaskForm with task for editing 1`] = `
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
+exports[`render should render TaskForm with task for editing group task 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={true}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+    <div>
+      <input
+        checked={false}
+        id="namingConvention"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="namingConvention"
+      >
+        Enforce naming convention
+      </label>
+    </div>
+  </div>
   <button>
     Edit Task
   </button>
@@ -768,6 +1490,197 @@ exports[`submit task should remove error after valid submission 2`] = `
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
+exports[`submit task should render error on submit if naming convention is empty when enabled 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <p>
+    Naming convention cannot be empty
+  </p>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={true}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+    <div>
+      <input
+        checked={true}
+        id="namingConvention"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="namingConvention"
+      >
+        Enforce naming convention
+      </label>
+      <input
+        onChange={[Function]}
+        placeholder="Naming convention"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
   <button>
     Edit Task
   </button>
@@ -1290,6 +2203,357 @@ exports[`submit task should render error on submit if title input is empty after
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
+exports[`upload requirement should not render enable naming convention checkbox if upload not required 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={false}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+  </div>
+  <button>
+    Edit Task
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;
+
+exports[`upload requirement should render enable naming convention checkbox if upload required 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    autoFocus={true}
+    onChange={[Function]}
+    placeholder="Title (required)"
+    type="text"
+    value="Homework 1"
+  />
+  <withStyles(SingleDatePicker)
+    anchorDirection="left"
+    appendToBody={false}
+    block={false}
+    calendarInfoPosition="bottom"
+    customCloseIcon={null}
+    customInputIcon={null}
+    date={null}
+    dayPickerNavigationInlineStyles={null}
+    daySize={39}
+    disableScroll={false}
+    disabled={false}
+    displayFormat="DD/MM/YYYY"
+    enableOutsideDays={false}
+    firstDayOfWeek={null}
+    focused={false}
+    hideKeyboardShortcutsPanel={false}
+    horizontalMargin={0}
+    horizontalMonthPadding={13}
+    id="taskDeadline"
+    initialVisibleMonth={null}
+    inputIconPosition="before"
+    isDayBlocked={[Function]}
+    isDayHighlighted={[Function]}
+    isOutsideRange={[Function]}
+    isRTL={false}
+    keepFocusOnInput={false}
+    keepOpenOnDateSelect={false}
+    monthFormat="MMMM YYYY"
+    navNext={null}
+    navPosition="navPositionTop"
+    navPrev={null}
+    noBorder={false}
+    numberOfMonths={1}
+    onClose={[Function]}
+    onDateChange={[Function]}
+    onFocusChange={[Function]}
+    onNextMonthClick={[Function]}
+    onPrevMonthClick={[Function]}
+    openDirection="down"
+    orientation="horizontal"
+    phrases={
+      Object {
+        "calendarLabel": "Calendar",
+        "chooseAvailableDate": [Function],
+        "clearDate": "Clear Date",
+        "closeDatePicker": "Close",
+        "dateIsSelected": [Function],
+        "dateIsUnavailable": [Function],
+        "enterKey": "Enter key",
+        "escape": "Escape key",
+        "hideKeyboardShortcutsPanel": "Close the shortcuts panel.",
+        "homeEnd": "Home and end keys",
+        "jumpToNextMonth": "Move forward to switch to the next month.",
+        "jumpToPrevMonth": "Move backward to switch to the previous month.",
+        "keyboardBackwardNavigationInstructions": "Navigate backward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardForwardNavigationInstructions": "Navigate forward to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.",
+        "keyboardShortcuts": "Keyboard Shortcuts",
+        "leftArrowRightArrow": "Right and left arrow keys",
+        "moveFocusByOneDay": "Move backward (left) and forward (right) by one day.",
+        "moveFocusByOneMonth": "Switch months.",
+        "moveFocusByOneWeek": "Move backward (up) and forward (down) by one week.",
+        "moveFocustoStartAndEndOfWeek": "Go to the first or last day of a week.",
+        "openThisPanel": "Open this panel.",
+        "pageUpPageDown": "page up and page down keys",
+        "questionMark": "Question mark",
+        "returnFocusToInput": "Return to the date input field.",
+        "roleDescription": "datepicker",
+        "selectFocusedDate": "Select the date in focus.",
+        "showKeyboardShortcutsPanel": "Open the keyboard shortcuts panel.",
+        "upArrowDownArrow": "up and down arrow keys",
+      }
+    }
+    placeholder="Deadline"
+    readOnly={false}
+    regular={false}
+    renderCalendarInfo={null}
+    renderDayContents={null}
+    renderMonthElement={null}
+    renderMonthText={null}
+    renderNavNextButton={null}
+    renderNavPrevButton={null}
+    renderWeekHeaderElement={null}
+    reopenPickerOnClearDate={false}
+    required={false}
+    screenReaderInputMessage=""
+    showClearDate={true}
+    showDefaultInputIcon={false}
+    small={false}
+    verticalHeight={null}
+    verticalSpacing={22}
+    weekDayFormat="dd"
+    withFullScreenPortal={false}
+    withPortal={false}
+  />
+  <textarea
+    onChange={[Function]}
+    placeholder="Add a description for your task (optional)"
+    value="Finish by Sunday!"
+  />
+  <div>
+    <SelectUserModal
+      addUser={[Function]}
+      groupCompletedState={
+        Object {
+          "testuid": false,
+        }
+      }
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeUser={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <input
+      checked={true}
+      id="uploadRequired"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="uploadRequired"
+    >
+      Require submission
+    </label>
+    <div>
+      <input
+        checked={false}
+        id="namingConvention"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="namingConvention"
+      >
+        Enforce naming convention
+      </label>
+    </div>
+  </div>
   <button>
     Edit Task
   </button>

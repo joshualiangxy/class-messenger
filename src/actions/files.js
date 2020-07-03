@@ -31,30 +31,42 @@ export const uploadFile = (file, id, nameConvention) => {
 };
 
 export const downloadFile = (gid, id) => {
-  return () =>
-    firestore
-      .collection('groups')
-      .doc(gid)
-      .collection('tasks')
-      .doc(id)
+  return (dispatch, getState) => {
+    const groupRef = firestore.collection('groups').doc(gid);
+    const uid = getState().auth.user.uid;
+
+    return groupRef
+      .collection('users')
+      .doc(uid)
       .get()
-      .then(snapshot => {
-        const downloadURLs = Object.values(snapshot.get('downloadURLs'));
-        const zip = new JSZip();
-        const promises = [];
+      .then(userSnapshot => userSnapshot.exists && userSnapshot.get('admin'))
+      .then(isAdmin => {
+        if (isAdmin)
+          return groupRef
+            .collection('tasks')
+            .doc(id)
+            .get()
+            .then(snapshot => {
+              const downloadURLs = Object.values(snapshot.get('downloadURLs'));
+              const zip = new JSZip();
+              const promises = [];
 
-        downloadURLs.forEach(({ downloadURL, fileName }) => {
-          promises.push(
-            JSZipUtils.getBinaryContent(downloadURL).then(data =>
-              zip.file(fileName, data, { base64: true })
-            )
-          );
-        });
+              downloadURLs.forEach(({ downloadURL, fileName }) => {
+                promises.push(
+                  JSZipUtils.getBinaryContent(downloadURL).then(data =>
+                    zip.file(fileName, data, { base64: true })
+                  )
+                );
+              });
 
-        return Promise.all(promises)
-          .then(() => zip.generateAsync({ type: 'blob' }))
-          .then(blob => saveAs(blob, 'submissions.zip'));
+              return Promise.all(promises)
+                .then(() => zip.generateAsync({ type: 'blob' }))
+                .then(blob => saveAs(blob, 'submissions.zip'));
+            })
+            .then(() => true);
+        else return false;
       });
+  };
 };
 
 export const startRemoveUserFile = (id, uid) => {

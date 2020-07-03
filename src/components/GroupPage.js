@@ -5,7 +5,7 @@ import GroupSettingsModal from './GroupSettingsModal';
 import LeaveGroupModal from './LeaveGroupModal';
 import AddTaskModal from './AddTaskModal';
 import GroupTaskList from './GroupTaskList';
-import { getAllUsers } from '../actions/groups';
+import { getAllUsers, leaveGroup } from '../actions/groups';
 import { getAllGroupTasks } from '../actions/tasks';
 import { history } from '../routers/AppRouter';
 
@@ -16,7 +16,8 @@ const GroupPage = ({
   authorised,
   uid,
   getAllUsers,
-  getAllGroupTasks
+  getAllGroupTasks,
+  leaveGroup
 }) => {
   // For Modal
   const [addUserOpen, setAddUserOpen] = useState(false);
@@ -45,7 +46,13 @@ const GroupPage = ({
   }, [gid, authorised, getAllUsers, getAllGroupTasks]);
 
   useEffect(() => {
-    if (users.length > 0) setAdmin(users.find(user => user.uid === uid).admin);
+    if (users.length > 0) {
+      const user = users.find(user => user.uid === uid);
+      if (!user) {
+        history.push('/groups');
+        leaveGroup();
+      } else setAdmin(user.admin);
+    }
   }, [users, uid]);
 
   const addGroupTask = task => setTasks([...tasks, task]);
@@ -176,7 +183,8 @@ const mapDispatchToProps = (dispatch, { match }) => {
 
   return {
     getAllUsers: () => dispatch(getAllUsers(gid)),
-    getAllGroupTasks: () => dispatch(getAllGroupTasks(gid))
+    getAllGroupTasks: () => dispatch(getAllGroupTasks(gid)),
+    leaveGroup: () => dispatch(leaveGroup(gid))
   };
 };
 

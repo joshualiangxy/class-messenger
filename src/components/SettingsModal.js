@@ -31,10 +31,15 @@ export const SettingsModal = ({
   };
 
   const onCancel = () => {
-    setError('');
-    setDisplayName(initialDisplayName);
-    setStudentNum(initialStudentNum);
-    onRequestClose(false);
+    if (isNewUser) {
+      setError('Please submit display name and student number');
+      return;
+    } else {
+      setError('');
+      setDisplayName(initialDisplayName);
+      setStudentNum(initialStudentNum);
+      onRequestClose(false);
+    }
   };
 
   const onSubmit = e => {

@@ -246,9 +246,11 @@ describe('add task', () => {
       }));
 
   it('should not add task if user is not admin', () => {
+    const uid = 'differentUser';
+
     store = createMockStore({
       auth: {
-        user: { uid: 'differentUser' }
+        user: { uid }
       },
       tasks: [{ ...groupTask, completed: false }]
     });
@@ -375,9 +377,11 @@ describe('remove task', () => {
       }));
 
   it('should not remove task if user is not admin', () => {
+    const uid = 'differentUser';
+
     store = createMockStore({
       auth: {
-        user: { uid: 'differentUser' }
+        user: { uid }
       },
       tasks: [{ ...groupTask, completed: false }]
     });
@@ -395,7 +399,7 @@ describe('remove task', () => {
         expect(groupOneDocCollection).toHaveBeenLastCalledWith('users');
 
         expect(groupOneUserDoc).toHaveBeenCalledTimes(1);
-        expect(groupOneUserDoc).toHaveBeenLastCalledWith('differentUser');
+        expect(groupOneUserDoc).toHaveBeenLastCalledWith(uid);
 
         expect(groupOneUserDocTwoGet).toHaveBeenCalledTimes(1);
 
@@ -626,9 +630,11 @@ describe('edit task', () => {
       }));
 
   it('should not edit task if user is not admin', () => {
+    const uid = 'differentUser';
+
     store = createMockStore({
       auth: {
-        user: { uid: 'differentUser' }
+        user: { uid }
       },
       tasks: []
     });
@@ -941,10 +947,7 @@ describe('update download url', () => {
       .then(() => {
         const actions = store.getActions();
         const update = {};
-        update[`downloadURLs.${uid}`] = {
-          downloadURL,
-          fileName
-        };
+        update[`downloadURLs.${uid}`] = { downloadURL, fileName };
 
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');

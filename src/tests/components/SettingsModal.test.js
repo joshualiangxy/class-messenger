@@ -87,10 +87,10 @@ describe('student number input', () => {
 });
 
 describe('cancel button', () => {
-  it('should set display name and student number back to initial state and close modal', () => {
-    const newDisplayName = 'robert';
-    const newStudentNum = 'A0000000A';
+  const newDisplayName = 'robert';
+  const newStudentNum = 'A0000000A';
 
+  it('should set display name and student number back to initial state and close modal', () => {
     wrapper.setProps({
       initialDisplayName: displayName,
       initialStudentNum: studentNum
@@ -112,6 +112,30 @@ describe('cancel button', () => {
 
     expect(onRequestClose).toHaveBeenCalledTimes(1);
     expect(onRequestClose).toHaveBeenLastCalledWith(false);
+  });
+
+  it('should render error and not reset input fields if user is new', () => {
+    wrapper.setProps({
+      isNewUser: true,
+      initialDisplayName: displayName,
+      initialStudentNum: studentNum
+    });
+    wrapper.find('input').at(0).prop('onChange')({
+      target: { value: newDisplayName }
+    });
+    wrapper.find('input').at(1).prop('onChange')({
+      target: { value: newStudentNum }
+    });
+
+    expect(wrapper.find('input').at(0).prop('value')).toBe(newDisplayName);
+    expect(wrapper.find('input').at(1).prop('value')).toBe(newStudentNum);
+
+    wrapper.find('button').at(1).prop('onClick')();
+
+    expect(wrapper.find('input').at(0).prop('value')).toBe(newDisplayName);
+    expect(wrapper.find('input').at(1).prop('value')).toBe(newStudentNum);
+
+    expect(wrapper).toMatchSnapshot();
   });
 });
 

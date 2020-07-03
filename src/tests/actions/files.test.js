@@ -25,13 +25,19 @@ import { groupDoc } from '../__mocks__/firebase/firestore/groups';
 import {
   groupOneDocCollection,
   groupOneTaskDoc,
-  groupOneTaskDocGet
+  groupOneTaskDocGet,
+  groupOneUserDoc,
+  groupOneUserDocOneGet,
+  queryGroupOneUserCollection,
+  groupOneUserDocTwoGet
 } from '../__mocks__/firebase/firestore/groupCollections/groupOne';
 import { groupTasks } from '../fixtures/tasks';
 import {
   groupThreeDocCollection,
   groupThreeTaskDoc,
-  groupThreeTaskDocGet
+  groupThreeTaskDocGet,
+  groupThreeUserDoc,
+  queryGroupThreeUserCollection
 } from '../__mocks__/firebase/firestore/groupCollections/groupThree';
 
 jest.mock('file-saver');
@@ -44,12 +50,13 @@ const studentNum = 'A0000000A';
 const task = groupTasks[0];
 const id = task.id;
 const gid = task.gid;
-const store = createMockStore({
-  auth: { user: { uid } },
-  user: { studentNum }
-});
+let store;
 
 beforeEach(() => {
+  store = createMockStore({
+    auth: { user: { uid } },
+    user: { studentNum }
+  });
   jest.clearAllMocks();
   store.clearActions();
 });
@@ -88,15 +95,26 @@ describe('upload file', () => {
 
 describe('download files', () => {
   it('should download files from storage', () =>
-    store.dispatch(downloadFile(gid, id)).then(() => {
+    store.dispatch(downloadFile(gid, id)).then(isAdmin => {
       expect(collection).toHaveBeenCalledTimes(1);
       expect(collection).toHaveBeenLastCalledWith('groups');
 
       expect(groupDoc).toHaveBeenCalledTimes(1);
       expect(groupDoc).toHaveBeenLastCalledWith(gid);
 
-      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
-      expect(groupOneDocCollection).toHaveBeenLastCalledWith('tasks');
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(2);
+      expect(groupOneDocCollection).toHaveBeenNthCalledWith(1, 'users');
+      expect(groupOneDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+      expect(groupOneUserDoc).toHaveBeenCalledTimes(1);
+      expect(groupOneUserDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(groupOneUserDocOneGet).toHaveBeenCalledTimes(1);
+
+      expect(queryGroupOneUserCollection[0].get).toHaveBeenCalledTimes(1);
+      expect(queryGroupOneUserCollection[0].get).toHaveBeenLastCalledWith(
+        'admin'
+      );
 
       expect(groupOneTaskDoc).toHaveBeenCalledTimes(1);
       expect(groupOneTaskDoc).toHaveBeenLastCalledWith(id);
@@ -126,20 +144,31 @@ describe('download files', () => {
 
       expect(saveAs).toHaveBeenCalledTimes(1);
       expect(saveAs).toHaveBeenLastCalledWith(blob, 'submissions.zip');
+
+      expect(isAdmin).toBe(true);
     }));
 
   it('should not add any files to zip if no download urls are found', () =>
     store
       .dispatch(downloadFile(groupTasks[2].gid, groupTasks[2].id))
-      .then(() => {
+      .then(isAdmin => {
         expect(collection).toHaveBeenCalledTimes(1);
         expect(collection).toHaveBeenLastCalledWith('groups');
 
         expect(groupDoc).toHaveBeenCalledTimes(1);
         expect(groupDoc).toHaveBeenLastCalledWith(groupTasks[2].gid);
 
-        expect(groupThreeDocCollection).toHaveBeenCalledTimes(1);
-        expect(groupThreeDocCollection).toHaveBeenLastCalledWith('tasks');
+        expect(groupThreeDocCollection).toHaveBeenCalledTimes(2);
+        expect(groupThreeDocCollection).toHaveBeenNthCalledWith(1, 'users');
+        expect(groupThreeDocCollection).toHaveBeenNthCalledWith(2, 'tasks');
+
+        expect(groupThreeUserDoc).toHaveBeenCalledTimes(1);
+        expect(groupThreeUserDoc).toHaveBeenLastCalledWith(uid);
+
+        expect(queryGroupThreeUserCollection[0].get).toHaveBeenCalledTimes(1);
+        expect(queryGroupThreeUserCollection[0].get).toHaveBeenLastCalledWith(
+          'admin'
+        );
 
         expect(groupThreeTaskDoc).toHaveBeenCalledTimes(1);
         expect(groupThreeTaskDoc).toHaveBeenLastCalledWith(groupTasks[2].id);
@@ -157,7 +186,41 @@ describe('download files', () => {
 
         expect(saveAs).toHaveBeenCalledTimes(1);
         expect(saveAs).toHaveBeenLastCalledWith(blob, 'submissions.zip');
+
+        expect(isAdmin).toBe(true);
       }));
+
+  it('should not download files if user is not admin', () => {
+    const uid = 'differentUser';
+
+    store = createMockStore({
+      auth: { user: { uid } },
+      user: { studentNum }
+    });
+
+    return store.dispatch(downloadFile(gid, id)).then(isAdmin => {
+      expect(collection).toHaveBeenCalledTimes(1);
+      expect(collection).toHaveBeenLastCalledWith('groups');
+
+      expect(groupDoc).toHaveBeenCalledTimes(1);
+      expect(groupDoc).toHaveBeenLastCalledWith(gid);
+
+      expect(groupOneDocCollection).toHaveBeenCalledTimes(1);
+      expect(groupOneDocCollection).toHaveBeenLastCalledWith('users');
+
+      expect(groupOneUserDoc).toHaveBeenCalledTimes(1);
+      expect(groupOneUserDoc).toHaveBeenLastCalledWith(uid);
+
+      expect(groupOneUserDocTwoGet).toHaveBeenCalledTimes(1);
+
+      expect(queryGroupOneUserCollection[1].get).toHaveBeenCalledTimes(1);
+      expect(queryGroupOneUserCollection[1].get).toHaveBeenLastCalledWith(
+        'admin'
+      );
+
+      expect(isAdmin).toBe(false);
+    });
+  });
 });
 
 describe('remove user files', () => {

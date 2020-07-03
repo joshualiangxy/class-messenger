@@ -144,6 +144,7 @@ const TaskForm = ({
     setDescription(initialDescription);
     setDeadline(initialDeadline ? moment(initialDeadline) : null);
     setCalendarFocus(false);
+    setGroupCompletedState(completed);
     setUploadRequired(initialUploadRequired);
     setEnforceNamingConvention(false);
     setNamingConvention('');
