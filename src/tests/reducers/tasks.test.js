@@ -1,5 +1,5 @@
 import tasksReducer from '../../reducers/tasks';
-import tasks from '../fixtures/tasks';
+import tasks, { groupTasks } from '../fixtures/tasks';
 
 describe('reducer', () => {
   it('should initialise default state', () => {
@@ -127,5 +127,71 @@ describe('reducer', () => {
     const state = tasksReducer(tasks, { type: 'REMOVE_TASK_DATA' });
 
     expect(state).toEqual([]);
+  });
+
+  it('should update download url of task', () => {
+    const fileName = 'testFileName.pdf';
+    const downloadURL = 'testDownloadURL.com';
+    const uid = 'testuid';
+    const state = tasksReducer(
+      [...tasks, { ...groupTasks[1], completed: false }],
+      {
+        type: 'UPDATE_DOWNLOAD_URL',
+        fileName,
+        downloadURL,
+        uid,
+        id: groupTasks[1].id
+      }
+    );
+
+    expect(state).toEqual([
+      ...tasks,
+      {
+        ...groupTasks[1],
+        completed: false,
+        downloadURLs: { testuid: { downloadURL, fileName } }
+      }
+    ]);
+  });
+
+  it('should not update download url of task if task not found', () => {
+    const fileName = 'testFileName.pdf';
+    const downloadURL = 'testDownloadURL.com';
+    const uid = 'testuid';
+    const state = tasksReducer(
+      [...tasks, { ...groupTasks[1], completed: false }],
+      {
+        type: 'UPDATE_DOWNLOAD_URL',
+        fileName,
+        downloadURL,
+        uid,
+        id: groupTasks[0].id
+      }
+    );
+
+    expect(state).toEqual([...tasks, { ...groupTasks[1], completed: false }]);
+  });
+
+  it('should remove download url of task', () => {
+    const uid = 'testuid';
+    const state = tasksReducer(
+      [...tasks, { ...groupTasks[0], completed: false }],
+      { type: 'REMOVE_DOWNLOAD_URL', uid, id: groupTasks[0].id }
+    );
+
+    expect(state).toEqual([
+      ...tasks,
+      { ...groupTasks[0], completed: false, downloadURLs: {} }
+    ]);
+  });
+
+  it('should not remove download url of task if task not found', () => {
+    const uid = 'testuid';
+    const state = tasksReducer(
+      [...tasks, { ...groupTasks[0], completed: false }],
+      { type: 'REMOVE_DOWNLOAD_URL', uid, id: groupTasks[1].id }
+    );
+
+    expect(state).toEqual([...tasks, { ...groupTasks[0], completed: false }]);
   });
 });

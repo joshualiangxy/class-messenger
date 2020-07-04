@@ -7,6 +7,14 @@ import filtersGrouped, {
 } from '../fixtures/filters';
 import tasks from '../fixtures/tasks';
 
+describe('default state', () => {
+  it('should generate default filters', () => {
+    expect(getSortedTasks(tasks)).toEqual({
+      others: { groupName: 'others', tasks }
+    });
+  });
+});
+
 describe('text filter', () => {
   it('should filter modules by text value', () => {
     const filters = { ...filtersGrouped, text: 'CS20' };

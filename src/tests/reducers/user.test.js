@@ -60,4 +60,19 @@ describe('reducer', () => {
 
     expect(state).toEqual({});
   });
+
+  it('should add group to user', () => {
+    const initialState = {
+      displayName,
+      studentNum,
+      newUser: false,
+      groups: []
+    };
+    const state = userReducer(initialState, {
+      type: 'ADD_GROUP',
+      gid: 'testgid'
+    });
+
+    expect(state).toEqual({ ...initialState, groups: ['testgid'] });
+  });
 });
