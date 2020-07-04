@@ -3,6 +3,7 @@ import TaskListItem from './TaskListItem';
 import getSortedTasks from '../selectors/tasks';
 
 const GroupTaskList = ({
+  removeUserFromTask,
   removeAdmin,
   tasks,
   users,
@@ -26,6 +27,7 @@ const GroupTaskList = ({
         Object.values(sortedList)[0].tasks.map(task => (
           <TaskListItem
             key={task.id}
+            removeUserFromTask={removeUserFromTask}
             removeAdmin={removeAdmin}
             users={users}
             task={task}

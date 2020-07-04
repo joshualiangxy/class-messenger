@@ -39,6 +39,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
     groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
     task={
       Object {
         "completed": false,
@@ -53,7 +54,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
 </div>
 `;
 
-exports[`render should render TaskListItem 1`] = `
+exports[`clickable div should toggle visibility of div 2`] = `
 <div>
   <input
     checked={false}
@@ -77,6 +78,7 @@ exports[`render should render TaskListItem 1`] = `
     groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
     task={
       Object {
         "completed": false,
@@ -91,7 +93,279 @@ exports[`render should render TaskListItem 1`] = `
 </div>
 `;
 
-exports[`render should render TaskListItem with alt task 1`] = `
+exports[`render should render TaskListItem with group task on GroupPage as admin 1`] = `
+<div>
+  <input
+    checked={false}
+    disabled={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Homework 1
+    </h3>
+    <div>
+      <p>
+        Finish by Sunday!
+      </p>
+      <div>
+        <Connect(FileUploadForm)
+          gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+          id="076e610e-aade-4d2b-897f-81a29f00c76b"
+        />
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        Download submissions
+      </button>
+      <div
+        key="testuid"
+      >
+        <div>
+          <input
+            checked={false}
+            disabled={true}
+            htmlFor="testuid"
+            type="checkbox"
+          />
+          <label
+            id="testuid"
+          >
+            Robert
+          </label>
+        </div>
+      </div>
+      <button
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </div>
+  <Connect(EditTaskModal)
+    gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+    groupModule="CS1231"
+    isOpen={false}
+    onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
+    task={
+      Object {
+        "completed": Object {
+          "testuid": false,
+        },
+        "description": "Finish by Sunday!",
+        "downloadURLs": Object {
+          "testuid": Object {
+            "downloadURL": "website.com",
+            "fileName": "Homework.pdf",
+          },
+        },
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "076e610e-aade-4d2b-897f-81a29f00c76b",
+        "module": "CS1231",
+        "title": "Homework 1",
+        "uploadRequired": true,
+      }
+    }
+    users={
+      Array [
+        Object {
+          "admin": true,
+          "displayName": "Robert",
+          "studentNum": "A0123456A",
+          "uid": "testuid",
+        },
+        Object {
+          "admin": false,
+          "displayName": "Peter",
+          "studentNum": "A0000000A",
+          "uid": "testuid2",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`render should render TaskListItem with group task on GroupPage as regular user 1`] = `
+<div>
+  <input
+    checked={false}
+    disabled={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Homework 1
+    </h3>
+    <div>
+      <p>
+        Finish by Sunday!
+      </p>
+      <div>
+        <Connect(FileUploadForm)
+          gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+          id="076e610e-aade-4d2b-897f-81a29f00c76b"
+        />
+      </div>
+      <div
+        key="testuid"
+      >
+        <div>
+          <input
+            checked={false}
+            disabled={true}
+            htmlFor="testuid"
+            type="checkbox"
+          />
+          <label
+            id="testuid"
+          >
+            Robert
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Connect(EditTaskModal)
+    gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+    groupModule="CS1231"
+    isOpen={false}
+    onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
+    task={
+      Object {
+        "completed": Object {
+          "testuid": false,
+        },
+        "description": "Finish by Sunday!",
+        "downloadURLs": Object {
+          "testuid": Object {
+            "downloadURL": "website.com",
+            "fileName": "Homework.pdf",
+          },
+        },
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "076e610e-aade-4d2b-897f-81a29f00c76b",
+        "module": "CS1231",
+        "title": "Homework 1",
+        "uploadRequired": true,
+      }
+    }
+    users={
+      Array [
+        Object {
+          "admin": true,
+          "displayName": "Robert",
+          "studentNum": "A0123456A",
+          "uid": "testuid",
+        },
+        Object {
+          "admin": false,
+          "displayName": "Peter",
+          "studentNum": "A0000000A",
+          "uid": "testuid2",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`render should render TaskListItem with group task on dashboard 1`] = `
+<div>
+  <input
+    checked={false}
+    disabled={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Homework 1
+    </h3>
+  </div>
+  <Connect(EditTaskModal)
+    gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+    groupModule="CS1231"
+    isOpen={false}
+    onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
+    task={
+      Object {
+        "completed": false,
+        "description": "Finish by Sunday!",
+        "downloadURLs": Object {
+          "testuid": Object {
+            "downloadURL": "website.com",
+            "fileName": "Homework.pdf",
+          },
+        },
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "076e610e-aade-4d2b-897f-81a29f00c76b",
+        "module": "CS1231",
+        "title": "Homework 1",
+        "uploadRequired": true,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`render should render personal TaskListItem 1`] = `
+<div>
+  <input
+    checked={false}
+    disabled={false}
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <div
+    onClick={[Function]}
+  >
+    <h3>
+      Watch lecture
+    </h3>
+    <h3
+      className="after-deadline"
+    >
+      5th Jun 2020
+    </h3>
+  </div>
+  <Connect(EditTaskModal)
+    groupModule="CS2030"
+    isOpen={false}
+    onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
+    task={
+      Object {
+        "completed": false,
+        "deadline": 1591329600000,
+        "description": "Catch up on lectures!",
+        "id": "5feb18c0-78a8-49b6-8584-75b8c1b40abc",
+        "module": "CS2030",
+        "title": "Watch lecture",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`render should render personal TaskListItem with group/module shown 1`] = `
 <div>
   <input
     checked={false}
@@ -110,6 +384,7 @@ exports[`render should render TaskListItem with alt task 1`] = `
     groupModule="CS2030"
     isOpen={false}
     onRequestClose={[Function]}
+    removeAdmin={[MockFunction]}
     task={
       Object {
         "completed": false,

@@ -71,6 +71,24 @@ const GroupPage = ({
     );
   };
 
+  const removeUserFromTask = (id, uid) => {
+    setTasks(
+      tasks.map(task => {
+        const newTask = { ...task };
+        if (task.id === id) {
+          const { [uid]: omit, ...rest } = task.completed;
+          newTask.completed = rest;
+        }
+        if (task.uploadRequired && task.downloadURLs.hasOwnProperty(uid)) {
+          const { [uid]: omit, ...rest } = task.downloadURLs;
+          newTask.downloadURLs = rest;
+        }
+
+        return newTask;
+      })
+    );
+  };
+
   const kickUserLocal = uid =>
     setTasks(
       tasks.map(task => {
@@ -121,6 +139,7 @@ const GroupPage = ({
           <button onClick={openLeave}>Leave Group</button>
           <GroupTaskList
             removeAdmin={removeAdmin}
+            removeUserFromTask={removeUserFromTask}
             tasks={tasks}
             users={users}
             admin={admin}

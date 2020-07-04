@@ -23,6 +23,7 @@ export const TaskListItem = ({
   startToggleCompletedGroup,
   removeGroupTask,
   toggleGroupTaskComplete,
+  removeUserFromTask,
   showGroup,
   admin,
   groupName,
@@ -64,13 +65,17 @@ export const TaskListItem = ({
   const toggleCompleted = () => {
     if (!(userInvolved || dashboard)) return;
 
-    setCompleted(!completed);
     if (gid) {
       startToggleCompletedGroup(id, gid, completed).then(userInvolved => {
-        if (!userInvolved) setUserInvolved(false);
+        if (!userInvolved) {
+          setUserInvolved(false);
+          if (!dashboard) removeUserFromTask(id, uid);
+          return;
+        }
         if (!dashboard) toggleGroupTaskComplete(id);
       });
     } else startToggleCompletedPersonal(id, completed);
+    setCompleted(!completed);
   };
 
   const onRemove = e => {
