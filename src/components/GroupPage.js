@@ -115,9 +115,9 @@ const GroupPage = ({
           {admin && (
             <div>
               <button onClick={openAddTask}>Add Task</button>
-              <button onClick={openAddUser}>Group Settings</button>
             </div>
           )}
+          <button onClick={openAddUser}>Group Settings</button>
           <button onClick={openLeave}>Leave Group</button>
           <GroupTaskList
             removeAdmin={removeAdmin}
@@ -136,6 +136,7 @@ const GroupPage = ({
             users={users}
             setUsers={setUsers}
             admin={admin}
+            setAdmin={setAdmin}
             uid={uid}
             kickUserLocal={kickUserLocal}
           />

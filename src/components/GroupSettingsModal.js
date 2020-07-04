@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { addNewUser, getUser } from '../actions/groups';
-import UserListing from './UserListing';
+import { addNewUser, getUser, recheckAdmin } from '../actions/groups';
+import GroupUserListing from './GroupUserListing';
 
 const GroupSettingsModal = ({
   isOpen,
@@ -11,6 +11,7 @@ const GroupSettingsModal = ({
   users,
   setUsers,
   admin,
+  setAdmin,
   uid,
   kickUserLocal
 }) => {
@@ -35,21 +36,30 @@ const GroupSettingsModal = ({
     } else {
       // Retrieve the user's data, and add it to the array of users.
       // user contains {admin, displayName, studentNum, uid} fields
-      getUser(submittedEmail).then(user => {
-        if (typeof user !== 'undefined') {
-          addNewUser(user, group)
-            .then(() => {
-              setUsers([...users, user]);
-              setError('Added!');
-              setUserEmail('');
-            })
-            .catch(() => {
-              setError('Something went wrong');
-            });
+      recheckAdmin(uid, group).then(isAdmin => {
+        if (isAdmin) {
+          getUser(submittedEmail).then(user => {
+            if (typeof user !== 'undefined') {
+              addNewUser(user, group)
+                .then(() => {
+                  setUsers([...users, user]);
+                  setError('Added!');
+                  setUserEmail('');
+                })
+                .catch(() => {
+                  setError('Something went wrong');
+                });
+            } else {
+              setError('No user found');
+            }
+          });
         } else {
-          setError('No user found');
+          // This user is not an admin anymore
+          setAdmin(false);
+          setError('You are not an admin!')
         }
-      });
+      })
+
     }
   };
 
@@ -60,7 +70,7 @@ const GroupSettingsModal = ({
       onRequestClose={() => onRequestClose()}
       appElement={document.getElementById('root')}
     >
-      <form onSubmit={onSubmit}>
+      {admin && (<form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Email (required)"
@@ -69,17 +79,19 @@ const GroupSettingsModal = ({
           autoFocus
         />
         <button>Add to list</button>
-        <button onClick={onCancel}>Cancel</button>
         <div>{error}</div>
-      </form>
+      </form>      )}
+      <button onClick={onCancel}>Close</button>
       <h3>Users:</h3>
-      <UserListing
+      <GroupUserListing
         users={users}
         setUsers={setUsers}
         group={group}
         admin={admin}
+        setAdmin={setAdmin}
         uid={uid}
         kickUserLocal={kickUserLocal}
+        setError={setError}
       />
     </Modal>
   );
