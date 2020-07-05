@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`error should render cancelled error 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <p>
+    File upload cancelled
+  </p>
+  <input
+    accept=".pdf"
+    disabled={false}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`error should render default error 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <p>
+    File upload failed
+  </p>
+  <input
+    accept=".pdf"
+    disabled={false}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`error should render error when no file is selected 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={false}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`error should render unauthorized error 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <p>
+    Not allowed to upload file!
+  </p>
+  <input
+    accept=".pdf"
+    disabled={false}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`render should render FileUploadForm 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={false}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`upload form should change button to "Uploading..." during upload 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={true}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={true}
+    onClick={[Function]}
+  >
+    Uploading...
+  </button>
+</form>
+`;
+
+exports[`upload form should remove error, set uploading to false and reset input after upload 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={true}
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onClick={[Function]}
+    type="file"
+  />
+  <button
+    disabled={true}
+    onClick={[Function]}
+  >
+    Uploading...
+  </button>
+</form>
+`;

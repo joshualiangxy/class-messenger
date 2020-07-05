@@ -25,7 +25,7 @@ export const FileUploadForm = ({
     if (files.length > 0) {
       const file = files[0];
 
-      Promise.resolve()
+      return Promise.resolve()
         .then(() => {
           if (fileExists) return startRemoveUserFile(uid);
         })
