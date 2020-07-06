@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render GroupTaskList 1`] = `
+<div>
+  <Connect(TaskListItem)
+    key="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    showGroup={false}
+    task={
+      Object {
+        "completed": Object {
+          "testuid": false,
+        },
+        "deadline": 1593489600000,
+        "description": "Finish readings",
+        "downloadURLs": Object {},
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "c1511c73-07b9-44cd-a4bd-01758515acb5",
+        "module": "CS1231",
+        "title": "Tutorial",
+        "uploadRequired": true,
+      }
+    }
+    users={
+      Array [
+        Object {
+          "admin": true,
+          "displayName": "Robert",
+          "studentNum": "A0123456A",
+          "uid": "testuid",
+        },
+        Object {
+          "admin": false,
+          "displayName": "Peter",
+          "studentNum": "A0000000A",
+          "uid": "testuid2",
+        },
+      ]
+    }
+  />
+  <Connect(TaskListItem)
+    key="076e610e-aade-4d2b-897f-81a29f00c76b"
+    showGroup={false}
+    task={
+      Object {
+        "completed": Object {
+          "testuid": false,
+        },
+        "description": "Finish by Sunday!",
+        "downloadURLs": Object {
+          "testuid": Object {
+            "downloadURL": "website.com",
+            "fileName": "Homework.pdf",
+          },
+        },
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "076e610e-aade-4d2b-897f-81a29f00c76b",
+        "module": "CS1231",
+        "title": "Homework 1",
+        "uploadRequired": true,
+      }
+    }
+    users={
+      Array [
+        Object {
+          "admin": true,
+          "displayName": "Robert",
+          "studentNum": "A0123456A",
+          "uid": "testuid",
+        },
+        Object {
+          "admin": false,
+          "displayName": "Peter",
+          "studentNum": "A0000000A",
+          "uid": "testuid2",
+        },
+      ]
+    }
+  />
+  <Connect(TaskListItem)
+    key="0b80e917-78a4-4f87-a379-cdc1733923d6"
+    showGroup={false}
+    task={
+      Object {
+        "completed": Object {},
+        "deadline": 1593403200000,
+        "description": "",
+        "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+        "id": "0b80e917-78a4-4f87-a379-cdc1733923d6",
+        "module": "CS1231",
+        "title": "Watch lectures",
+      }
+    }
+    users={
+      Array [
+        Object {
+          "admin": true,
+          "displayName": "Robert",
+          "studentNum": "A0123456A",
+          "uid": "testuid",
+        },
+        Object {
+          "admin": false,
+          "displayName": "Peter",
+          "studentNum": "A0000000A",
+          "uid": "testuid2",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`render should render GroupTaskList without tasks 1`] = `
+<div>
+  <h3>
+    No tasks yet
+  </h3>
+</div>
+`;

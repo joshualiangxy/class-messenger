@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render UserListItem 1`] = `
+<div>
+  <input
+    checked={false}
+    id="testuid"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <label
+    htmlFor="testuid"
+  >
+    Robert
+  </label>
+</div>
+`;
+
+exports[`render should render UserListItem for alt user 1`] = `
+<div>
+  <input
+    checked={true}
+    id="testuid2"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <label
+    htmlFor="testuid2"
+  >
+    Peter
+  </label>
+</div>
+`;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render UserList 1`] = `
+<div>
+  <UserListItem
+    initialPick={true}
+    key="testuid"
+    user={
+      Object {
+        "admin": true,
+        "displayName": "Robert",
+        "studentNum": "A0123456A",
+        "uid": "testuid",
+      }
+    }
+  />
+  <UserListItem
+    initialPick={false}
+    key="testuid2"
+    user={
+      Object {
+        "admin": false,
+        "displayName": "Peter",
+        "studentNum": "A0000000A",
+        "uid": "testuid2",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`render should render UserList with different groupCompletedState 1`] = `
+<div>
+  <UserListItem
+    initialPick={false}
+    key="testuid"
+    user={
+      Object {
+        "admin": true,
+        "displayName": "Robert",
+        "studentNum": "A0123456A",
+        "uid": "testuid",
+      }
+    }
+  />
+  <UserListItem
+    initialPick={false}
+    key="testuid2"
+    user={
+      Object {
+        "admin": false,
+        "displayName": "Peter",
+        "studentNum": "A0000000A",
+        "uid": "testuid2",
+      }
+    }
+  />
+</div>
+`;

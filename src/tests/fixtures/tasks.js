@@ -65,4 +65,39 @@ export const groupTasks = [
   }
 ];
 
+export const singleGroup = [
+  {
+    completed: { testuid: false },
+    description: 'Finish by Sunday!',
+    downloadURLs: {
+      testuid: { fileName: 'Homework.pdf', downloadURL: 'website.com' }
+    },
+    gid: '72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9',
+    id: '076e610e-aade-4d2b-897f-81a29f00c76b',
+    module: 'CS1231',
+    title: 'Homework 1',
+    uploadRequired: true
+  },
+  {
+    completed: {},
+    deadline: 1593403200000,
+    description: '',
+    gid: '72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9',
+    id: '0b80e917-78a4-4f87-a379-cdc1733923d6',
+    module: 'CS1231',
+    title: 'Watch lectures'
+  },
+  {
+    completed: { testuid: false },
+    deadline: 1593489600000,
+    description: 'Finish readings',
+    downloadURLs: {},
+    gid: '72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9',
+    id: 'c1511c73-07b9-44cd-a4bd-01758515acb5',
+    module: 'CS1231',
+    title: 'Tutorial',
+    uploadRequired: true
+  }
+];
+
 export default tasks;
