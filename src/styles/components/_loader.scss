@@ -11,3 +11,13 @@
   height: 6rem;
   width: 6rem;
 }
+
+.loader__text {
+  color: white;
+  font-size: $font-size-large;
+
+  a {
+    color: $queen-blue;
+    text-decoration: none;
+  }
+}
