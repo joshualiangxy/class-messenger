@@ -2,20 +2,26 @@
 
 exports[`render should render LoadingPage 1`] = `
 <div
-  className="loader"
+  className="box-layout"
 >
-  <img
-    className="loader__image"
-    src="/images/loader.gif"
-  />
-  <p>
-    This loading gif is provided by
-     
-    <a
-      href="https://loading.io/"
+  <div
+    className="loader"
+  >
+    <img
+      className="loader__image"
+      src="/images/loader.svg"
+    />
+    <p
+      className="loader__text"
     >
-      loading.io
-    </a>
-  </p>
+      This loading gif is provided by
+       
+      <a
+        href="https://loading.io/"
+      >
+        loading.io
+      </a>
+    </p>
+  </div>
 </div>
 `;
