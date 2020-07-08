@@ -19,21 +19,21 @@ exports[`clickable div should toggle visibility of div 1`] = `
     >
       5th Jun 2020
     </h3>
-    <div>
-      <p>
-        Catch up on lectures!
-      </p>
-      <button
-        onClick={[Function]}
-      >
-        Edit Task
-      </button>
-      <button
-        onClick={[Function]}
-      >
-        Remove Task
-      </button>
-    </div>
+  </div>
+  <div>
+    <p>
+      Catch up on lectures!
+    </p>
+    <button
+      onClick={[Function]}
+    >
+      Edit Task
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      Remove Task
+    </button>
   </div>
   <Connect(EditTaskModal)
     groupModule="CS2030"
@@ -107,49 +107,49 @@ exports[`render should render TaskListItem with group task on GroupPage as admin
     <h3>
       Homework 1
     </h3>
+  </div>
+  <div>
+    <p>
+      Finish by Sunday!
+    </p>
     <div>
-      <p>
-        Finish by Sunday!
-      </p>
-      <div>
-        <Connect(FileUploadForm)
-          gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
-          id="076e610e-aade-4d2b-897f-81a29f00c76b"
-        />
-      </div>
-      <button
-        onClick={[Function]}
-      >
-        Download submissions
-      </button>
-      <div
-        key="testuid"
-      >
-        <div>
-          <input
-            checked={false}
-            disabled={true}
-            htmlFor="testuid"
-            type="checkbox"
-          />
-          <label
-            id="testuid"
-          >
-            Robert
-          </label>
-        </div>
-      </div>
-      <button
-        onClick={[Function]}
-      >
-        Edit Task
-      </button>
-      <button
-        onClick={[Function]}
-      >
-        Remove Task
-      </button>
+      <Connect(FileUploadForm)
+        gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+        id="076e610e-aade-4d2b-897f-81a29f00c76b"
+      />
     </div>
+    <button
+      onClick={[Function]}
+    >
+      Download submissions
+    </button>
+    <div
+      key="testuid"
+    >
+      <div>
+        <input
+          checked={false}
+          disabled={true}
+          htmlFor="testuid"
+          type="checkbox"
+        />
+        <label
+          id="testuid"
+        >
+          Robert
+        </label>
+      </div>
+    </div>
+    <button
+      onClick={[Function]}
+    >
+      Edit Task
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      Remove Task
+    </button>
   </div>
   <Connect(EditTaskModal)
     gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
@@ -210,32 +210,32 @@ exports[`render should render TaskListItem with group task on GroupPage as regul
     <h3>
       Homework 1
     </h3>
+  </div>
+  <div>
+    <p>
+      Finish by Sunday!
+    </p>
     <div>
-      <p>
-        Finish by Sunday!
-      </p>
+      <Connect(FileUploadForm)
+        gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+        id="076e610e-aade-4d2b-897f-81a29f00c76b"
+      />
+    </div>
+    <div
+      key="testuid"
+    >
       <div>
-        <Connect(FileUploadForm)
-          gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
-          id="076e610e-aade-4d2b-897f-81a29f00c76b"
+        <input
+          checked={false}
+          disabled={true}
+          htmlFor="testuid"
+          type="checkbox"
         />
-      </div>
-      <div
-        key="testuid"
-      >
-        <div>
-          <input
-            checked={false}
-            disabled={true}
-            htmlFor="testuid"
-            type="checkbox"
-          />
-          <label
-            id="testuid"
-          >
-            Robert
-          </label>
-        </div>
+        <label
+          id="testuid"
+        >
+          Robert
+        </label>
       </div>
     </div>
   </div>

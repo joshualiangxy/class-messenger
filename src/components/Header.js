@@ -18,21 +18,31 @@ export const Header = ({ startLogout, isNewUser }) => {
   };
 
   return (
-    <div>
-      <Link to="/dashboard">
-        <h2>Class Board Tasks</h2>
-      </Link>
-      <NavLink to="/groups" exact={true}>
-        Groups
-      </NavLink>
-      <button onClick={openSettings}>Settings</button>
-      <button onClick={startLogout}>Logout</button>
+    <header className="header">
+      <div className="content-container">
+        <Link className="header__title" to="/dashboard">
+          <h1>Class Board Tasks</h1>
+        </Link>
+        <div className="header__content">
+          <NavLink className="button button--link" to="/groups" exact={true}>
+            Groups
+          </NavLink>
+          <div>
+            <button className="button button--link" onClick={openSettings}>
+              Settings
+            </button>
+            <button className="button button--link" onClick={startLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
       <SettingsModal
         isOpen={open}
         onRequestClose={onRequestClose}
         isNewUser={isNewUser}
       />
-    </div>
+    </header>
   );
 };
 

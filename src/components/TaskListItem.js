@@ -110,6 +110,7 @@ export const TaskListItem = ({
         onChange={toggleCompleted}
         disabled={!(dashboard || userInvolved)}
       />
+
       <div onClick={toggleVisibility}>
         <h3>{title}</h3>
         {deadline && (
@@ -117,55 +118,54 @@ export const TaskListItem = ({
             {moment(deadline).format('Do MMM YYYY')}
           </h3>
         )}
-        {visible && (
-          <div>
-            {showGroup && module && <h5>{module}</h5>}
-            {description && <p>{description}</p>}
-            {userInvolved && uploadRequired && (
-              <div>
-                <FileUploadForm
-                  id={id}
-                  gid={gid}
-                  namingConvention={namingConvention}
-                />
-              </div>
-            )}
-            {uploadRequired && admin && (
-              <button onClick={onDownload}>Download submissions</button>
-            )}
-            {!dashboard &&
-              Object.keys(initialComplete)
-                .sort((uidOne, uidTwo) => {
-                  const userOne = users.find(user => user.uid === uidOne);
-                  const userTwo = users.find(user => user.uid === uidTwo);
-
-                  if (!(userOne && userTwo)) return 0;
-                  return userOne.displayName.localeCompare(userTwo.displayName);
-                })
-                .map(id => (
-                  <div key={id}>
-                    {users.find(user => user.uid === id) && (
-                      <div>
-                        <input
-                          type="checkbox"
-                          checked={id === uid ? completed : initialComplete[id]}
-                          htmlFor={id}
-                          disabled={true}
-                        />
-                        <label id={id}>
-                          {users.find(user => user.uid === id).displayName}
-                        </label>
-                      </div>
-                    )}
-                  </div>
-                ))}
-            {(admin || !gid) && (
-              <button onClick={openEditTask}>Edit Task</button>
-            )}
-            {(admin || !gid) && <button onClick={onRemove}>Remove Task</button>}
-          </div>
-        )}
       </div>
+      {visible && (
+        <div>
+          {showGroup && module && <h5>{module}</h5>}
+          {description && <p>{description}</p>}
+          {userInvolved && uploadRequired && (
+            <div>
+              <FileUploadForm
+                id={id}
+                gid={gid}
+                namingConvention={namingConvention}
+              />
+            </div>
+          )}
+          {uploadRequired && admin && (
+            <button onClick={onDownload}>Download submissions</button>
+          )}
+          {!dashboard &&
+            Object.keys(initialComplete)
+              .sort((uidOne, uidTwo) => {
+                const userOne = users.find(user => user.uid === uidOne);
+                const userTwo = users.find(user => user.uid === uidTwo);
+
+                if (!(userOne && userTwo)) return 0;
+                return userOne.displayName.localeCompare(userTwo.displayName);
+              })
+              .map(id => (
+                <div key={id}>
+                  {users.find(user => user.uid === id) && (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={id === uid ? completed : initialComplete[id]}
+                        htmlFor={id}
+                        disabled={true}
+                      />
+                      <label id={id}>
+                        {users.find(user => user.uid === id).displayName}
+                      </label>
+                    </div>
+                  )}
+                </div>
+              ))}
+          {(admin || !gid) && <button onClick={openEditTask}>Edit Task</button>}
+          {(admin || !gid) && <button onClick={onRemove}>Remove Task</button>}
+        </div>
+      )}
+
       <EditTaskModal
         removeAdmin={removeAdmin}
         isOpen={open}

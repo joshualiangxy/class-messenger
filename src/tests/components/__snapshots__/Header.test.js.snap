@@ -1,33 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render should render Header 1`] = `
-<div>
-  <Link
-    to="/dashboard"
+<header
+  className="header"
+>
+  <div
+    className="content-container"
   >
-    <h2>
-      Class Board Tasks
-    </h2>
-  </Link>
-  <NavLink
-    exact={true}
-    to="/groups"
-  >
-    Groups
-  </NavLink>
-  <button
-    onClick={[Function]}
-  >
-    Settings
-  </button>
-  <button
-    onClick={[MockFunction]}
-  >
-    Logout
-  </button>
+    <Link
+      className="header__title"
+      to="/dashboard"
+    >
+      <h1>
+        Class Board Tasks
+      </h1>
+    </Link>
+    <div
+      className="header__content"
+    >
+      <NavLink
+        className="button button--link"
+        exact={true}
+        to="/groups"
+      >
+        Groups
+      </NavLink>
+      <div>
+        <button
+          className="button button--link"
+          onClick={[Function]}
+        >
+          Settings
+        </button>
+        <button
+          className="button button--link"
+          onClick={[MockFunction]}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
   <Connect(SettingsModal)
     isOpen={false}
     onRequestClose={[Function]}
   />
-</div>
+</header>
 `;
