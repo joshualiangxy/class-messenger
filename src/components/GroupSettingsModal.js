@@ -56,10 +56,9 @@ const GroupSettingsModal = ({
         } else {
           // This user is not an admin anymore
           setAdmin(false);
-          setError('You are not an admin!')
+          setError('You are not an admin!');
         }
-      })
-
+      });
     }
   };
 
@@ -69,18 +68,21 @@ const GroupSettingsModal = ({
       contentLabel="New Group"
       onRequestClose={() => onRequestClose()}
       appElement={document.getElementById('root')}
+      className="modal"
     >
-      {admin && (<form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="Email (required)"
-          value={userEmail}
-          onChange={onUserEmailChange}
-          autoFocus
-        />
-        <button>Add to list</button>
-        <div>{error}</div>
-      </form>      )}
+      {admin && (
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            placeholder="Email (required)"
+            value={userEmail}
+            onChange={onUserEmailChange}
+            autoFocus
+          />
+          <button>Add to list</button>
+          <div>{error}</div>
+        </form>
+      )}
       <button onClick={onCancel}>Close</button>
       <h3>Users:</h3>
       <GroupUserListing

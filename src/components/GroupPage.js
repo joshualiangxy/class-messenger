@@ -53,7 +53,7 @@ const GroupPage = ({
         leaveGroup();
       } else setAdmin(user.admin);
     }
-  }, [users, uid]);
+  }, [users, uid, leaveGroup]);
 
   const addGroupTask = task => setTasks([...tasks, task]);
 

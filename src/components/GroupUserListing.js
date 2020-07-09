@@ -70,16 +70,16 @@ const GroupUserListing = ({
 
   // The other buttons can only be seen if the current user is an admin.
   return users.map(user => (
-    <div key={user.uid}>
+    <div key={user.uid} >
       {user.displayName} {user.uid === uid && '(You)'}{' '}
       {admin && !user.admin && (
-        <button onClick={() => onPromote(user, group)}>Make admin</button>
+        <button className="button button--content" onClick={() => onPromote(user, group)}>Make admin</button>
       )}{' '}
       {admin && user.admin && user.uid !== uid && (
-        <button onClick={() => onDemote(user, group)}>Demote admin</button>
+        <button className="button button--content" onClick={() => onDemote(user, group)}>Demote admin</button>
       )}
       {admin && user.uid !== uid && (
-        <button onClick={() => onKick(user, group)}>Kick</button>
+        <button className="button button--content" onClick={() => onKick(user, group)}>Kick</button>
       )}
     </div>
   ));
