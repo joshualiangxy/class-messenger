@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render should render TaskList with no tasks text 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <h3>
     No tasks yet
   </h3>
@@ -9,7 +12,10 @@ exports[`render should render TaskList with no tasks text 1`] = `
 `;
 
 exports[`render should render TaskList with tasks in groups 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <TaskListGroup
     group={
       Object {
@@ -73,7 +79,10 @@ exports[`render should render TaskList with tasks in groups 1`] = `
 `;
 
 exports[`render should render TaskList with tasks sorted by deadline in reverse 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <Connect(TaskListItem)
     dashboard={true}
     key="a1050220-fa88-4dc2-aa9d-9521ae95de47"
@@ -135,7 +144,10 @@ exports[`render should render TaskList with tasks sorted by deadline in reverse 
 `;
 
 exports[`render should render TaskList with tasks sorted by name 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <Connect(TaskListItem)
     dashboard={true}
     key="a1050220-fa88-4dc2-aa9d-9521ae95de47"
@@ -197,7 +209,10 @@ exports[`render should render TaskList with tasks sorted by name 1`] = `
 `;
 
 exports[`render should render TaskList with tasks sorted by name in reverse 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <Connect(TaskListItem)
     dashboard={true}
     key="5feb18c0-78a8-49b6-8584-75b8c1b40abc"
@@ -259,7 +274,10 @@ exports[`render should render TaskList with tasks sorted by name in reverse 1`] 
 `;
 
 exports[`render should render TaskList with tasks ungrouped 1`] = `
-<div>
+<div
+  className="content-container"
+>
+  <Connect(TaskListHeader) />
   <Connect(TaskListItem)
     dashboard={true}
     key="5feb18c0-78a8-49b6-8584-75b8c1b40abc"

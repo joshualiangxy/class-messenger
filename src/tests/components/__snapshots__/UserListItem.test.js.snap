@@ -2,15 +2,12 @@
 
 exports[`render should render UserListItem 1`] = `
 <div>
-  <input
-    checked={false}
-    id="testuid"
-    onChange={[Function]}
-    type="checkbox"
-  />
-  <label
-    htmlFor="testuid"
-  >
+  <label>
+    <input
+      checked={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
     Robert
   </label>
 </div>
@@ -18,15 +15,12 @@ exports[`render should render UserListItem 1`] = `
 
 exports[`render should render UserListItem for alt user 1`] = `
 <div>
-  <input
-    checked={true}
-    id="testuid2"
-    onChange={[Function]}
-    type="checkbox"
-  />
-  <label
-    htmlFor="testuid2"
-  >
+  <label>
+    <input
+      checked={true}
+      onChange={[Function]}
+      type="checkbox"
+    />
     Peter
   </label>
 </div>

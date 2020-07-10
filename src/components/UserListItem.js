@@ -13,8 +13,10 @@ const UserListItem = ({ user, removeUser, addUser, initialPick }) => {
 
   return (
     <div>
-      <input type="checkbox" checked={pick} onChange={togglePick} id={uid} />
-      <label htmlFor={uid}>{displayName}</label>
+      <label>
+        <input type="checkbox" checked={pick} onChange={togglePick} />
+        {displayName}
+      </label>
     </div>
   );
 };

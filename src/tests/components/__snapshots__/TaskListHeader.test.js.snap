@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render TaskListHeader 1`] = `
+<div
+  className="list-header"
+>
+  <div
+    className="list-header__toggle"
+    onClick={[Function]}
+  >
+    Task
+  </div>
+  <div
+    className="list-header__toggle"
+    onClick={[Function]}
+  >
+    Deadline
+  </div>
+</div>
+`;

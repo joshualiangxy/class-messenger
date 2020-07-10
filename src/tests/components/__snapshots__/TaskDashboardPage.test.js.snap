@@ -2,14 +2,25 @@
 
 exports[`render should render TaskDashboardPage 1`] = `
 <div>
-  <h1>
-    Dashboard
-  </h1>
-  <button
-    onClick={[Function]}
+  <div
+    className="page-header"
   >
-    Add Task
-  </button>
+    <div
+      className="content-container"
+    >
+      <h1
+        className="page-header__title"
+      >
+        Dashboard
+      </h1>
+      <button
+        className="button button--norm page-header__actions"
+        onClick={[Function]}
+      >
+        Add Task
+      </button>
+    </div>
+  </div>
   <Connect(TaskListFilters) />
   <Connect(TaskList) />
   <Connect(AddTaskModal)

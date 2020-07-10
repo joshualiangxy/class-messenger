@@ -1,95 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render should render TaskListFilters 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    placeholder="Search tasks"
-    type="text"
-    value=""
-  />
-  <input
-    checked={false}
-    id="grouped"
-    onChange={[MockFunction]}
-    type="checkbox"
-  />
-  <label
-    htmlFor="grouped"
+<div
+  className="content-container"
+>
+  <div
+    className="input-group"
   >
-     Group tasks
-  </label>
-  <select
-    onChange={[Function]}
-    value="deadline"
-  >
-    <option
-      value="deadline"
+    <div
+      className="input-group__item"
     >
-      Deadline
-    </option>
-    <option
-      value="deadlineReversed"
+      <input
+        className="text-input"
+        onChange={[Function]}
+        placeholder="Search tasks"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="input-group__item"
     >
-      Deadline Reversed
-    </option>
-    <option
-      value="name"
-    >
-      Name
-    </option>
-    <option
-      value="nameReversed"
-    >
-      Name Reversed
-    </option>
-  </select>
+      <label
+        className="switch"
+      >
+        <input
+          checked={false}
+          className="toggle"
+          onChange={[MockFunction]}
+          type="checkbox"
+        />
+        <span
+          className="slider"
+        />
+      </label>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`render should render TaskListFilters with alt filters 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    placeholder="Search tasks"
-    type="text"
-    value=""
-  />
-  <input
-    checked={false}
-    id="grouped"
-    onChange={[MockFunction]}
-    type="checkbox"
-  />
-  <label
-    htmlFor="grouped"
+<div
+  className="content-container"
+>
+  <div
+    className="input-group"
   >
-     Group tasks
-  </label>
-  <select
-    onChange={[Function]}
-    value="name"
-  >
-    <option
-      value="deadline"
+    <div
+      className="input-group__item"
     >
-      Deadline
-    </option>
-    <option
-      value="deadlineReversed"
+      <input
+        className="text-input"
+        onChange={[Function]}
+        placeholder="Search tasks"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="input-group__item"
     >
-      Deadline Reversed
-    </option>
-    <option
-      value="name"
-    >
-      Name
-    </option>
-    <option
-      value="nameReversed"
-    >
-      Name Reversed
-    </option>
-  </select>
+      <label
+        className="switch"
+      >
+        <input
+          checked={false}
+          className="toggle"
+          onChange={[MockFunction]}
+          type="checkbox"
+        />
+        <span
+          className="slider"
+        />
+      </label>
+    </div>
+  </div>
 </div>
 `;

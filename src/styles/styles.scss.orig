@@ -5,9 +5,12 @@
 @import './components/button';
 @import './components/content-container';
 @import './components/header';
+<<<<<<< HEAD
 @import './components/content';
 @import './components/modal';
+=======
 @import './components/list';
 @import './components/page';
 @import './components/input-group';
 @import './components/inputs';
+>>>>>>> 97ee60f... Add styles and update tests

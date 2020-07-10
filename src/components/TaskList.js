@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getSortedTasks from '../selectors/tasks';
+import TaskListHeader from './TaskListHeader';
 import TaskListGroup from './TaskListGroup';
 import TaskListItem from './TaskListItem';
 
 export const TaskList = ({ sortedList, grouped }) => (
-  <div>
+  <div className="content-container">
+    <TaskListHeader />
     {Object.keys(sortedList).length === 1 &&
     sortedList.others.tasks.length === 0 ? (
       <h3>No tasks yet</h3>

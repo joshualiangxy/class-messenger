@@ -18,7 +18,7 @@ exports[`render should render LoginPage 1`] = `
       Group work made easy
     </p>
     <button
-      className="button"
+      className="button button--norm"
       onClick={[MockFunction]}
     >
       Login with Google

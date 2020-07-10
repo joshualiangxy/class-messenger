@@ -1,0 +1,16 @@
+.list-header {
+  background: $light-grey;
+  border: 1px solid darken($light-grey, 10%);
+  color: $grey-text;
+  display: flex;
+  justify-content: space-between;
+  padding: $s-size $m-size;
+}
+
+.list-header__toggle {
+  cursor: pointer;
+}
+
+.list-item {
+
+}
