@@ -2,18 +2,22 @@
 
 exports[`render should render TaskList with no tasks text 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
-  <h3>
-    No tasks yet
-  </h3>
+  <div
+    className="list-item__header list-item__header-message"
+  >
+    <p>
+      No tasks yet
+    </p>
+  </div>
 </div>
 `;
 
 exports[`render should render TaskList with tasks in groups 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
   <TaskListGroup
@@ -80,7 +84,7 @@ exports[`render should render TaskList with tasks in groups 1`] = `
 
 exports[`render should render TaskList with tasks sorted by deadline in reverse 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
   <Connect(TaskListItem)
@@ -145,7 +149,7 @@ exports[`render should render TaskList with tasks sorted by deadline in reverse 
 
 exports[`render should render TaskList with tasks sorted by name 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
   <Connect(TaskListItem)
@@ -210,7 +214,7 @@ exports[`render should render TaskList with tasks sorted by name 1`] = `
 
 exports[`render should render TaskList with tasks sorted by name in reverse 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
   <Connect(TaskListItem)
@@ -275,7 +279,7 @@ exports[`render should render TaskList with tasks sorted by name in reverse 1`] 
 
 exports[`render should render TaskList with tasks ungrouped 1`] = `
 <div
-  className="content-container"
+  className="content-container list"
 >
   <Connect(TaskListHeader) />
   <Connect(TaskListItem)

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import {
@@ -49,8 +50,6 @@ export const TaskListItem = ({
     !dashboard ? (userInvolved ? initialComplete[uid] : false) : initialComplete
   );
   const [open, setOpen] = useState(false);
-  const now = moment().valueOf;
-  const deadlineClass = deadline > now ? 'before-deadline' : 'after-deadline';
 
   useEffect(() => {
     if (!(dashboard || userInvolved)) setCompleted(false);
@@ -103,69 +102,118 @@ export const TaskListItem = ({
   };
 
   return (
-    <div>
-      <input
-        type="checkbox"
-        checked={completed}
-        onChange={toggleCompleted}
-        disabled={!(dashboard || userInvolved)}
-      />
+    <div className="list-item">
+      <div
+        className={
+          visible
+            ? 'list-item__header list-item__header--visible'
+            : 'list-item__header'
+        }
+      >
+        <input
+          type="checkbox"
+          checked={completed}
+          onChange={toggleCompleted}
+          disabled={!(dashboard || userInvolved)}
+        />
 
-      <div onClick={toggleVisibility}>
-        <h3>{title}</h3>
-        {deadline && (
-          <h3 className={deadlineClass}>
-            {moment(deadline).format('Do MMM YYYY')}
-          </h3>
-        )}
+        <div className="list-item__toggle" onClick={toggleVisibility}>
+          <h3 className="list-item__title">{title}</h3>
+          {deadline && (
+            <h3 className="list-item__deadline">
+              {moment(deadline).format('Do MMM YYYY')}
+            </h3>
+          )}
+        </div>
       </div>
-      {visible && (
+      <CSSTransition in={visible} timeout={200} className="list-item__visible">
         <div>
-          {showGroup && module && <h5>{module}</h5>}
-          {description && <p>{description}</p>}
-          {userInvolved && uploadRequired && (
-            <div>
-              <FileUploadForm
-                id={id}
-                gid={gid}
-                namingConvention={namingConvention}
-              />
+          {showGroup && module && (
+            <p className="list-item__group">
+              <b>Group:</b> {module}
+            </p>
+          )}
+          <div className="file-manager">
+            {userInvolved && uploadRequired && (
+              <div>
+                <FileUploadForm
+                  id={id}
+                  gid={gid}
+                  namingConvention={namingConvention}
+                />
+              </div>
+            )}
+            {uploadRequired && admin && (
+              <button
+                className="button button--grey button--norm-grey button--right"
+                onClick={onDownload}
+              >
+                Download submissions
+              </button>
+            )}
+          </div>
+          {description && (
+            <p className="list-item__description">
+              <b>Description:</b> {description}
+            </p>
+          )}
+          {!dashboard && (
+            <div className="list-item__users">
+              <p>
+                <b>Users: </b>
+              </p>
+              {Object.keys(initialComplete)
+                .sort((uidOne, uidTwo) => {
+                  const userOne = users.find(user => user.uid === uidOne);
+                  const userTwo = users.find(user => user.uid === uidTwo);
+
+                  if (!(userOne && userTwo)) return 0;
+                  return userOne.displayName.localeCompare(userTwo.displayName);
+                })
+                .map(id => (
+                  <div key={id}>
+                    {users.find(user => user.uid === id) && (
+                      <div>
+                        <input
+                          className="user-complete-checkbox"
+                          type="checkbox"
+                          checked={id === uid ? completed : initialComplete[id]}
+                          htmlFor={id}
+                          disabled={true}
+                        />
+                        <label
+                          className="user-complete-checkbox__label"
+                          id={id}
+                          data-content={
+                            users.find(user => user.uid === id).displayName
+                          }
+                        >
+                          {users.find(user => user.uid === id).displayName}
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                ))}
             </div>
           )}
-          {uploadRequired && admin && (
-            <button onClick={onDownload}>Download submissions</button>
+          {(admin || !gid) && (
+            <button
+              className="button button--norm-grey button--grey"
+              onClick={openEditTask}
+            >
+              Edit Task
+            </button>
           )}
-          {!dashboard &&
-            Object.keys(initialComplete)
-              .sort((uidOne, uidTwo) => {
-                const userOne = users.find(user => user.uid === uidOne);
-                const userTwo = users.find(user => user.uid === uidTwo);
-
-                if (!(userOne && userTwo)) return 0;
-                return userOne.displayName.localeCompare(userTwo.displayName);
-              })
-              .map(id => (
-                <div key={id}>
-                  {users.find(user => user.uid === id) && (
-                    <div>
-                      <input
-                        type="checkbox"
-                        checked={id === uid ? completed : initialComplete[id]}
-                        htmlFor={id}
-                        disabled={true}
-                      />
-                      <label id={id}>
-                        {users.find(user => user.uid === id).displayName}
-                      </label>
-                    </div>
-                  )}
-                </div>
-              ))}
-          {(admin || !gid) && <button onClick={openEditTask}>Edit Task</button>}
-          {(admin || !gid) && <button onClick={onRemove}>Remove Task</button>}
+          {(admin || !gid) && (
+            <button
+              className="button button--norm-grey button--grey"
+              onClick={onRemove}
+            >
+              Remove Task
+            </button>
+          )}
         </div>
-      )}
-
+      </CSSTransition>{' '}
       <EditTaskModal
         removeAdmin={removeAdmin}
         isOpen={open}

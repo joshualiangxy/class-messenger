@@ -75,4 +75,19 @@ describe('reducer', () => {
 
     expect(state).toEqual({ ...initialState, groups: ['testgid'] });
   });
+
+  it('should remove group from user', () => {
+    const initialState = {
+      displayName,
+      studentNum,
+      newUser: false,
+      groups
+    };
+    const state = userReducer(initialState, {
+      type: 'REMOVE_GROUP',
+      gid: groups[0]
+    });
+
+    expect(state).toEqual({ ...initialState, groups: [groups[1], groups[2]] });
+  });
 });

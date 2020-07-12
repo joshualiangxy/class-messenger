@@ -2,6 +2,7 @@
 
 exports[`error should render cancelled error 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <p>
@@ -10,11 +11,27 @@ exports[`error should render cancelled error 1`] = `
   <input
     accept=".pdf"
     disabled={false}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={false}
     onClick={[Function]}
   >
@@ -25,6 +42,7 @@ exports[`error should render cancelled error 1`] = `
 
 exports[`error should render default error 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <p>
@@ -33,11 +51,27 @@ exports[`error should render default error 1`] = `
   <input
     accept=".pdf"
     disabled={false}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={false}
     onClick={[Function]}
   >
@@ -48,16 +82,33 @@ exports[`error should render default error 1`] = `
 
 exports[`error should render error when no file is selected 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <input
     accept=".pdf"
     disabled={false}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={false}
     onClick={[Function]}
   >
@@ -68,6 +119,7 @@ exports[`error should render error when no file is selected 1`] = `
 
 exports[`error should render unauthorized error 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <p>
@@ -76,11 +128,138 @@ exports[`error should render unauthorized error 1`] = `
   <input
     accept=".pdf"
     disabled={false}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`file name should change file name back to no file chosen if no file selected 1`] = `
+<form
+  className="file-upload-form"
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={false}
+    hidden="hidden"
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
+    onClick={[Function]}
+    type="file"
+  />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      fileName
+    </p>
+  </div>
+  <button
+    className="button button--grey button--norm-grey"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`file name should change file name back to no file chosen if no file selected 2`] = `
+<form
+  className="file-upload-form"
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={false}
+    hidden="hidden"
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
+    onClick={[Function]}
+    type="file"
+  />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
+  <button
+    className="button button--grey button--norm-grey"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Upload
+  </button>
+</form>
+`;
+
+exports[`file name should change file name on selecting file 1`] = `
+<form
+  className="file-upload-form"
+  onSubmit={[Function]}
+>
+  <input
+    accept=".pdf"
+    disabled={false}
+    hidden="hidden"
+    id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
+    onClick={[Function]}
+    type="file"
+  />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      fileName
+    </p>
+  </div>
+  <button
+    className="button button--grey button--norm-grey"
     disabled={false}
     onClick={[Function]}
   >
@@ -91,16 +270,33 @@ exports[`error should render unauthorized error 1`] = `
 
 exports[`render should render FileUploadForm 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <input
     accept=".pdf"
     disabled={false}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={false}
     onClick={[Function]}
   >
@@ -111,16 +307,33 @@ exports[`render should render FileUploadForm 1`] = `
 
 exports[`upload form should change button to "Uploading..." during upload 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <input
     accept=".pdf"
     disabled={true}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={true}
     onClick={[Function]}
   >
@@ -131,16 +344,33 @@ exports[`upload form should change button to "Uploading..." during upload 1`] = 
 
 exports[`upload form should remove error, set uploading to false and reset input after upload 1`] = `
 <form
+  className="file-upload-form"
   onSubmit={[Function]}
 >
   <input
     accept=".pdf"
     disabled={true}
+    hidden="hidden"
     id="c1511c73-07b9-44cd-a4bd-01758515acb5"
+    onChange={[Function]}
     onClick={[Function]}
     type="file"
   />
+  <label
+    className="button button--grey button--norm-grey"
+    htmlFor="c1511c73-07b9-44cd-a4bd-01758515acb5"
+  >
+    Choose File
+  </label>
+  <div
+    className="file-name"
+  >
+    <p>
+      No file chosen
+    </p>
+  </div>
   <button
+    className="button button--grey button--norm-grey"
     disabled={true}
     onClick={[Function]}
   >

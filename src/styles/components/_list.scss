@@ -1,16 +1,143 @@
 .list-header {
-  background: $light-grey;
-  border: 1px solid darken($light-grey, 10%);
-  color: $grey-text;
+  background: darken($light-grey, 10%);
+  border: 1px solid darken($light-grey, 20%);
+  color: black;
   display: flex;
   justify-content: space-between;
-  padding: $s-size $m-size;
+  padding: $s-size $m-size $s-size $l-size;
+}
+
+.list-header__text {
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .list-header__toggle {
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.list {
+  margin-bottom: $xl-size;
+}
+
+.list-group__header {
+  border: 1px solid darken($light-grey, 20%);
+  border-top: none;
+  margin: 0;
+  padding: $m-size $s-size;
+  background: $light-grey;
+  cursor: default;
+  word-wrap: break-word;
 }
 
 .list-item {
+  transition: background 0.3s ease;
 
+  &:hover {
+    background: $light-grey;
+  }
+}
+
+.list-item__header {
+  padding-left: 10px;
+  display: flex;
+  border: 1px solid darken($light-grey, 20%);
+  border-top: none;
+}
+
+.list-item__header--visible {
+  border-bottom: none;
+}
+
+.list-item__toggle {
+  cursor: pointer;
+  margin-left: 10px;
+  width: 96%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 $s-size 0 0;
+}
+
+.list-item__visible {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  border: 1px solid darken($light-grey, 20%);
+  border-top: none;
+
+  &.enter {
+    opacity: 0;
+  }
+
+  &.enter-done {
+    opacity: 1;
+    height: auto;
+  }
+
+  &.enter-active {
+    opacity: 1;
+    height: auto;
+    transition: all 200ms ease-in-out;
+  }
+
+  &.exit {
+    opacity: 1;
+    height: auto;
+  }
+
+  &.exit-done {
+    opacity: 0;
+    height: 0;
+  }
+
+  &.exit-active {
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+  }
+}
+
+.list-item__group {
+  padding: $s-size;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.list-item__description {
+  padding: $s-size;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.list-item__title {
+  word-wrap: break-word;
+  width: 80%;
+}
+
+.list-item__deadline {
+  min-width: 12rem;
+}
+
+.list-item__header-message {
+  align-items: center;
+  justify-content: center;
+  color: $grey-text;
+  padding: $m-size;
+}
+
+.list-item__users {
+  margin: 0;
+  padding: 0 $s-size;
+  
+  p {
+    margin: 0;
+  }
 }

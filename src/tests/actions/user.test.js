@@ -20,7 +20,8 @@ import {
   startSetUserData,
   newUser,
   startNewUser,
-  addGroup
+  addGroup,
+  removeGroup
 } from '../../actions/user';
 import {
   groupOneDocCollection,
@@ -204,4 +205,12 @@ describe('new user', () => {
 describe('add group', () => {
   it('should generate action object', () =>
     expect(addGroup(groups[0])).toEqual({ type: 'ADD_GROUP', gid: groups[0] }));
+});
+
+describe('remove group', () => {
+  it('should generate action object', () =>
+    expect(removeGroup(groups[0])).toEqual({
+      type: 'REMOVE_GROUP',
+      gid: groups[0]
+    }));
 });

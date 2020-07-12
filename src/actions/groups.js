@@ -1,6 +1,6 @@
 import firebase, { firestore } from '../firebase/firebase';
 import { v4 as uuid } from 'uuid';
-import { addGroup } from './user';
+import { addGroup, removeGroup } from './user';
 import { startRemoveDownloadURL } from './tasks';
 import { startRemoveUserFile } from './files';
 
@@ -172,7 +172,10 @@ export const startLeaveGroup = (gid, count) => {
           return;
         }
       })
-      .then(() => dispatch(leaveGroup(gid)));
+      .then(() => {
+        dispatch(leaveGroup(gid));
+        dispatch(removeGroup(gid));
+      });
   };
 };
 
@@ -297,7 +300,8 @@ export const demoteUser = (user, gid) => {
 // Returns a promise of a boolean (admin status of this user) to chain inside GroupSettingsModal
 export const recheckAdmin = (uid, gid) => {
   // Checks if the current user is an admin of a group
-  return firebase.firestore()
+  return firebase
+    .firestore()
     .collection('groups')
     .doc(gid)
     .collection('users')

@@ -2,7 +2,9 @@
 
 exports[`render should render TaskListGroup 1`] = `
 <div>
-  <h3>
+  <h3
+    className="list-group__header"
+  >
     CS2030
   </h3>
   <Connect(TaskListItem)
@@ -39,7 +41,9 @@ exports[`render should render TaskListGroup 1`] = `
 
 exports[`render should render TaskListGroup with alt group 1`] = `
 <div>
-  <h3>
+  <h3
+    className="list-group__header"
+  >
     others
   </h3>
   <Connect(TaskListItem)

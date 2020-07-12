@@ -1,40 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`clickable div should toggle visibility of div 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header list-item__header--visible"
   >
-    <h3>
-      Watch lecture
-    </h3>
-    <h3
-      className="after-deadline"
-    >
-      5th Jun 2020
-    </h3>
-  </div>
-  <div>
-    <p>
-      Catch up on lectures!
-    </p>
-    <button
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <div
+      className="list-item__toggle"
       onClick={[Function]}
     >
-      Edit Task
-    </button>
-    <button
-      onClick={[Function]}
-    >
-      Remove Task
-    </button>
+      <h3
+        className="list-item__title"
+      >
+        Watch lecture
+      </h3>
+      <h3
+        className="list-item__deadline"
+      >
+        5th Jun 2020
+      </h3>
+    </div>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={true}
+    timeout={200}
+  >
+    <div>
+      <div
+        className="file-manager"
+      />
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Catch up on lectures!
+      </p>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     groupModule="CS2030"
     isOpen={false}
@@ -55,25 +83,68 @@ exports[`clickable div should toggle visibility of div 1`] = `
 `;
 
 exports[`clickable div should toggle visibility of div 2`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header"
   >
-    <h3>
-      Watch lecture
-    </h3>
-    <h3
-      className="after-deadline"
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <div
+      className="list-item__toggle"
+      onClick={[Function]}
     >
-      5th Jun 2020
-    </h3>
+      <h3
+        className="list-item__title"
+      >
+        Watch lecture
+      </h3>
+      <h3
+        className="list-item__deadline"
+      >
+        5th Jun 2020
+      </h3>
+    </div>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={false}
+    timeout={200}
+  >
+    <div>
+      <div
+        className="file-manager"
+      />
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Catch up on lectures!
+      </p>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     groupModule="CS2030"
     isOpen={false}
@@ -94,63 +165,105 @@ exports[`clickable div should toggle visibility of div 2`] = `
 `;
 
 exports[`render should render TaskListItem with group task on GroupPage as admin 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header list-item__header--visible"
   >
-    <h3>
-      Homework 1
-    </h3>
-  </div>
-  <div>
-    <p>
-      Finish by Sunday!
-    </p>
-    <div>
-      <Connect(FileUploadForm)
-        gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
-        id="076e610e-aade-4d2b-897f-81a29f00c76b"
-      />
-    </div>
-    <button
-      onClick={[Function]}
-    >
-      Download submissions
-    </button>
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
     <div
-      key="testuid"
+      className="list-item__toggle"
+      onClick={[Function]}
     >
-      <div>
-        <input
-          checked={false}
-          disabled={true}
-          htmlFor="testuid"
-          type="checkbox"
-        />
-        <label
-          id="testuid"
-        >
-          Robert
-        </label>
-      </div>
+      <h3
+        className="list-item__title"
+      >
+        Homework 1
+      </h3>
     </div>
-    <button
-      onClick={[Function]}
-    >
-      Edit Task
-    </button>
-    <button
-      onClick={[Function]}
-    >
-      Remove Task
-    </button>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={true}
+    timeout={200}
+  >
+    <div>
+      <div
+        className="file-manager"
+      >
+        <div>
+          <Connect(FileUploadForm)
+            gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+            id="076e610e-aade-4d2b-897f-81a29f00c76b"
+          />
+        </div>
+        <button
+          className="button button--grey button--norm-grey button--right"
+          onClick={[Function]}
+        >
+          Download submissions
+        </button>
+      </div>
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Finish by Sunday!
+      </p>
+      <div
+        className="list-item__users"
+      >
+        <p>
+          <b>
+            Users: 
+          </b>
+        </p>
+        <div
+          key="testuid"
+        >
+          <div>
+            <input
+              checked={false}
+              className="user-complete-checkbox"
+              disabled={true}
+              htmlFor="testuid"
+              type="checkbox"
+            />
+            <label
+              className="user-complete-checkbox__label"
+              data-content="Robert"
+              id="testuid"
+            >
+              Robert
+            </label>
+          </div>
+        </div>
+      </div>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
     groupModule="CS1231"
@@ -197,48 +310,87 @@ exports[`render should render TaskListItem with group task on GroupPage as admin
 `;
 
 exports[`render should render TaskListItem with group task on GroupPage as regular user 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header list-item__header--visible"
   >
-    <h3>
-      Homework 1
-    </h3>
-  </div>
-  <div>
-    <p>
-      Finish by Sunday!
-    </p>
-    <div>
-      <Connect(FileUploadForm)
-        gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
-        id="076e610e-aade-4d2b-897f-81a29f00c76b"
-      />
-    </div>
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
     <div
-      key="testuid"
+      className="list-item__toggle"
+      onClick={[Function]}
     >
-      <div>
-        <input
-          checked={false}
-          disabled={true}
-          htmlFor="testuid"
-          type="checkbox"
-        />
-        <label
-          id="testuid"
+      <h3
+        className="list-item__title"
+      >
+        Homework 1
+      </h3>
+    </div>
+  </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={true}
+    timeout={200}
+  >
+    <div>
+      <div
+        className="file-manager"
+      >
+        <div>
+          <Connect(FileUploadForm)
+            gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
+            id="076e610e-aade-4d2b-897f-81a29f00c76b"
+          />
+        </div>
+      </div>
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Finish by Sunday!
+      </p>
+      <div
+        className="list-item__users"
+      >
+        <p>
+          <b>
+            Users: 
+          </b>
+        </p>
+        <div
+          key="testuid"
         >
-          Robert
-        </label>
+          <div>
+            <input
+              checked={false}
+              className="user-complete-checkbox"
+              disabled={true}
+              htmlFor="testuid"
+              type="checkbox"
+            />
+            <label
+              className="user-complete-checkbox__label"
+              data-content="Robert"
+              id="testuid"
+            >
+              Robert
+            </label>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
     groupModule="CS1231"
@@ -285,20 +437,60 @@ exports[`render should render TaskListItem with group task on GroupPage as regul
 `;
 
 exports[`render should render TaskListItem with group task on dashboard 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header"
   >
-    <h3>
-      Homework 1
-    </h3>
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <div
+      className="list-item__toggle"
+      onClick={[Function]}
+    >
+      <h3
+        className="list-item__title"
+      >
+        Homework 1
+      </h3>
+    </div>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={false}
+    timeout={200}
+  >
+    <div>
+      <p
+        className="list-item__group"
+      >
+        <b>
+          Group:
+        </b>
+         
+        CS1231
+      </p>
+      <div
+        className="file-manager"
+      />
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Finish by Sunday!
+      </p>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     gid="72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9"
     groupModule="CS1231"
@@ -327,25 +519,68 @@ exports[`render should render TaskListItem with group task on dashboard 1`] = `
 `;
 
 exports[`render should render personal TaskListItem 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header"
   >
-    <h3>
-      Watch lecture
-    </h3>
-    <h3
-      className="after-deadline"
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <div
+      className="list-item__toggle"
+      onClick={[Function]}
     >
-      5th Jun 2020
-    </h3>
+      <h3
+        className="list-item__title"
+      >
+        Watch lecture
+      </h3>
+      <h3
+        className="list-item__deadline"
+      >
+        5th Jun 2020
+      </h3>
+    </div>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={false}
+    timeout={200}
+  >
+    <div>
+      <div
+        className="file-manager"
+      />
+      <p
+        className="list-item__description"
+      >
+        <b>
+          Description:
+        </b>
+         
+        Catch up on lectures!
+      </p>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     groupModule="CS2030"
     isOpen={false}
@@ -366,20 +601,63 @@ exports[`render should render personal TaskListItem 1`] = `
 `;
 
 exports[`render should render personal TaskListItem with group/module shown 1`] = `
-<div>
-  <input
-    checked={false}
-    disabled={false}
-    onChange={[Function]}
-    type="checkbox"
-  />
+<div
+  className="list-item"
+>
   <div
-    onClick={[Function]}
+    className="list-item__header"
   >
-    <h3>
-      Do lab
-    </h3>
+    <input
+      checked={false}
+      disabled={false}
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <div
+      className="list-item__toggle"
+      onClick={[Function]}
+    >
+      <h3
+        className="list-item__title"
+      >
+        Do lab
+      </h3>
+    </div>
   </div>
+  <CSSTransition
+    className="list-item__visible"
+    classNames=""
+    in={false}
+    timeout={200}
+  >
+    <div>
+      <p
+        className="list-item__group"
+      >
+        <b>
+          Group:
+        </b>
+         
+        CS2030
+      </p>
+      <div
+        className="file-manager"
+      />
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Edit Task
+      </button>
+      <button
+        className="button button--norm-grey button--grey"
+        onClick={[Function]}
+      >
+        Remove Task
+      </button>
+    </div>
+  </CSSTransition>
+   
   <Connect(EditTaskModal)
     groupModule="CS2030"
     isOpen={false}

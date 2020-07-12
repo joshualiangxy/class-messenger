@@ -9,6 +9,11 @@
   text-decoration: none;
   line-height: 1;
   position: relative;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
 }
 
 .button--link {
@@ -55,4 +60,41 @@
     right: 0;
     bottom: 0;
   }
+}
+
+.button--grey {
+  margin: $s-size;
+  margin-right: 0;
+  background: $grey;
+}
+
+.button--norm-grey {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid $grey;
+    transition: all 100ms ease;
+  }
+
+  &:hover::before {
+    top: calc(2px * -2);
+    left: calc(2px * -2);
+    right: calc(2px * -2);
+    bottom: calc(2px * -2);
+  }
+
+  &:active::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.button--right {
+  margin: $s-size;
 }

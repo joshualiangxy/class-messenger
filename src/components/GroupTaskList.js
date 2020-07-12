@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TaskListItem from './TaskListItem';
 import getSortedTasks from '../selectors/tasks';
+import TaskListHeader from './TaskListHeader';
 
 const GroupTaskList = ({
   removeUserFromTask,
@@ -20,9 +21,12 @@ const GroupTaskList = ({
   }, [tasks]);
 
   return (
-    <div>
+    <div className="content-container list">
+      <TaskListHeader isGroup={true} />
       {sortedList.others.tasks.length === 0 ? (
-        <h3>No tasks yet</h3>
+        <div className="list-item__header list-item__header-message">
+          <p>No tasks yet</p>
+        </div>
       ) : (
         Object.values(sortedList)[0].tasks.map(task => (
           <TaskListItem

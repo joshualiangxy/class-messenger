@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from '../firebase/firebase';
 import { startUpdateDownloadURL } from '../actions/tasks';
 import { uploadFile, startRemoveUserFile } from '../actions/files';
@@ -15,6 +15,7 @@ export const FileUploadForm = ({
 }) => {
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [fileName, setFileName] = useState('No file chosen');
 
   const fileUpload = e => {
     e.preventDefault();
@@ -59,6 +60,7 @@ export const FileUploadForm = ({
                   startUpdateDownloadURL(downloadURL, fileName);
                 })
                 .then(() => {
+                  setFileName('No file chosen');
                   setError('');
                   setUploading(false);
                   e.target.reset();
@@ -69,17 +71,36 @@ export const FileUploadForm = ({
     } else setError('No file selected');
   };
 
+  const onFileChange = e => {
+    const files = e.target.files;
+
+    if (files.length > 0) setFileName(files[0].name);
+    else setFileName('No file chosen');
+  };
+
   return (
-    <form onSubmit={fileUpload}>
+    <form className="file-upload-form" onSubmit={fileUpload}>
       {error && <p>{error}</p>}
       <input
         type="file"
+        hidden="hidden"
         id={id}
         onClick={e => e.stopPropagation()}
+        onChange={onFileChange}
         accept=".pdf"
         disabled={uploading}
       />
-      <button onClick={e => e.stopPropagation()} disabled={uploading}>
+      <label className="button button--grey button--norm-grey" htmlFor={id}>
+        Choose File
+      </label>
+      <div className="file-name">
+        <p>{fileName}</p>
+      </div>
+      <button
+        className="button button--grey button--norm-grey"
+        onClick={e => e.stopPropagation()}
+        disabled={uploading}
+      >
         {uploading ? 'Uploading...' : 'Upload'}
       </button>
     </form>

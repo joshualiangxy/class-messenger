@@ -179,3 +179,24 @@ describe('upload form', () => {
         );
       }));
 });
+
+describe('file name', () => {
+  const name = 'fileName';
+  const files = [{ name }];
+
+  it('should change file name on selecting file', () => {
+    wrapper.find('input').prop('onChange')({ target: { files } });
+
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should change file name back to no file chosen if no file selected', () => {
+    wrapper.find('input').prop('onChange')({ target: { files } });
+
+    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('input').prop('onChange')({ target: { files: [] } });
+
+    expect(wrapper).toMatchSnapshot();
+  });
+});

@@ -21,6 +21,11 @@ const userReducer = (state = defaultUserState, action) => {
       return {};
     case 'ADD_GROUP':
       return { ...state, groups: [...state.groups, action.gid] };
+    case 'REMOVE_GROUP':
+      return {
+        ...state,
+        groups: state.groups.filter(groupId => groupId !== action.gid)
+      };
     default:
       return state;
   }

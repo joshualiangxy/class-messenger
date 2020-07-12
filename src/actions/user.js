@@ -85,3 +85,5 @@ export const startNewUser = () => {
 };
 
 export const addGroup = gid => ({ type: 'ADD_GROUP', gid });
+
+export const removeGroup = gid => ({ type: 'REMOVE_GROUP', gid });

@@ -6,11 +6,13 @@ import TaskListGroup from './TaskListGroup';
 import TaskListItem from './TaskListItem';
 
 export const TaskList = ({ sortedList, grouped }) => (
-  <div className="content-container">
+  <div className="content-container list">
     <TaskListHeader />
     {Object.keys(sortedList).length === 1 &&
     sortedList.others.tasks.length === 0 ? (
-      <h3>No tasks yet</h3>
+      <div className="list-item__header list-item__header-message">
+        <p>No tasks yet</p>
+      </div>
     ) : grouped ? (
       Object.values(sortedList).map((group, id) => {
         if (group.tasks.length > 0)

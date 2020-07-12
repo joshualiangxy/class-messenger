@@ -115,7 +115,7 @@ describe('render', () => {
         downloadFile={downloadFile}
       />
     );
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -141,7 +141,7 @@ describe('render', () => {
         downloadFile={downloadFile}
       />
     );
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -224,13 +224,13 @@ describe('completed checkbox', () => {
       />
     );
 
-    expect(wrapper.find('input').prop('checked')).toBe(
+    expect(wrapper.find('input').at(0).prop('checked')).toBe(
       groupTask.completed[uid]
     );
 
-    wrapper.find('input').prop('onChange')();
+    wrapper.find('input').at(0).prop('onChange')();
 
-    expect(wrapper.find('input').prop('checked')).toBe(
+    expect(wrapper.find('input').at(0).prop('checked')).toBe(
       !groupTask.completed[uid]
     );
 
@@ -265,13 +265,13 @@ describe('completed checkbox', () => {
       />
     );
 
-    expect(wrapper.find('input').prop('checked')).toBe(
+    expect(wrapper.find('input').at(0).prop('checked')).toBe(
       groupTask.completed[uid]
     );
 
-    wrapper.find('input').prop('onChange')();
+    wrapper.find('input').at(0).prop('onChange')();
 
-    expect(wrapper.find('input').prop('checked')).toBe(
+    expect(wrapper.find('input').at(0).prop('checked')).toBe(
       !groupTask.completed[uid]
     );
 
@@ -292,11 +292,11 @@ describe('completed checkbox', () => {
 
 describe('clickable div', () => {
   it('should toggle visibility of div', () => {
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     expect(wrapper).toMatchSnapshot();
 
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     expect(wrapper).toMatchSnapshot();
   });
@@ -327,7 +327,7 @@ describe('download button', () => {
   });
 
   it('should call onDownload on click', () => {
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
     wrapper.find('button').at(0).prop('onClick')({ stopPropagation: () => {} });
 
     expect(downloadFile).toHaveBeenCalledTimes(1);
@@ -337,7 +337,7 @@ describe('download button', () => {
   it('should remove admin priviledges if user is no longer admin on click', () => {
     downloadFile.mockImplementation(() => Promise.resolve(false));
 
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
     wrapper.find('button').at(0).prop('onClick')({ stopPropagation: () => {} });
 
     expect(downloadFile).toHaveBeenCalledTimes(1);
@@ -353,7 +353,7 @@ describe('download button', () => {
 
 describe('edit task button', () => {
   it('should open EditTaskModal on click', () => {
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     expect(wrapper.find('Connect(EditTaskModal)').prop('isOpen')).toBe(false);
 
@@ -365,7 +365,7 @@ describe('edit task button', () => {
 
 describe('remove task button', () => {
   it('should call startRemovePersonalTask on click', () => {
-    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
 
     wrapper.find('button').at(1).prop('onClick')({ stopPropagation: () => {} });
 

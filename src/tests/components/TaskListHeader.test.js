@@ -56,3 +56,20 @@ describe('toggle task deadline', () => {
     expect(sortByDeadline).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('group', () => {
+  it('should not toggle sorting if in group', () => {
+    wrapper.setProps({ isGroup: true });
+
+    wrapper.find('div').at(1).prop('onClick')();
+    wrapper.find('div').at(1).prop('onClick')();
+
+    wrapper.find('div').at(2).prop('onClick')();
+    wrapper.find('div').at(2).prop('onClick')();
+
+    expect(sortByNameReversed).toHaveBeenCalledTimes(0);
+    expect(sortByName).toHaveBeenCalledTimes(0);
+    expect(sortByDeadlineReversed).toHaveBeenCalledTimes(0);
+    expect(sortByDeadline).toHaveBeenCalledTimes(0);
+  });
+});

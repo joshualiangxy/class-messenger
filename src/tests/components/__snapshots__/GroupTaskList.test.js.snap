@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render should render GroupTaskList 1`] = `
-<div>
+<div
+  className="content-container list"
+>
+  <Connect(TaskListHeader)
+    isGroup={true}
+  />
   <Connect(TaskListItem)
     key="c1511c73-07b9-44cd-a4bd-01758515acb5"
     showGroup={false}
@@ -111,9 +116,18 @@ exports[`render should render GroupTaskList 1`] = `
 `;
 
 exports[`render should render GroupTaskList without tasks 1`] = `
-<div>
-  <h3>
-    No tasks yet
-  </h3>
+<div
+  className="content-container list"
+>
+  <Connect(TaskListHeader)
+    isGroup={true}
+  />
+  <div
+    className="list-item__header list-item__header-message"
+  >
+    <p>
+      No tasks yet
+    </p>
+  </div>
 </div>
 `;
