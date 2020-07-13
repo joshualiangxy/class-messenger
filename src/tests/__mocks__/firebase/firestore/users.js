@@ -31,7 +31,9 @@ export const userDocSnapshotGet = jest.fn(field => {
   }
 });
 
-const userDocSnapshot = { data: userDocSnapshotData, get: userDocSnapshotGet };
+const userDocSnapshot = { data: userDocSnapshotData, get: userDocSnapshotGet, ref: {
+  id: 'testuid'
+} };
 
 const userCollectionRef = { doc: userDoc };
 

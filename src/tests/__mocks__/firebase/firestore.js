@@ -14,8 +14,14 @@ export const collection = jest.fn(collectionName => {
 });
 
 export const deleteReturnValue = 'delete';
+export const arrayUnionReturnValue = 'arrayUnion';
+export const arrayRemoveReturnValue = 'arrayRemove';
 
-export const FieldValue = { delete: jest.fn(() => deleteReturnValue) };
+export const FieldValue = {
+  delete: jest.fn(() => deleteReturnValue),
+  arrayUnion: jest.fn(() => arrayUnionReturnValue),
+  arrayRemove: jest.fn(() => arrayRemoveReturnValue)
+};
 
 const firestore = jest.fn(() => ({ collection }));
 firestore.FieldValue = FieldValue;

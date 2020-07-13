@@ -1,4 +1,5 @@
 import { groupTasks as tasks } from '../../../../fixtures/tasks';
+import { deleteReturnValue } from '../../firestore';
 
 export const groupOneDocSnapshotGet = jest.fn(() =>
   Promise.resolve('groupOne')
@@ -10,11 +11,16 @@ export const groupOneDocGet = jest.fn(() =>
   Promise.resolve(groupOneDocSnapshot)
 );
 
+export const updateReturnValue = 'update';
 export const queryGroupOneTaskSnapshot = [
   {
     id: tasks[0].id,
     data: jest.fn(() => tasks[0]),
-    get: jest.fn(field => tasks[0][field])
+    get: jest.fn(field => tasks[0][field]),
+    ref: {
+      update: jest.fn(() => Promise.resolve(updateReturnValue)),
+      delete: jest.fn(() => deleteReturnValue)
+    }
   }
 ];
 
@@ -59,9 +65,13 @@ export const groupOneUserDocOneGet = jest.fn(() =>
   Promise.resolve(queryGroupOneUserCollection[0])
 );
 
+export const groupOneUserDocOneSet = jest.fn(() => Promise.resolve());
+
 const groupOneUserDocRefOne = {
   update: groupOneUserDocUpdate,
-  get: groupOneUserDocOneGet
+  get: groupOneUserDocOneGet,
+  set: groupOneUserDocOneSet,
+  delete: jest.fn(() => docDeleteReturnValue)
 };
 
 export const groupOneUserDoc = jest.fn(uid => {
@@ -74,8 +84,22 @@ export const groupOneUserDoc = jest.fn(uid => {
 });
 
 export const queryGroupOneUserCollection = [
-  { id: 'testuid', get: jest.fn(() => true), exists: true },
-  { id: 'differentUser', get: jest.fn(() => false), exists: true }
+  {
+    id: 'testuid',
+    get: jest.fn(() => true),
+    exists: true,
+    ref: {
+      delete: jest.fn(() => deleteReturnValue)
+    }
+  },
+  {
+    id: 'differentUser',
+    get: jest.fn(() => false),
+    exists: true,
+    ref: {
+      delete: jest.fn(() => deleteReturnValue)
+    }
+  }
 ];
 
 export const groupOneUserCollectionGet = jest.fn(() =>
@@ -96,9 +120,15 @@ export const groupOneDocCollection = jest.fn(collectionName => {
   }
 });
 
+export const groupOneDocSet = jest.fn(() => Promise.resolve());
+
+export const docDeleteReturnValue = 'DocDelete';
+
 const groupOneDocRef = {
   get: groupOneDocGet,
-  collection: groupOneDocCollection
+  collection: groupOneDocCollection,
+  set: groupOneDocSet,
+  delete: jest.fn(() => docDeleteReturnValue)
 };
 
 export default groupOneDocRef;

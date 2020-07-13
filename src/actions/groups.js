@@ -22,14 +22,10 @@ export const startNewGroup = (groupName, module) => {
     const userPromise = userRef.update({
       groups: firebase.firestore.FieldValue.arrayUnion(gid)
     });
-    const groupPromise = groupRef
-      .set({
-        name: groupName,
-        module
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const groupPromise = groupRef.set({
+      name: groupName,
+      module
+    });
     const groupUserPromise = groupRef.collection('users').doc(uid).set({
       uid: uid,
       displayName: getState().user.displayName,
@@ -75,7 +71,7 @@ export const setGroups = groups => ({ type: 'SET_GROUPS', groups });
 export const startSetGroups = () => {
   const groups = []; // The array of objects to be pushed
   return (dispatch, getState) => {
-    firestore
+    return firestore
       .collection('users')
       .doc(getState().auth.user.uid)
       .get()
@@ -103,7 +99,6 @@ export const startSetGroups = () => {
         return Promise.all(promises);
       })
       .then(() => dispatch(setGroups(groups)))
-      .catch(error => console.log(error));
   };
 };
 
