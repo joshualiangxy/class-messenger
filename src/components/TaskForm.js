@@ -153,9 +153,10 @@ const TaskForm = ({
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      {error && <p>{error}</p>}
+    <form className="form" onSubmit={onSubmit}>
+      {error && <p className="form__error">{error}</p>}
       <input
+        className="text-input"
         type="text"
         placeholder="Title (required)"
         value={title}
@@ -164,6 +165,7 @@ const TaskForm = ({
       />
       {!gid && (
         <input
+          className="text-input"
           type="text"
           placeholder="Module code/Class name (optional)"
           value={module}
@@ -183,10 +185,20 @@ const TaskForm = ({
         placeholder="Deadline"
       />
       <textarea
+        className="text-area"
         placeholder="Add a description for your task (optional)"
         value={description}
         onChange={onDescriptionChange}
       />
+      {enforceNamingConvention && (
+        <input
+          className="text-input"
+          type="text"
+          value={namingConvention}
+          onChange={onNamingConventionChange}
+          placeholder="Naming convention (Files will be renamed to [student_number]_[name_convention].pdf)"
+        />
+      )}
       {gid && (
         <div>
           <SelectUserModal
@@ -197,19 +209,20 @@ const TaskForm = ({
             isOpen={open}
             onRequestClose={closeSelectUserModal}
           />
-          <button type="button" onClick={openSelectUserModal}>
-            Select users
-          </button>
-          <input
-            type="checkbox"
-            id="uploadRequired"
-            checked={uploadRequired}
-            onChange={toggleUploadRequired}
-          />
-          <label htmlFor="uploadRequired">Require submission</label>
+          <div className="submission-required">
+            <input
+              className="submission-required__checkbox"
+              type="checkbox"
+              id="uploadRequired"
+              checked={uploadRequired}
+              onChange={toggleUploadRequired}
+            />
+            <label htmlFor="uploadRequired">Require submission</label>
+          </div>
           {uploadRequired && (
-            <div>
+            <div className="submission-required">
               <input
+                className="submission-required__checkbox"
                 type="checkbox"
                 id="namingConvention"
                 checked={enforceNamingConvention}
@@ -218,22 +231,31 @@ const TaskForm = ({
               <label htmlFor="namingConvention">
                 Enforce naming convention
               </label>
-              {enforceNamingConvention && (
-                <input
-                  type="text"
-                  value={namingConvention}
-                  onChange={onNamingConventionChange}
-                  placeholder="Naming convention"
-                />
-              )}
             </div>
           )}
         </div>
       )}
-      <button>{initialTitle ? 'Edit Task' : 'Add Task'}</button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
+      <div>
+        {gid && (
+          <button
+            className="button button--norm button--right"
+            type="button"
+            onClick={openSelectUserModal}
+          >
+            Select users
+          </button>
+        )}
+        <button className="button button--norm button--right">
+          {initialTitle ? 'Edit Task' : 'Add Task'}
+        </button>
+        <button
+          className="button button--norm"
+          type="button"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

@@ -14,6 +14,7 @@ const SelectUserModal = ({
     isOpen={isOpen}
     contentLabel="Select User"
     onRequestClose={onRequestClose}
+    closeTimeoutMS={200}
     appElement={document.getElementById('root')}
   >
     <h2>Select users</h2>

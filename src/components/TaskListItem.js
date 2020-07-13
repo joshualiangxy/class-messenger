@@ -111,6 +111,7 @@ export const TaskListItem = ({
         }
       >
         <input
+          className="task-complete-checkbox"
           type="checkbox"
           checked={completed}
           onChange={toggleCompleted}
@@ -118,7 +119,9 @@ export const TaskListItem = ({
         />
 
         <div className="list-item__toggle" onClick={toggleVisibility}>
-          <h3 className="list-item__title">{title}</h3>
+          <h3 className="list-item__title" data-content={title}>
+            {title}
+          </h3>
           {deadline && (
             <h3 className="list-item__deadline">
               {moment(deadline).format('Do MMM YYYY')}

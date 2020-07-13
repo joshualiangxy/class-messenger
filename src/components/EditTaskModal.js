@@ -29,12 +29,14 @@ export const EditTaskModal = ({
 
   return (
     <Modal
+      className="task-modal"
       isOpen={isOpen}
       contentLabel="Edit Task"
       onRequestClose={onRequestClose}
+      closeTimeoutMS={200}
       appElement={document.getElementById('root')}
     >
-      <h2>Edit Task</h2>
+      <h1>Edit Task</h1>
       <TaskForm
         gid={gid}
         groupModule={groupModule}

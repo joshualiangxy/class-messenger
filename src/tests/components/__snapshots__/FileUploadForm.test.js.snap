@@ -5,9 +5,6 @@ exports[`error should render cancelled error 1`] = `
   className="file-upload-form"
   onSubmit={[Function]}
 >
-  <p>
-    File upload cancelled
-  </p>
   <input
     accept=".pdf"
     disabled={false}
@@ -27,7 +24,7 @@ exports[`error should render cancelled error 1`] = `
     className="file-name"
   >
     <p>
-      No file chosen
+      File upload cancelled
     </p>
   </div>
   <button
@@ -45,9 +42,6 @@ exports[`error should render default error 1`] = `
   className="file-upload-form"
   onSubmit={[Function]}
 >
-  <p>
-    File upload failed
-  </p>
   <input
     accept=".pdf"
     disabled={false}
@@ -67,7 +61,7 @@ exports[`error should render default error 1`] = `
     className="file-name"
   >
     <p>
-      No file chosen
+      File upload failed
     </p>
   </div>
   <button
@@ -122,9 +116,6 @@ exports[`error should render unauthorized error 1`] = `
   className="file-upload-form"
   onSubmit={[Function]}
 >
-  <p>
-    Not allowed to upload file!
-  </p>
   <input
     accept=".pdf"
     disabled={false}
@@ -144,7 +135,7 @@ exports[`error should render unauthorized error 1`] = `
     className="file-name"
   >
     <p>
-      No file chosen
+      Not allowed to upload file!
     </p>
   </div>
   <button

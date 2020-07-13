@@ -2,19 +2,24 @@
 
 exports[`cancel button should remove errors after call 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
-  <p>
+  <p
+    className="form__error"
+  >
     Please provide title of task
   </p>
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value=""
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -116,34 +121,43 @@ exports[`cancel button should remove errors after call 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value=""
   />
-  <button>
-    Add Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Add Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`cancel button should remove errors after call 2`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="Do homework"
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -245,28 +259,36 @@ exports[`cancel button should remove errors after call 2`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value=""
   />
-  <button>
-    Add Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Add Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`naming convention should not render naming convention text input if not enabled 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -368,6 +390,7 @@ exports[`naming convention should not render naming convention text input if not
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
@@ -400,26 +423,28 @@ exports[`naming convention should not render naming convention text input if not
         ]
       }
     />
-    <button
-      onClick={[Function]}
-      type="button"
+    <div
+      className="submission-required"
     >
-      Select users
-    </button>
-    <input
-      checked={true}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
+      <input
+        checked={true}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+    <div
+      className="submission-required"
     >
-      Require submission
-    </label>
-    <div>
       <input
         checked={false}
+        className="submission-required__checkbox"
         id="namingConvention"
         onChange={[Function]}
         type="checkbox"
@@ -431,24 +456,38 @@ exports[`naming convention should not render naming convention text input if not
       </label>
     </div>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`naming convention should render naming convention text input if enabled 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -550,9 +589,17 @@ exports[`naming convention should render naming convention text input if enabled
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
+  />
+  <input
+    className="text-input"
+    onChange={[Function]}
+    placeholder="Naming convention (Files will be renamed to [student_number]_[name_convention].pdf)"
+    type="text"
+    value=""
   />
   <div>
     <SelectUserModal
@@ -582,26 +629,28 @@ exports[`naming convention should render naming convention text input if enabled
         ]
       }
     />
-    <button
-      onClick={[Function]}
-      type="button"
+    <div
+      className="submission-required"
     >
-      Select users
-    </button>
-    <input
-      checked={true}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
-    >
-      Require submission
-    </label>
-    <div>
       <input
         checked={true}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+    <div
+      className="submission-required"
+    >
+      <input
+        checked={true}
+        className="submission-required__checkbox"
         id="namingConvention"
         onChange={[Function]}
         type="checkbox"
@@ -611,38 +660,47 @@ exports[`naming convention should render naming convention text input if enabled
       >
         Enforce naming convention
       </label>
-      <input
-        onChange={[Function]}
-        placeholder="Naming convention"
-        type="text"
-        value=""
-      />
     </div>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`render should render TaskForm for adding 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value=""
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -744,28 +802,36 @@ exports[`render should render TaskForm for adding 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value=""
   />
-  <button>
-    Add Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Add Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`render should render TaskForm for adding group task 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -867,6 +933,7 @@ exports[`render should render TaskForm for adding group task 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value=""
@@ -900,48 +967,62 @@ exports[`render should render TaskForm for adding group task 1`] = `
         ]
       }
     />
+    <div
+      className="submission-required"
+    >
+      <input
+        checked={false}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+  </div>
+  <div>
     <button
+      className="button button--norm button--right"
       onClick={[Function]}
       type="button"
     >
       Select users
     </button>
-    <input
-      checked={false}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
+    <button
+      className="button button--norm button--right"
     >
-      Require submission
-    </label>
+      Add Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
   </div>
-  <button>
-    Add Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
 </form>
 `;
 
 exports[`render should render TaskForm with task for editing 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -1043,28 +1124,36 @@ exports[`render should render TaskForm with task for editing 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`render should render TaskForm with task for editing group task 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -1166,6 +1255,7 @@ exports[`render should render TaskForm with task for editing group task 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
@@ -1198,26 +1288,28 @@ exports[`render should render TaskForm with task for editing group task 1`] = `
         ]
       }
     />
-    <button
-      onClick={[Function]}
-      type="button"
+    <div
+      className="submission-required"
     >
-      Select users
-    </button>
-    <input
-      checked={true}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
+      <input
+        checked={true}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+    <div
+      className="submission-required"
     >
-      Require submission
-    </label>
-    <div>
       <input
         checked={false}
+        className="submission-required__checkbox"
         id="namingConvention"
         onChange={[Function]}
         type="checkbox"
@@ -1229,33 +1321,50 @@ exports[`render should render TaskForm with task for editing group task 1`] = `
       </label>
     </div>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should remove error after valid submission 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
-  <p>
+  <p
+    className="form__error"
+  >
     Please provide title of task
   </p>
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value=""
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -1357,34 +1466,43 @@ exports[`submit task should remove error after valid submission 1`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should remove error after valid submission 2`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -1486,31 +1604,41 @@ exports[`submit task should remove error after valid submission 2`] = `
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should render error on submit if naming convention is empty when enabled 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
-  <p>
+  <p
+    className="form__error"
+  >
     Naming convention cannot be empty
   </p>
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -1612,9 +1740,17 @@ exports[`submit task should render error on submit if naming convention is empty
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
+  />
+  <input
+    className="text-input"
+    onChange={[Function]}
+    placeholder="Naming convention (Files will be renamed to [student_number]_[name_convention].pdf)"
+    type="text"
+    value=""
   />
   <div>
     <SelectUserModal
@@ -1644,26 +1780,28 @@ exports[`submit task should render error on submit if naming convention is empty
         ]
       }
     />
-    <button
-      onClick={[Function]}
-      type="button"
+    <div
+      className="submission-required"
     >
-      Select users
-    </button>
-    <input
-      checked={true}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
-    >
-      Require submission
-    </label>
-    <div>
       <input
         checked={true}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+    <div
+      className="submission-required"
+    >
+      <input
+        checked={true}
+        className="submission-required__checkbox"
         id="namingConvention"
         onChange={[Function]}
         type="checkbox"
@@ -1673,38 +1811,47 @@ exports[`submit task should render error on submit if naming convention is empty
       >
         Enforce naming convention
       </label>
-      <input
-        onChange={[Function]}
-        placeholder="Naming convention"
-        type="text"
-        value=""
-      />
     </div>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should render error on submit if title input is empty 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -1806,37 +1953,48 @@ exports[`submit task should render error on submit if title input is empty 1`] =
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should render error on submit if title input is empty 2`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
-  <p>
+  <p
+    className="form__error"
+  >
     Please provide title of task
   </p>
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value=""
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -1938,34 +2096,43 @@ exports[`submit task should render error on submit if title input is empty 2`] =
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should render error on submit if title input is empty after trimming 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="Watch lecture"
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -2067,37 +2234,48 @@ exports[`submit task should render error on submit if title input is empty after
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`submit task should render error on submit if title input is empty after trimming 2`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
-  <p>
+  <p
+    className="form__error"
+  >
     Please provide title of task
   </p>
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
     value="            "
   />
   <input
+    className="text-input"
     onChange={[Function]}
     placeholder="Module code/Class name (optional)"
     type="text"
@@ -2199,28 +2377,36 @@ exports[`submit task should render error on submit if title input is empty after
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Catch up on lectures!"
   />
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;
 
 exports[`upload requirement should not render enable naming convention checkbox if upload not required 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -2322,6 +2508,7 @@ exports[`upload requirement should not render enable naming convention checkbox 
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
@@ -2354,42 +2541,55 @@ exports[`upload requirement should not render enable naming convention checkbox 
         ]
       }
     />
+    <div
+      className="submission-required"
+    >
+      <input
+        checked={false}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+  </div>
+  <div>
     <button
+      className="button button--norm button--right"
       onClick={[Function]}
       type="button"
     >
       Select users
     </button>
-    <input
-      checked={false}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
+    <button
+      className="button button--norm button--right"
     >
-      Require submission
-    </label>
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
 </form>
 `;
 
 exports[`upload requirement should render enable naming convention checkbox if upload required 1`] = `
 <form
+  className="form"
   onSubmit={[Function]}
 >
   <input
     autoFocus={true}
+    className="text-input"
     onChange={[Function]}
     placeholder="Title (required)"
     type="text"
@@ -2491,6 +2691,7 @@ exports[`upload requirement should render enable naming convention checkbox if u
     withPortal={false}
   />
   <textarea
+    className="text-area"
     onChange={[Function]}
     placeholder="Add a description for your task (optional)"
     value="Finish by Sunday!"
@@ -2523,26 +2724,28 @@ exports[`upload requirement should render enable naming convention checkbox if u
         ]
       }
     />
-    <button
-      onClick={[Function]}
-      type="button"
+    <div
+      className="submission-required"
     >
-      Select users
-    </button>
-    <input
-      checked={true}
-      id="uploadRequired"
-      onChange={[Function]}
-      type="checkbox"
-    />
-    <label
-      htmlFor="uploadRequired"
+      <input
+        checked={true}
+        className="submission-required__checkbox"
+        id="uploadRequired"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        htmlFor="uploadRequired"
+      >
+        Require submission
+      </label>
+    </div>
+    <div
+      className="submission-required"
     >
-      Require submission
-    </label>
-    <div>
       <input
         checked={false}
+        className="submission-required__checkbox"
         id="namingConvention"
         onChange={[Function]}
         type="checkbox"
@@ -2554,14 +2757,26 @@ exports[`upload requirement should render enable naming convention checkbox if u
       </label>
     </div>
   </div>
-  <button>
-    Edit Task
-  </button>
-  <button
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+  <div>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+      type="button"
+    >
+      Select users
+    </button>
+    <button
+      className="button button--norm button--right"
+    >
+      Edit Task
+    </button>
+    <button
+      className="button button--norm"
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+  </div>
 </form>
 `;

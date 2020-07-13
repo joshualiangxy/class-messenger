@@ -9,6 +9,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -19,6 +20,7 @@ exports[`clickable div should toggle visibility of div 1`] = `
     >
       <h3
         className="list-item__title"
+        data-content="Watch lecture"
       >
         Watch lecture
       </h3>
@@ -91,6 +93,7 @@ exports[`clickable div should toggle visibility of div 2`] = `
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -101,6 +104,7 @@ exports[`clickable div should toggle visibility of div 2`] = `
     >
       <h3
         className="list-item__title"
+        data-content="Watch lecture"
       >
         Watch lecture
       </h3>
@@ -173,6 +177,7 @@ exports[`render should render TaskListItem with group task on GroupPage as admin
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -183,6 +188,7 @@ exports[`render should render TaskListItem with group task on GroupPage as admin
     >
       <h3
         className="list-item__title"
+        data-content="Homework 1"
       >
         Homework 1
       </h3>
@@ -318,6 +324,7 @@ exports[`render should render TaskListItem with group task on GroupPage as regul
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -328,6 +335,7 @@ exports[`render should render TaskListItem with group task on GroupPage as regul
     >
       <h3
         className="list-item__title"
+        data-content="Homework 1"
       >
         Homework 1
       </h3>
@@ -445,6 +453,7 @@ exports[`render should render TaskListItem with group task on dashboard 1`] = `
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -455,6 +464,7 @@ exports[`render should render TaskListItem with group task on dashboard 1`] = `
     >
       <h3
         className="list-item__title"
+        data-content="Homework 1"
       >
         Homework 1
       </h3>
@@ -527,6 +537,7 @@ exports[`render should render personal TaskListItem 1`] = `
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -537,6 +548,7 @@ exports[`render should render personal TaskListItem 1`] = `
     >
       <h3
         className="list-item__title"
+        data-content="Watch lecture"
       >
         Watch lecture
       </h3>
@@ -609,6 +621,7 @@ exports[`render should render personal TaskListItem with group/module shown 1`] 
   >
     <input
       checked={false}
+      className="task-complete-checkbox"
       disabled={false}
       onChange={[Function]}
       type="checkbox"
@@ -619,6 +632,7 @@ exports[`render should render personal TaskListItem with group/module shown 1`] 
     >
       <h3
         className="list-item__title"
+        data-content="Do lab"
       >
         Do lab
       </h3>

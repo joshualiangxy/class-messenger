@@ -28,12 +28,14 @@ export const AddTaskModal = ({
 
   return (
     <Modal
+      className="task-modal"
       isOpen={isOpen}
       contentLabel="Add Task"
       onRequestClose={onRequestClose}
+      closeTimeoutMS={200}
       appElement={document.getElementById('root')}
     >
-      <h2>Add Task</h2>
+      <h1>Add Task</h1>
       <TaskForm
         gid={gid}
         groupModule={groupModule}

@@ -183,8 +183,8 @@ describe('cancel button', () => {
     wrapper.find('withStyles(SingleDatePicker)').prop('onDateChange')(deadline);
     wrapper.find('SelectUserModal').prop('removeUser')(users[0].uid);
     wrapper.find('SelectUserModal').prop('addUser')(users[1].uid);
-    wrapper.find('input').at(2).prop('onChange')();
-    wrapper.find('input').at(3).prop('onChange')({
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
+    wrapper.find('input').at(1).prop('onChange')({
       target: { value: namingConvention }
     });
 
@@ -196,8 +196,10 @@ describe('cancel button', () => {
     expect(
       wrapper.find('SelectUserModal').prop('groupCompletedState')
     ).toEqual({ [users[1].uid]: false });
-    expect(wrapper.find('input').at(2).prop('checked')).toBe(true);
-    expect(wrapper.find('input').at(3).prop('value')).toBe(namingConvention);
+    expect(
+      wrapper.find('.submission-required__checkbox').at(1).prop('checked')
+    ).toBe(true);
+    expect(wrapper.find('input').at(1).prop('value')).toBe(namingConvention);
 
     wrapper.find('button').at(2).prop('onClick')();
 
@@ -211,11 +213,13 @@ describe('cancel button', () => {
         [users[0].uid]: false
       }
     );
-    expect(wrapper.find('input').at(2).prop('checked')).toBe(false);
+    expect(
+      wrapper.find('.submission-required__checkbox').at(1).prop('checked')
+    ).toBe(false);
 
-    wrapper.find('input').at(2).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
 
-    expect(wrapper.find('input').at(3).prop('value')).toBe('');
+    expect(wrapper.find('input').at(1).prop('value')).toBe('');
   });
 
   it('should call onRequestClose on button click', () => {
@@ -262,10 +266,10 @@ describe('submit task', () => {
       />
     );
 
-    wrapper.find('input').at(2).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
     wrapper.find('form').prop('onSubmit')(submitEvent);
 
-    expect(wrapper.find('input').at(3).prop('value')).toBe('');
+    expect(wrapper.find('input').at(1).prop('value')).toBe('');
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -457,30 +461,32 @@ describe('naming convention', () => {
     expect(wrapper).toMatchSnapshot());
 
   it('should set naming convention on text input change', () => {
-    wrapper.find('input').at(2).prop('onChange')();
-    wrapper.find('input').at(3).prop('onChange')({ target: { value } });
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
+    wrapper.find('input').at(1).prop('onChange')({ target: { value } });
 
-    expect(wrapper.find('input').at(3).prop('value')).toBe(value);
+    expect(wrapper.find('input').at(1).prop('value')).toBe(value);
   });
 
   it('should reset naming convention if checkbox is toggled', () => {
-    wrapper.find('input').at(2).prop('onChange')();
-    wrapper.find('input').at(3).prop('onChange')({ target: { value } });
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
+    wrapper.find('input').at(1).prop('onChange')({ target: { value } });
 
-    wrapper.find('input').at(2).prop('onChange')();
-    wrapper.find('input').at(2).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
 
-    expect(wrapper.find('input').at(3).prop('value')).toBe('');
+    expect(wrapper.find('input').at(1).prop('value')).toBe('');
 
-    wrapper.find('input').at(3).prop('onChange')({ target: { value } });
+    wrapper.find('input').at(1).prop('onChange')({ target: { value } });
 
-    wrapper.find('input').at(1).prop('onChange')();
-    wrapper.find('input').at(1).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(0).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(0).prop('onChange')();
 
-    expect(wrapper.find('input').at(2).prop('checked')).toBe(false);
+    expect(
+      wrapper.find('.submission-required__checkbox').at(1).prop('checked')
+    ).toBe(false);
 
-    wrapper.find('input').at(2).prop('onChange')();
+    wrapper.find('.submission-required__checkbox').at(1).prop('onChange')();
 
-    expect(wrapper.find('input').at(3).prop('value')).toBe('');
+    expect(wrapper.find('input').at(1).prop('value')).toBe('');
   });
 });

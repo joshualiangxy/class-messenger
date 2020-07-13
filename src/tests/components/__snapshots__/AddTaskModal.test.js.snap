@@ -5,7 +5,8 @@ exports[`render should render AddTaskModal 1`] = `
   appElement={null}
   ariaHideApp={true}
   bodyOpenClassName="ReactModal__Body--open"
-  closeTimeoutMS={0}
+  className="task-modal"
+  closeTimeoutMS={200}
   contentLabel="Add Task"
   isOpen={true}
   onRequestClose={[MockFunction]}
@@ -17,9 +18,9 @@ exports[`render should render AddTaskModal 1`] = `
   shouldFocusAfterRender={true}
   shouldReturnFocusAfterClose={true}
 >
-  <h2>
+  <h1>
     Add Task
-  </h2>
+  </h1>
   <TaskForm
     onRequestClose={[MockFunction]}
     submitTask={[Function]}
@@ -32,7 +33,8 @@ exports[`render should render AddTaskModal for group 1`] = `
   appElement={null}
   ariaHideApp={true}
   bodyOpenClassName="ReactModal__Body--open"
-  closeTimeoutMS={0}
+  className="task-modal"
+  closeTimeoutMS={200}
   contentLabel="Add Task"
   isOpen={true}
   onRequestClose={[MockFunction]}
@@ -44,9 +46,9 @@ exports[`render should render AddTaskModal for group 1`] = `
   shouldFocusAfterRender={true}
   shouldReturnFocusAfterClose={true}
 >
-  <h2>
+  <h1>
     Add Task
-  </h2>
+  </h1>
   <TaskForm
     gid="testgid"
     groupModule="CS1231S"

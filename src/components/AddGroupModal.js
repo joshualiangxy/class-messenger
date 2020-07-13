@@ -43,6 +43,7 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
       isOpen={isOpen}
       contentLabel="New Group"
       onRequestClose={onCancel}
+      closeTimeoutMS={200}
       appElement={document.getElementById('root')}
     >
       <form onSubmit={onSubmit}>

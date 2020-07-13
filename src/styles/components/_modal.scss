@@ -1,3 +1,30 @@
+.ReactModalPortal > div {
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 200ms ease-in-out;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.task-modal {
+  background: $light-grey;
+  max-width: 80rem;
+  padding: $l-size;
+  width: 75vw;
+  border-radius: 10px;
+}
+
 .modal {
   padding: $m-size;
   color: white;
@@ -18,5 +45,5 @@
   margin-right: 0%;
   margin-left: 0%;
   margin-top: 0%;
-  
+
 }

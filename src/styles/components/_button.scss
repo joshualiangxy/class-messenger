@@ -10,7 +10,11 @@
   line-height: 1;
   position: relative;
   cursor: pointer;
-  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
   &:focus {
     outline: none;
   }
@@ -96,5 +100,5 @@
 }
 
 .button--right {
-  margin: $s-size;
+  margin-right: $s-size;
 }

@@ -129,14 +129,35 @@ const GroupPage = ({
         <LoadingPage />
       ) : (
         <div>
-          <h1>{groupName}</h1>
-          {admin && (
-            <div>
-              <button onClick={openAddTask}>Add Task</button>
+          <div className="page-header">
+            <div className="content-container">
+              <h1 className="page-header__title">{groupName}</h1>
+              <div className="page-header__buttons">
+                {admin && (
+                  <button
+                    className="button button--norm page-header__actions"
+                    onClick={openAddTask}
+                  >
+                    Add Task
+                  </button>
+                )}
+                <div>
+                  <button
+                    className="button button--norm page-header__actions button--right"
+                    onClick={openAddUser}
+                  >
+                    Group Settings
+                  </button>
+                  <button
+                    className="button button--norm page-header__actions"
+                    onClick={openLeave}
+                  >
+                    Leave Group
+                  </button>
+                </div>
+              </div>{' '}
             </div>
-          )}
-          <button onClick={openAddUser}>Group Settings</button>
-          <button onClick={openLeave}>Leave Group</button>
+          </div>
           <GroupTaskList
             removeAdmin={removeAdmin}
             removeUserFromTask={removeUserFromTask}

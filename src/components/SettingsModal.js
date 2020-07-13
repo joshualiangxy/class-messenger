@@ -69,6 +69,7 @@ export const SettingsModal = ({
       contentLabel="Settings"
       onRequestClose={onCancel}
       appElement={document.getElementById('root')}
+      closeTimeoutMS={200}
     >
       {isNewUser ? (
         <div>

@@ -69,32 +69,35 @@ const GroupSettingsModal = ({
       onRequestClose={() => onRequestClose()}
       appElement={document.getElementById('root')}
       className="modal"
+      closeTimeoutMS={200}
     >
-      {admin && (
-        <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            placeholder="Email (required)"
-            value={userEmail}
-            onChange={onUserEmailChange}
-            autoFocus
-          />
-          <button>Add to list</button>
-          <div>{error}</div>
-        </form>
-      )}
-      <button onClick={onCancel}>Close</button>
-      <h3>Users:</h3>
-      <GroupUserListing
-        users={users}
-        setUsers={setUsers}
-        group={group}
-        admin={admin}
-        setAdmin={setAdmin}
-        uid={uid}
-        kickUserLocal={kickUserLocal}
-        setError={setError}
-      />
+      <div>
+        {admin && (
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              placeholder="Email (required)"
+              value={userEmail}
+              onChange={onUserEmailChange}
+              autoFocus
+            />
+            <button>Add to list</button>
+            <div>{error}</div>
+          </form>
+        )}
+        <button onClick={onCancel}>Close</button>
+        <h3>Users:</h3>
+        <GroupUserListing
+          users={users}
+          setUsers={setUsers}
+          group={group}
+          admin={admin}
+          setAdmin={setAdmin}
+          uid={uid}
+          kickUserLocal={kickUserLocal}
+          setError={setError}
+        />
+      </div>
     </Modal>
   );
 };

@@ -15,7 +15,7 @@ export const FileUploadForm = ({
 }) => {
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [fileName, setFileName] = useState('No file chosen');
+  const [fileName, setFileName] = useState('');
 
   const fileUpload = e => {
     e.preventDefault();
@@ -75,12 +75,11 @@ export const FileUploadForm = ({
     const files = e.target.files;
 
     if (files.length > 0) setFileName(files[0].name);
-    else setFileName('No file chosen');
+    else setFileName('');
   };
 
   return (
     <form className="file-upload-form" onSubmit={fileUpload}>
-      {error && <p>{error}</p>}
       <input
         type="file"
         hidden="hidden"
@@ -94,7 +93,15 @@ export const FileUploadForm = ({
         Choose File
       </label>
       <div className="file-name">
-        <p>{fileName}</p>
+        <p>
+          {error
+            ? fileName
+              ? fileName
+              : error
+            : fileName
+            ? fileName
+            : 'No file chosen'}
+        </p>
       </div>
       <button
         className="button button--grey button--norm-grey"

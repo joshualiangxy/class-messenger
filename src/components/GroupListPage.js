@@ -16,8 +16,17 @@ const GroupListPage = ({ groups }) => {
 
   return (
     <div>
-      <h1>Groups</h1>
-      <button onClick={openNewGroup}>Add New Group</button>
+      <div className="page-header">
+        <div className="content-container">
+          <h1 className="page-header__title">Groups</h1>
+          <button
+            className="button button--norm page-header__actions"
+            onClick={openNewGroup}
+          >
+            Add New Group
+          </button>
+        </div>
+      </div>
       {
         // TODO: make this into an actual list with link
         groups.map(group => {
