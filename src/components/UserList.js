@@ -2,7 +2,7 @@ import React from 'react';
 import UserListItem from './UserListItem';
 
 const UserList = ({ users, removeUser, addUser, groupCompletedState }) => (
-  <div>
+  <div className="user-list">
     {users.map(user => (
       <UserListItem
         key={user.uid}

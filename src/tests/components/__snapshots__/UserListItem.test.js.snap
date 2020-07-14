@@ -2,9 +2,12 @@
 
 exports[`render should render UserListItem 1`] = `
 <div>
-  <label>
+  <label
+    className="user-select"
+  >
     <input
       checked={false}
+      className="user-select__checkbox"
       onChange={[Function]}
       type="checkbox"
     />
@@ -15,9 +18,12 @@ exports[`render should render UserListItem 1`] = `
 
 exports[`render should render UserListItem for alt user 1`] = `
 <div>
-  <label>
+  <label
+    className="user-select user-select--picked"
+  >
     <input
       checked={true}
+      className="user-select__checkbox"
       onChange={[Function]}
       type="checkbox"
     />

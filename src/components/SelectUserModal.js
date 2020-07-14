@@ -11,6 +11,7 @@ const SelectUserModal = ({
   onRequestClose
 }) => (
   <Modal
+    className="select-user-modal"
     isOpen={isOpen}
     contentLabel="Select User"
     onRequestClose={onRequestClose}
@@ -24,7 +25,9 @@ const SelectUserModal = ({
       addUser={addUser}
       groupCompletedState={groupCompletedState}
     />
-    <button onClick={onRequestClose}>Done</button>
+    <button className="button button--norm" onClick={onRequestClose}>
+      Done
+    </button>
   </Modal>
 );
 

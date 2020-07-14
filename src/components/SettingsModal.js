@@ -57,14 +57,14 @@ export const SettingsModal = ({
       setError('Please enter a valid student number');
     } else {
       setError('');
-      return startSetUserData(submittedDisplayName, studentNum).then(() =>
-        onRequestClose(true)
-      );
+      onRequestClose(true);
+      return startSetUserData(submittedDisplayName, studentNum);
     }
   };
 
   return (
     <Modal
+      className="setting-modal"
       isOpen={isOpen}
       contentLabel="Settings"
       onRequestClose={onCancel}
@@ -73,15 +73,16 @@ export const SettingsModal = ({
     >
       {isNewUser ? (
         <div>
-          <h2>Welcome to Class Board Tasks!</h2>
-          <h4>Please enter your information to get started</h4>
+          <h1>Welcome to Class Board Tasks!</h1>
+          <p>Please enter your information to get started</p>
         </div>
       ) : (
-        <h2>Settings</h2>
+        <h1>Settings</h1>
       )}
-      {error && <p>{error}</p>}
-      <form onSubmit={onSubmit}>
+      <form className="form" onSubmit={onSubmit}>
+        {error && <p className="form__error">{error}</p>}
         <input
+          className="text-input"
           type="text"
           placeholder="Display name (required)"
           value={displayName}
@@ -89,15 +90,23 @@ export const SettingsModal = ({
           autoFocus={true}
         />
         <input
+          className="text-input"
           type="text"
           placeholder="Student number (required)"
           value={studentNum}
           onChange={onStudentNumChange}
         />
-        <button>Submit</button>
-        <button type="button" onClick={onCancel} disabled={isNewUser}>
-          Cancel
-        </button>
+        <div>
+          <button className="button button--norm button--right">Submit</button>
+          <button
+            className="button button--norm"
+            type="button"
+            onClick={onCancel}
+            disabled={isNewUser}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </Modal>
   );

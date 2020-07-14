@@ -22,7 +22,29 @@
   max-width: 80rem;
   padding: $l-size;
   width: 75vw;
+  max-height: 100%;
   border-radius: 10px;
+  overflow: auto;
+}
+
+.setting-modal {
+  background: $light-grey;
+  max-width: 80rem;
+  width: 75vw;
+  padding: $l-size;
+  max-height: 100%;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.select-user-modal {
+  background: $light-grey;
+  max-width: 80rem;
+  width: 25vw;
+  padding: $l-size;
+  max-height: 100%;
+  border-radius: 10px;
+  overflow: auto;
 }
 
 .modal {
@@ -45,5 +67,4 @@
   margin-right: 0%;
   margin-left: 0%;
   margin-top: 0%;
-
 }

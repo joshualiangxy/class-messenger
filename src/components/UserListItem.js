@@ -13,8 +13,15 @@ const UserListItem = ({ user, removeUser, addUser, initialPick }) => {
 
   return (
     <div>
-      <label>
-        <input type="checkbox" checked={pick} onChange={togglePick} />
+      <label
+        className={pick ? 'user-select user-select--picked' : 'user-select'}
+      >
+        <input
+          className="user-select__checkbox"
+          type="checkbox"
+          checked={pick}
+          onChange={togglePick}
+        />
         {displayName}
       </label>
     </div>

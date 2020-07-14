@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render should render UserList 1`] = `
-<div>
+<div
+  className="user-list"
+>
   <UserListItem
     initialPick={true}
     key="testuid"
@@ -30,7 +32,9 @@ exports[`render should render UserList 1`] = `
 `;
 
 exports[`render should render UserList with different groupCompletedState 1`] = `
-<div>
+<div
+  className="user-list"
+>
   <UserListItem
     initialPick={false}
     key="testuid"

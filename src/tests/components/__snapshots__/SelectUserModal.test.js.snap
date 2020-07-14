@@ -5,6 +5,7 @@ exports[`render should render SelectUserModal 1`] = `
   appElement={null}
   ariaHideApp={true}
   bodyOpenClassName="ReactModal__Body--open"
+  className="select-user-modal"
   closeTimeoutMS={200}
   contentLabel="Select User"
   isOpen={false}
@@ -37,7 +38,9 @@ exports[`render should render SelectUserModal 1`] = `
       ]
     }
   />
-  <button>
+  <button
+    className="button button--norm"
+  >
     Done
   </button>
 </Modal>
