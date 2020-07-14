@@ -122,13 +122,13 @@
 .list-item__title {
   word-wrap: break-word;
   width: 80%;
-
+  user-select: none;
   transition: all 200ms ease;
 }
 
 .list-item__deadline {
   min-width: 12rem;
-  
+  user-select: none;
   transition: all 200ms ease;
 }
 
