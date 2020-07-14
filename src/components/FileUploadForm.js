@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import firebase from '../firebase/firebase';
 import { startUpdateDownloadURL } from '../actions/tasks';
 import { uploadFile, startRemoveUserFile } from '../actions/files';
