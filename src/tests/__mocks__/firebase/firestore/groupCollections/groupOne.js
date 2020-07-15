@@ -83,6 +83,19 @@ export const groupOneUserDoc = jest.fn(uid => {
   }
 });
 
+export const dataReturnValue = {
+  admin: true,
+  displayName: 'michael',
+  studentNum: 'A0123456B',
+  uid: 'testuid'
+};
+
+export const dataReturnValueNonAdmin = {
+  admin: false,
+  displayName: 'michael',
+  studentNum: 'A0123456B',
+  uid: 'testuid'
+};
 export const queryGroupOneUserCollection = [
   {
     id: 'testuid',
@@ -90,7 +103,8 @@ export const queryGroupOneUserCollection = [
     exists: true,
     ref: {
       delete: jest.fn(() => deleteReturnValue)
-    }
+    },
+    data: jest.fn(() => dataReturnValue)
   },
   {
     id: 'differentUser',
@@ -98,7 +112,8 @@ export const queryGroupOneUserCollection = [
     exists: true,
     ref: {
       delete: jest.fn(() => deleteReturnValue)
-    }
+    },
+    data: jest.fn(() => dataReturnValueNonAdmin)
   }
 ];
 

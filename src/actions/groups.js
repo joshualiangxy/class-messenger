@@ -262,7 +262,6 @@ export const kickUser = (user, gid) => {
 
         return Promise.all(promises);
       })
-      .catch(error => console.log(error));
     return Promise.all([groupPromise, userPromise, tasksPromise]);
   };
 };
