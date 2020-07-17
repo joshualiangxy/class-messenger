@@ -3,7 +3,7 @@ import AddGroupModal from './AddGroupModal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const GroupListPage = ({ groups }) => {
+export const GroupListPage = ({ groups }) => {
   const [open, setOpen] = useState(false);
 
   const onRequestClose = () => {
@@ -28,18 +28,22 @@ const GroupListPage = ({ groups }) => {
         </div>
       </div>
       {
-        // TODO: make this into an actual list with link
-        groups.map(group => {
-          const gid = group.gid;
-          const name = group.name;
-          return (
-            <div key={gid}>
-              <Link to={`/groups/${gid}`}>
-                <h2>{name}</h2>
-              </Link>
-            </div>
-          );
-        })
+        // Add a 'no groups' when there's no groups
+        groups.length === 0 ? (
+          <p>No groups</p>
+        ) : (
+          groups.map(group => {
+            const gid = group.gid;
+            const name = group.name;
+            return (
+              <div key={gid}>
+                <Link to={`/groups/${gid}`}>
+                  <h2>{name}</h2>
+                </Link>
+              </div>
+            );
+          })
+        )
       }
       <AddGroupModal isOpen={open} onRequestClose={onRequestClose} />
     </div>

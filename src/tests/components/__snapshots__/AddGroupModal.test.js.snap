@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render AddGroupModal 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  closeTimeoutMS={200}
+  contentLabel="New Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <input
+      autoFocus={true}
+      onChange={[Function]}
+      placeholder="Group name (required)"
+      type="text"
+      value=""
+    />
+    <input
+      onChange={[Function]}
+      placeholder="Module code/Class name (Optional)"
+      type="text"
+      value=""
+    />
+    <button>
+      Submit
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      Cancel
+    </button>
+    <div
+      className="error"
+    />
+  </form>
+</Modal>
+`;

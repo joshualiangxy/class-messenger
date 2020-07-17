@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render GroupListPage with one group 1`] = `
+<div>
+  <div
+    className="page-header"
+  >
+    <div
+      className="content-container"
+    >
+      <h1
+        className="page-header__title"
+      >
+        Groups
+      </h1>
+      <button
+        className="button button--norm page-header__actions"
+        onClick={[Function]}
+      >
+        Add New Group
+      </button>
+    </div>
+  </div>
+  <div
+    key="one"
+  >
+    <Link
+      to="/groups/one"
+    >
+      <h2>
+        nameOne
+      </h2>
+    </Link>
+  </div>
+  <Connect(AddGroupModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+  />
+</div>
+`;
+
+exports[`render should render GroupListPage with two groups 1`] = `
+<div>
+  <div
+    className="page-header"
+  >
+    <div
+      className="content-container"
+    >
+      <h1
+        className="page-header__title"
+      >
+        Groups
+      </h1>
+      <button
+        className="button button--norm page-header__actions"
+        onClick={[Function]}
+      >
+        Add New Group
+      </button>
+    </div>
+  </div>
+  <div
+    key="one"
+  >
+    <Link
+      to="/groups/one"
+    >
+      <h2>
+        nameOne
+      </h2>
+    </Link>
+  </div>
+  <div
+    key="two"
+  >
+    <Link
+      to="/groups/two"
+    >
+      <h2>
+        nameTwo
+      </h2>
+    </Link>
+  </div>
+  <Connect(AddGroupModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+  />
+</div>
+`;
+
+exports[`render should render GroupListPage without groups 1`] = `
+<div>
+  <div
+    className="page-header"
+  >
+    <div
+      className="content-container"
+    >
+      <h1
+        className="page-header__title"
+      >
+        Groups
+      </h1>
+      <button
+        className="button button--norm page-header__actions"
+        onClick={[Function]}
+      >
+        Add New Group
+      </button>
+    </div>
+  </div>
+  <p>
+    No groups
+  </p>
+  <Connect(AddGroupModal)
+    isOpen={false}
+    onRequestClose={[Function]}
+  />
+</div>
+`;

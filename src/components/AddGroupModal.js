@@ -4,7 +4,7 @@ import { startNewGroup } from '../actions/groups';
 import { connect } from 'react-redux';
 
 // TODO: Add the ability to add other users into the group
-const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
+export const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
   const [groupName, setGroupName] = useState('');
   const [module, setModule] = useState('');
   const [error, setError] = useState('');
@@ -62,7 +62,7 @@ const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
         />
         <button>Submit</button>
         <button onClick={onCancel}>Cancel</button>
-        <div>{error}</div>
+        <div className="error">{error}</div>
       </form>
     </Modal>
   );
