@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render for admins 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="modal"
+  closeTimeoutMS={200}
+  contentLabel="New Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        autoFocus={true}
+        onChange={[Function]}
+        placeholder="Email (required)"
+        type="text"
+        value=""
+      />
+      <button>
+        Add to list
+      </button>
+      <div
+        className="error"
+      />
+    </form>
+    <button
+      onClick={[Function]}
+    >
+      Close
+    </button>
+    <h3>
+      Users:
+    </h3>
+    <Connect(GroupUserListing)
+      admin={true}
+      group="one"
+      kickUserLocal={[MockFunction]}
+      setAdmin={[MockFunction]}
+      setError={[Function]}
+      setUsers={[MockFunction]}
+      uid="testuid"
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+  </div>
+</Modal>
+`;
+
+exports[`render should render for non-admins 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="modal"
+  closeTimeoutMS={200}
+  contentLabel="New Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <button
+      onClick={[Function]}
+    >
+      Close
+    </button>
+    <h3>
+      Users:
+    </h3>
+    <Connect(GroupUserListing)
+      admin={false}
+      group="one"
+      kickUserLocal={[MockFunction]}
+      setAdmin={[MockFunction]}
+      setError={[Function]}
+      setUsers={[MockFunction]}
+      uid="testuid"
+      users={
+        Array [
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+        ]
+      }
+    />
+  </div>
+</Modal>
+`;

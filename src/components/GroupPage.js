@@ -9,7 +9,7 @@ import { getAllUsers, leaveGroup } from '../actions/groups';
 import { getAllGroupTasks } from '../actions/tasks';
 import { history } from '../routers/AppRouter';
 
-const GroupPage = ({
+export const GroupPage = ({
   gid,
   groupName,
   groupModule,

@@ -151,3 +151,37 @@
 .user-list {
   margin-bottom: $s-size;
 }
+
+.users {
+  border: 1px solid darken($light-grey, 20%);
+  border-top: none;
+  margin: 0;
+  padding: 0.2rem $s-size;
+  background: $light-grey;
+  cursor: default;
+  word-wrap: break-word;
+}
+
+.userwrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid darken($light-grey, 20%);
+}
+
+.bordertop {
+  border-top: 1px solid darken($light-grey, 20%);
+}
+
+.grouplist {
+  border: 1px solid darken($light-grey, 20%);  
+  align-items:center;
+  background: $light-grey;
+  cursor: default;
+  word-wrap: break-word;
+}
+
+.groupitem {  
+  padding-left: 1.8rem;
+
+}

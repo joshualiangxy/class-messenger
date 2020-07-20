@@ -45,10 +45,14 @@ export const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
       onRequestClose={onCancel}
       closeTimeoutMS={200}
       appElement={document.getElementById('root')}
+      className="setting-modal"
     >
-      <form onSubmit={onSubmit}>
+      <h1>New Group</h1>
+      {error && <p className="form__error">{error}</p>}
+      <form onSubmit={onSubmit} className="form">
         <input
           type="text"
+          className="text-input"
           placeholder="Group name (required)"
           value={groupName}
           onChange={onGroupNameChange}
@@ -56,13 +60,20 @@ export const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
         />
         <input
           type="text"
+          className="text-input"
           placeholder="Module code/Class name (Optional)"
           value={module}
           onChange={onModuleChange}
         />
-        <button>Submit</button>
-        <button onClick={onCancel}>Cancel</button>
-        <div className="error">{error}</div>
+        <div>
+          <button className="button button--norm button--right">Submit</button>
+          <button
+            onClick={onCancel}
+            className="button button--norm button--right"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </Modal>
   );

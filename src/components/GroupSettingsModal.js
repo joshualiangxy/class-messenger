@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addNewUser, getUser, recheckAdmin } from '../actions/groups';
 import GroupUserListing from './GroupUserListing';
 
-const GroupSettingsModal = ({
+export const GroupSettingsModal = ({
   isOpen,
   onRequestClose,
   group,
@@ -65,28 +65,39 @@ const GroupSettingsModal = ({
   return (
     <Modal
       isOpen={isOpen}
-      contentLabel="New Group"
+      contentLabel="Settings"
       onRequestClose={() => onRequestClose()}
       appElement={document.getElementById('root')}
-      className="modal"
+      className="setting-modal"
       closeTimeoutMS={200}
     >
+      <h1>Group Settings</h1>
       <div>
         {admin && (
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="form">
             <input
               type="text"
+              className="text-input"
               placeholder="Email (required)"
               value={userEmail}
               onChange={onUserEmailChange}
               autoFocus
             />
-            <button>Add to list</button>
-            <div>{error}</div>
+            {error && <p className="form__error">{error}</p>}
+            <div>
+              <button className="button button--norm">Add to list</button>{' '}
+              <button onClick={onCancel} className="button button--norm">
+                Cancel
+              </button>
+            </div>
           </form>
         )}
-        <button onClick={onCancel}>Close</button>
-        <h3>Users:</h3>
+        {!admin && (
+          <button onClick={onCancel} className="button button--norm">
+            Close
+          </button>
+        )}
+        <h2>Users:</h2>
         <GroupUserListing
           users={users}
           setUsers={setUsers}

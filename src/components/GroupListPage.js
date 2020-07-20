@@ -27,24 +27,27 @@ export const GroupListPage = ({ groups }) => {
           </button>
         </div>
       </div>
-      {
-        // Add a 'no groups' when there's no groups
-        groups.length === 0 ? (
-          <p>No groups</p>
-        ) : (
-          groups.map(group => {
-            const gid = group.gid;
-            const name = group.name;
-            return (
-              <div key={gid}>
-                <Link to={`/groups/${gid}`}>
-                  <h2>{name}</h2>
+      <div className="content-container">
+        {
+          // Add a 'no groups' when there's no groups
+          groups.length === 0 ? (
+            <p className="list-header__text">No groups</p>
+          ) : (
+            groups.map(group => (
+              <div key={group.gid} className="grouplist">
+                <Link
+                  className="button--link-black"
+                  to={`/groups/${group.gid}`}
+                >
+                  <h2 className="groupitem">{group.name}</h2>
+                  
                 </Link>
               </div>
-            );
-          })
-        )
-      }
+            ))
+          )
+        }
+      </div>
+
       <AddGroupModal isOpen={open} onRequestClose={onRequestClose} />
     </div>
   );

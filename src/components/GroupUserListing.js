@@ -12,7 +12,7 @@ import {
  * list of users, as well as the respective buttons for kicking
  * or editing.
  */
-const GroupUserListing = ({
+export const GroupUserListing = ({
   users,
   setUsers,
   group,
@@ -33,7 +33,7 @@ const GroupUserListing = ({
           .catch(error => console.log(error));
       } else {
         setAdmin(false);
-        setError('You are not an admin!')
+        setError('You are not an admin!');
       }
     });
   };
@@ -48,7 +48,7 @@ const GroupUserListing = ({
         });
       } else {
         setAdmin(false);
-        setError('You are not an admin!')
+        setError('You are not an admin!');
       }
     });
   };
@@ -63,26 +63,52 @@ const GroupUserListing = ({
         });
       } else {
         setAdmin(false);
-        setError('You are not an admin!')
+        setError('You are not an admin!');
       }
     });
   };
 
   // The other buttons can only be seen if the current user is an admin.
-  return users.map(user => (
-    <div key={user.uid} >
-      {user.displayName} {user.uid === uid && '(You)'}{' '}
-      {admin && !user.admin && (
-        <button className="button button--content" onClick={() => onPromote(user, group)}>Make admin</button>
-      )}{' '}
-      {admin && user.admin && user.uid !== uid && (
-        <button className="button button--content" onClick={() => onDemote(user, group)}>Demote admin</button>
-      )}
-      {admin && user.uid !== uid && (
-        <button className="button button--content" onClick={() => onKick(user, group)}>Kick</button>
-      )}
+  return (
+    <div className="bordertop">
+      {users.map(user => (
+        <div key={user.uid} className="userwrapper">
+          <div>
+            <p className="list-header__text">
+              {user.displayName}
+              {user.uid === uid && '(You)'}
+            </p>
+          </div>
+          <div>
+            {admin && !user.admin && (
+              <button
+                className="button button--norm-small button--right"
+                onClick={() => onPromote(user, group)}
+              >
+                Make admin
+              </button>
+            )}
+            {admin && user.admin && user.uid !== uid && (
+              <button
+                className="button button--norm-small button--right"
+                onClick={() => onDemote(user, group)}
+              >
+                Demote admin
+              </button>
+            )}
+            {admin && user.uid !== uid && (
+              <button
+                className="button button--norm-small button--right"
+                onClick={() => onKick(user, group)}
+              >
+                Kick
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
-  ));
+  );
 };
 
 const mapDispatchToProps = dispatch => ({

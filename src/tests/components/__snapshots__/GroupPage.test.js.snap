@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should render if the user is part of the group 1`] = `
+<div>
+  <div>
+    <div
+      className="page-header"
+    >
+      <div
+        className="content-container"
+      >
+        <h1
+          className="page-header__title"
+        >
+          nameOne
+        </h1>
+        <div
+          className="page-header__buttons"
+        >
+          <button
+            className="button button--norm page-header__actions"
+            onClick={[Function]}
+          >
+            Add Task
+          </button>
+          <div>
+            <button
+              className="button button--norm page-header__actions button--right"
+              onClick={[Function]}
+            >
+              Group Settings
+            </button>
+            <button
+              className="button button--norm page-header__actions"
+              onClick={[Function]}
+            >
+              Leave Group
+            </button>
+          </div>
+        </div>
+         
+      </div>
+    </div>
+    <GroupTaskList
+      admin={true}
+      editGroupTask={[Function]}
+      groupName="nameOne"
+      removeAdmin={[Function]}
+      removeGroupTask={[Function]}
+      removeUserFromTask={[Function]}
+      tasks={
+        Array [
+          Object {
+            "completed": Object {
+              "testuid": false,
+            },
+            "description": "Finish by Sunday!",
+            "downloadURLs": Object {
+              "testuid": Object {
+                "downloadURL": "website.com",
+                "fileName": "Homework.pdf",
+              },
+            },
+            "gid": "72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9",
+            "id": "076e610e-aade-4d2b-897f-81a29f00c76b",
+            "module": "CS1231",
+            "title": "Homework 1",
+            "uploadRequired": true,
+          },
+          Object {
+            "completed": Object {},
+            "deadline": 1593403200000,
+            "description": "",
+            "gid": "ce5c9b1b-e4d2-4dd2-bae4-7c559e8235ea",
+            "id": "0b80e917-78a4-4f87-a379-cdc1733923d6",
+            "module": "CS2040S",
+            "title": "Do problem set",
+          },
+          Object {
+            "completed": Object {
+              "testuid": false,
+            },
+            "deadline": 1593489600000,
+            "description": "Finish readings",
+            "downloadURLs": Object {},
+            "gid": "3e28d54d-ebc1-4469-be21-e59ce210f245",
+            "id": "c1511c73-07b9-44cd-a4bd-01758515acb5",
+            "module": "GEQ1000",
+            "title": "Physics readings",
+            "uploadRequired": true,
+          },
+        ]
+      }
+      toggleGroupTaskComplete={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+        ]
+      }
+    />
+    <Connect(GroupSettingsModal)
+      admin={true}
+      group="one"
+      isOpen={false}
+      kickUserLocal={[Function]}
+      onRequestClose={[Function]}
+      setAdmin={[Function]}
+      setUsers={[Function]}
+      uid="testuid"
+      users={
+        Array [
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+        ]
+      }
+    />
+    <Connect(LeaveGroupModal)
+      admin={true}
+      gid="one"
+      isOpen={false}
+      onRequestClose={[Function]}
+      renderLoad={[Function]}
+      uid="testuid"
+      users={
+        Array [
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+        ]
+      }
+    />
+    <Connect(AddTaskModal)
+      addGroupTask={[Function]}
+      gid="one"
+      groupModule="moduleOne"
+      groupName="nameOne"
+      isOpen={false}
+      onRequestClose={[Function]}
+      removeAdmin={[Function]}
+      users={
+        Array [
+          Object {
+            "admin": false,
+            "displayName": "Peter",
+            "studentNum": "A0000000A",
+            "uid": "testuid2",
+          },
+          Object {
+            "admin": true,
+            "displayName": "Robert",
+            "studentNum": "A0123456A",
+            "uid": "testuid",
+          },
+        ]
+      }
+    />
+  </div>
+</div>
+`;
