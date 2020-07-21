@@ -22,15 +22,23 @@ exports[`render should render GroupListPage with one group 1`] = `
     </div>
   </div>
   <div
-    key="one"
+    className="content-container"
   >
-    <Link
-      to="/groups/one"
+    <div
+      className="grouplist"
+      key="one"
     >
-      <h2>
-        nameOne
-      </h2>
-    </Link>
+      <Link
+        className="button--link-black"
+        to="/groups/one"
+      >
+        <h2
+          className="groupitem"
+        >
+          nameOne
+        </h2>
+      </Link>
+    </div>
   </div>
   <Connect(AddGroupModal)
     isOpen={false}
@@ -61,26 +69,38 @@ exports[`render should render GroupListPage with two groups 1`] = `
     </div>
   </div>
   <div
-    key="one"
+    className="content-container"
   >
-    <Link
-      to="/groups/one"
+    <div
+      className="grouplist"
+      key="one"
     >
-      <h2>
-        nameOne
-      </h2>
-    </Link>
-  </div>
-  <div
-    key="two"
-  >
-    <Link
-      to="/groups/two"
+      <Link
+        className="button--link-black"
+        to="/groups/one"
+      >
+        <h2
+          className="groupitem"
+        >
+          nameOne
+        </h2>
+      </Link>
+    </div>
+    <div
+      className="grouplist"
+      key="two"
     >
-      <h2>
-        nameTwo
-      </h2>
-    </Link>
+      <Link
+        className="button--link-black"
+        to="/groups/two"
+      >
+        <h2
+          className="groupitem"
+        >
+          nameTwo
+        </h2>
+      </Link>
+    </div>
   </div>
   <Connect(AddGroupModal)
     isOpen={false}
@@ -110,9 +130,15 @@ exports[`render should render GroupListPage without groups 1`] = `
       </button>
     </div>
   </div>
-  <p>
-    No groups
-  </p>
+  <div
+    className="content-container"
+  >
+    <p
+      className="list-header__text"
+    >
+      No groups
+    </p>
+  </div>
   <Connect(AddGroupModal)
     isOpen={false}
     onRequestClose={[Function]}

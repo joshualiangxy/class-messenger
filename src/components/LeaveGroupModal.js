@@ -49,6 +49,7 @@ const LeaveGroupModal = ({
 
   return (
     <Modal
+      className="setting-modal"
       isOpen={isOpen}
       contentLabel="Leave Group"
       onRequestClose={() => onRequestClose()}
@@ -58,14 +59,14 @@ const LeaveGroupModal = ({
       {canLeave && (
         <div>
           <h3>Do you want to leave?</h3>
-          <button onClick={onSubmit}>Yes</button>
-          <button onClick={onCancel}>No</button>
+          <button className="button button--norm button--right" onClick={onSubmit}>Yes</button>
+          <button className="button button--norm button--right" onClick={onCancel}>No</button>
         </div>
       )}
       {!canLeave && (
         <div>
-          <h3>You cannot leave this group.</h3>
-          <button onClick={onCancel}>Return</button>
+          <h3>You cannot leave this group as the only admin!</h3>
+          <button className="button button--norm button--right" onClick={onCancel}>Return</button>
         </div>
       )}
     </Modal>
