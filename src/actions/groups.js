@@ -294,8 +294,7 @@ export const demoteUser = (user, gid) => {
 // Returns a promise of a boolean (admin status of this user) to chain inside GroupSettingsModal
 export const recheckAdmin = (uid, gid) => {
   // Checks if the current user is an admin of a group
-  return firebase
-    .firestore()
+  return firestore
     .collection('groups')
     .doc(gid)
     .collection('users')

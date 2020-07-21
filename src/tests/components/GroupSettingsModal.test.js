@@ -2,43 +2,24 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { GroupSettingsModal } from '../../components/GroupSettingsModal';
 import groupUsers from '../fixtures/groupUsers';
+import user from '../fixtures/user';
 
 let wrapper;
 const isOpen = true;
 const onRequestClose = jest.fn();
-const groupOne = 'one';
-const groupTwo = 'two';
+const groupOne = '72b6b3bb-cb74-4d08-ae67-dfc1b51baaf9';
 const users = groupUsers;
 const setUsers = jest.fn(users => true);
 const admin = true;
 const setAdmin = jest.fn();
 const kickUserLocal = jest.fn();
 const uid1 = 'testuid';
-const uid2 = 'testuid2';
-const newUser = {
-  displayName: 'Clarisse',
-  studentNum: 'A0178221B',
-  uid: 'testuid3'
+const testUser = {
+  displayName: user.displayName,
+  studentNum: user.studentNum,
+  uid: 'testuid',
+  admin: false
 };
-const addNewUser = jest.fn((uid, gid) => Promise.resolve());
-const getUser = jest.fn(email => {
-  switch (email) {
-    case 'email':
-      return Promise.resolve(newUser);
-    default:
-      return Promise.resolve(undefined);
-  }
-});
-const recheckAdmin = jest.fn((uid, gid) => {
-  switch (uid) {
-    case uid1:
-      return Promise.resolve(true);
-    case uid2:
-      return Promise.resolve(false);
-    default:
-      return Promise.resolve(false);
-  }
-});
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -82,18 +63,35 @@ describe('addUser', () => {
     expect(wrapper.find('input').at(0).prop('value')).toEqual('email');
   });
   it('should set the error for invalid emails', () => {
-    expect(wrapper.find('div.error').text()).toEqual('')
+    expect(wrapper.find('.form__error')).toHaveLength(0);
     wrapper.find('input').prop('onChange')({ target: { value: ' ' } });
     wrapper.find('form').at(0).prop('onSubmit')({ preventDefault: jest.fn() });
-    expect(wrapper.find('div.error').text()).toEqual('Please enter an email')
+    expect(wrapper.find('.form__error').text()).toEqual(
+      'Please enter an email'
+    );
   });
 
-  // it('should set the error for invalid users (with valid email)', () => {
-  //   expect(wrapper.find('div.error').text()).toEqual('')
-  //   wrapper.find('input').prop('onChange')({ target: { value: 'validemail' } });
-  //   wrapper.find('form').at(0).prop('onSubmit')({ preventDefault: jest.fn() });
-  //   expect(recheckAdmin).toHaveBeenCalledTimes(1)
-  //   expect(wrapper.find('div.error').text()).toEqual('No user found')
-  
-  // })
+  it('should set the error for invalid users (with valid email)', () => {
+    expect(wrapper.find('.form__error')).toHaveLength(0);
+    wrapper.find('input').prop('onChange')({ target: { value: '123124' } });
+    wrapper
+      .find('form')
+      .at(0)
+      .prop('onSubmit')({ preventDefault: jest.fn() })
+      .then(() => expect(wrapper).toMatchSnapshot());
+  });
+
+  it('should add the user if valid', () => {
+    wrapper.find('input').prop('onChange')({ target: { value: 'email' } });
+    wrapper
+      .find('form')
+      .at(0)
+      .prop('onSubmit')({ preventDefault: jest.fn() })
+      .then(() => {
+        expect(wrapper.find('.form__error').text()).toEqual('Added!');
+        expect(setUsers).toHaveBeenCalledTimes(1);
+        expect(setUsers).toHaveBeenLastCalledWith([...users, testUser]);
+        expect(wrapper).toMatchSnapshot();
+      });
+  });
 });

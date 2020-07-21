@@ -50,7 +50,7 @@ const groupOneTaskCollectionRef = {
   doc: groupOneTaskDoc
 };
 
-export const groupOneUserDocUpdate = jest.fn();
+export const groupOneUserDocUpdate = jest.fn(() => Promise.resolve());
 
 export const groupOneUserDocTwoGet = jest.fn(() =>
   Promise.resolve(queryGroupOneUserCollection[1])
@@ -78,6 +78,8 @@ export const groupOneUserDoc = jest.fn(uid => {
   switch (uid) {
     case 'testuid':
       return groupOneUserDocRefOne;
+    case 'testuid2':
+      return groupOneUserDocRefTwo;
     case 'differentUser':
       return groupOneUserDocRefTwo;
   }

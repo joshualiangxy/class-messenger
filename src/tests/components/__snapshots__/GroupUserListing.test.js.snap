@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modifying users should demote a user 1`] = `
+<div
+  className="bordertop"
+>
+  <div
+    className="userwrapper"
+    key="testuid"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Robert
+        (You)
+      </p>
+    </div>
+    <div />
+  </div>
+  <div
+    className="userwrapper"
+    key="testuid2"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Peter
+      </p>
+    </div>
+    <div>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Demote admin
+      </button>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Kick
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`modifying users should promote a user 1`] = `
+<div
+  className="bordertop"
+>
+  <div
+    className="userwrapper"
+    key="testuid"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Robert
+        (You)
+      </p>
+    </div>
+    <div />
+  </div>
+  <div
+    className="userwrapper"
+    key="testuid2"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Peter
+      </p>
+    </div>
+    <div>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Make admin
+      </button>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Kick
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render should not render buttons for non-admins 1`] = `
+<div
+  className="bordertop"
+>
+  <div
+    className="userwrapper"
+    key="testuid"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Robert
+        (You)
+      </p>
+    </div>
+    <div />
+  </div>
+  <div
+    className="userwrapper"
+    key="testuid2"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Peter
+      </p>
+    </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`render should render all the users in the group 1`] = `
+<div
+  className="bordertop"
+>
+  <div
+    className="userwrapper"
+    key="testuid"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Robert
+        (You)
+      </p>
+    </div>
+    <div />
+  </div>
+  <div
+    className="userwrapper"
+    key="testuid2"
+  >
+    <div>
+      <p
+        className="list-header__text"
+      >
+        Peter
+      </p>
+    </div>
+    <div>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Make admin
+      </button>
+      <button
+        className="button button--norm-small button--right"
+        onClick={[Function]}
+      >
+        Kick
+      </button>
+    </div>
+  </div>
+</div>
+`;

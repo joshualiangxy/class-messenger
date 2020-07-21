@@ -36,13 +36,14 @@ export const GroupSettingsModal = ({
     } else {
       // Retrieve the user's data, and add it to the array of users.
       // user contains {admin, displayName, studentNum, uid} fields
-      recheckAdmin(uid, group).then(isAdmin => {
+      return recheckAdmin(uid, group).then(isAdmin => {
         if (isAdmin) {
-          getUser(submittedEmail).then(user => {
+          return getUser(submittedEmail).then(user => {            
+            const newuser = {...user, admin: false}
             if (typeof user !== 'undefined') {
-              addNewUser(user, group)
+              return addNewUser(newuser, group)
                 .then(() => {
-                  setUsers([...users, user]);
+                  setUsers([...users, newuser]);
                   setError('Added!');
                   setUserEmail('');
                 })
@@ -114,8 +115,7 @@ export const GroupSettingsModal = ({
 };
 
 const mapDispatchToProps = dispatch => ({
-  addNewUser: (uid, gid) => dispatch(addNewUser(uid, gid)),
-  getUser: email => dispatch(getUser(email))
+  addNewUser: (uid, gid) => dispatch(addNewUser(uid, gid))
 });
 
 export default connect(null, mapDispatchToProps)(GroupSettingsModal);

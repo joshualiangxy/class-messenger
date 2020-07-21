@@ -25,48 +25,51 @@ export const GroupUserListing = ({
 }) => {
   const onKick = (user, group) => {
     // Remove from users
-    recheckAdmin(uid, group).then(isAdmin => {
+    return recheckAdmin(uid, group).then(isAdmin => {
       if (isAdmin) {
-        kickUser(user, group)
+        return kickUser(user, group)
           .then(() => kickUserLocal(user.uid))
           .then(() => setUsers(users.filter(u => u.uid !== user.uid)))
           .catch(error => console.log(error));
       } else {
         setAdmin(false);
         setError('You are not an admin!');
+        return Promise.resolve()
       }
     });
   };
 
-  const onPromote = (user, group) => {
+  const onPromote = (user, group) =>
     recheckAdmin(uid, group).then(isAdmin => {
       if (isAdmin) {
-        promoteUser(user, group).then(() => {
+        return promoteUser(user, group).then(() => {
           setUsers(
             users.map(u => (u.uid === user.uid ? { ...u, admin: true } : u))
           );
+          return Promise.resolve();
         });
       } else {
         setAdmin(false);
         setError('You are not an admin!');
+        return Promise.resolve();
       }
     });
-  };
 
-  const onDemote = (user, group) => {
+  const onDemote = (user, group) =>
     recheckAdmin(uid, group).then(isAdmin => {
       if (isAdmin) {
-        demoteUser(user, group).then(() => {
+        return demoteUser(user, group).then(() => {
           setUsers(
             users.map(u => (u.uid === user.uid ? { ...u, admin: false } : u))
           );
+          return Promise.resolve();
         });
       } else {
         setAdmin(false);
         setError('You are not an admin!');
+        return Promise.resolve();
       }
     });
-  };
 
   // The other buttons can only be seen if the current user is an admin.
   return (
