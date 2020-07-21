@@ -124,7 +124,7 @@ describe('submit', () => {
     wrapper.find('form').at(0).prop('onSubmit')({ preventDefault });
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(startNewGroup).toHaveBeenCalledTimes(0);
-    expect(wrapper.find('div.error').text()).toEqual(
+    expect(wrapper.find('.form__error').text()).toEqual(
       'Please enter a group name'
     );
   });
@@ -140,7 +140,7 @@ describe('submit', () => {
     wrapper.find('form').at(0).prop('onSubmit')({ preventDefault });
     expect(preventDefault).toHaveBeenCalledTimes(1);
     expect(startNewGroup).toHaveBeenCalledTimes(0);
-    expect(wrapper.find('div.error').text()).toEqual(
+    expect(wrapper.find('.form__error').text()).toEqual(
       'Please enter a group name'
     );
   });
@@ -162,7 +162,7 @@ describe('submit', () => {
       target: { value: { toUpperCase: () => testTwo.module } }
     });
     wrapper.find('form').at(0).prop('onSubmit')({ preventDefault });
-    expect(wrapper.find('div.error').text()).toEqual('');
+    expect(wrapper.find('.form__error')).toHaveLength(0);
   });
 });
 
@@ -180,6 +180,6 @@ describe('cancel', () => {
     expect(onRequestClose).toHaveBeenCalledTimes(1);
     expect(wrapper.find('input').at(0).prop('value')).toEqual('');
     expect(wrapper.find('input').at(1).prop('value')).toEqual('');
-    expect(wrapper.find('div.error').text()).toEqual('');
+    expect(wrapper.find('.form__error')).toHaveLength(0)
   });
 });
