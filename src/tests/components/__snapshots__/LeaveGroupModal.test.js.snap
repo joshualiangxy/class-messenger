@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render should allow the non-admin user to leave 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="setting-modal"
+  closeTimeoutMS={200}
+  contentLabel="Leave Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <h3>
+      Do you want to leave?
+    </h3>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+    >
+      No
+    </button>
+  </div>
+</Modal>
+`;
+
+exports[`render should allow the only user left to leave 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="setting-modal"
+  closeTimeoutMS={200}
+  contentLabel="Leave Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <h3>
+      Do you want to leave?
+    </h3>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+    >
+      No
+    </button>
+  </div>
+</Modal>
+`;
+
+exports[`render should not allow the admin user to leave 1`] = `
+<Modal
+  appElement={null}
+  ariaHideApp={true}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="setting-modal"
+  closeTimeoutMS={200}
+  contentLabel="Leave Group"
+  isOpen={true}
+  onRequestClose={[Function]}
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  role="dialog"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div>
+    <h3>
+      You cannot leave this group as the only admin!
+    </h3>
+    <button
+      className="button button--norm button--right"
+      onClick={[Function]}
+    >
+      Return
+    </button>
+  </div>
+</Modal>
+`;

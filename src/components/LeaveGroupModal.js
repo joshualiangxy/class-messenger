@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { history } from '../routers/AppRouter';
 import { startLeaveGroup } from '../actions/groups';
 
-const LeaveGroupModal = ({
+export const LeaveGroupModal = ({
   isOpen,
   onRequestClose,
   startLeaveGroup,
@@ -36,6 +36,7 @@ const LeaveGroupModal = ({
   // Passing users into this modal so that we can tell if we should clean up this (empty) group or not
   const onCancel = () => {
     onRequestClose();
+    return Promise.resolve();
   };
 
   const onSubmit = e => {
@@ -44,7 +45,7 @@ const LeaveGroupModal = ({
     // There is another admin in the group already, or this group will be empty after leaving.
     renderLoad();
     history.push('/groups');
-    startLeaveGroup(gid, users.length).then(() => onRequestClose());
+    return Promise.resolve(startLeaveGroup(gid, users.length)).then(() => onRequestClose());
   };
 
   return (
