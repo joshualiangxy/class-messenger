@@ -133,11 +133,15 @@ exports[`render should render GroupListPage without groups 1`] = `
   <div
     className="content-container"
   >
-    <p
-      className="list-header__text"
+    <div
+      className="grouplist grouplist--header"
     >
-      No groups
-    </p>
+      <p
+        className="list-header__text"
+      >
+        No groups
+      </p>
+    </div>
   </div>
   <Connect(AddGroupModal)
     isOpen={false}

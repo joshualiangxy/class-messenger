@@ -175,7 +175,7 @@
 
 .grouplist {
   border: 1px solid darken($light-grey, 20%);  
-  align-items:center;
+  align-items: center;
   background: $light-grey;
   cursor: default;
   word-wrap: break-word;
@@ -183,5 +183,12 @@
 
 .groupitem {  
   padding-left: 1.8rem;
+}
 
+.grouplist--header {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
 }

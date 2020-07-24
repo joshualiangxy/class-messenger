@@ -31,7 +31,9 @@ export const GroupListPage = ({ groups }) => {
         {
           // Add a 'no groups' when there's no groups
           groups.length === 0 ? (
-            <p className="list-header__text">No groups</p>
+            <div className="grouplist grouplist--header">
+              <p className="list-header__text">No groups</p>
+            </div>
           ) : (
             groups.map(group => (
               <div key={group.gid} className="grouplist">
@@ -40,7 +42,6 @@ export const GroupListPage = ({ groups }) => {
                   to={`/groups/${group.gid}`}
                 >
                   <h2 className="groupitem">{group.name}</h2>
-                  
                 </Link>
               </div>
             ))
