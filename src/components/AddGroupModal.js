@@ -28,6 +28,7 @@ export const AddGroupModal = ({ isOpen, onRequestClose, startNewGroup }) => {
     e.preventDefault();
     const submittedName = groupName.trim();
     const submittedMod = module.trim();
+
     if (!submittedName) {
       setError('Please enter a group name');
     } else {
